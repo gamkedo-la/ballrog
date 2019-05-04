@@ -1,0 +1,151 @@
+#+TITLE: Ballrog README
+#+AUTHOR: Gonzalo Delgado
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* What is Ballrog?
+
+Ballrog is an arcade-style brick-breaker game built with HTML5 Canvas and Javascript.
+
+It's also a [[https://gamkedo.com/][Gamkedo Club]] project meant for gamedev practice.
+
+Ballrog is set for release on June 16 2019, join us!
+
+To play the game, simply open the ~index.html~ file in any browser and the game should load.
+
+* Game Architecture
+
+Ballrog builds upon the Hands-On Intro to Game Programming brick-breaker example and its completion exercises.
+If you've gone through either the book or the [[http://gamkedo.com/how-to-program-games/][How to Program Games course]] you should find yourself right at home.
+
+There is however a small difference to how the book structures the code in that Ballrog makes use of the [[http://gameprogrammingpatterns.com/observer.html][observer pattern]] quite a bit.
+This should help write cleaner code and functions that do one thing well :)
+
+** Jumping right in
+
+   The entry point is the ~window.onload~ function defined in Main.js.
+   Here's where the main game events connect with functions that implement responses to such events.
+   Then there's of course the main ~moveEverything~ and ~drawEverything~ functions where how the game responds to player input is defined.
+
+   Main.js is also where stuff like score, lives and game state is handled. This may change in the future.
+
+** Main game elements
+
+*** Bricks
+
+	Bricks are layed in a (currently 10x14) grid at the top of the screen (with a top margin of 2 times the brick height, to leave room to display the score and lives).
+
+	There's three different types of bricks, as defined by the ~BRICK_TYPES~ constant:
+	- one hit
+	- two hit
+	- three hit
+	- unbreakable
+
+**** Data representation
+
+	 Bricks are represented in code by an array of integers. The ~brickGrid~ variable contains the array for the current level being played.
+	 Each element of the array can be a value between 0 and 4, with 0 meaning there's no brick at that spot and 1-4 being the different types of bricks.
+
+**** Events
+	 - ~brickRemoved~ :: triggered when a brick in the grid changes it value to ~BRICK_TYPES.empty~ (0)
+
+**** Utility functions
+	 - ~getBrickAtTileCoord(column, row)~ :: returns the brick integer value from the bricks array for the column and row coordinates
+	 - ~brickToTileIndex(column, row)~ :: returns the array index for the brick located at the column and row coordinates
+	 - ~getColXCoord(column)~ :: return the column's left edge position in pixels
+	 - ~getRowYCoord(row)~ :: return the row's top edge position in pixels
+
+*** Paddle
+	The paddle responds to mouse inputs and balls bounce off of it.
+	It can also "eat" power pills and change its state.
+
+**** Data representation
+
+	 The paddle's current representation is just a few global variables and constants (this may change as the game grows in complexity):
+	 - ~PADDLE_W~ :: the paddle's width. Despite it being uppercase, it's a variable that power pills can change.
+	 - ~paddleX~ :: the paddle's left edge position (in pixels) in the play field, changes with the mouse position
+	 - ~paddleAlpha~ :: the paddle's opacity, should always be 1 unless changed by some power pill
+	 - ~paddleScale~ :: an object containing the paddle's scaling values in x and y
+
+*** Ball
+
+	The ball is the element of the game that does the most work, moving around the whole screen and bouncing off the other elements of the game.
+	As such, it's currently the largest element code-wise, and where pretty much all the collision detection happens.
+
+	When it hits the paddle, the ball will change its angle and speed based on how far from the paddle center the collision happened.
+
+	When it hits a brick, the paddle will increase its overall speed depending on which row the brick is.
+
+**** Data representation
+	 Same as other elements, the ball is currently represented by a few variables and constants:
+	 - ~ballX~ :: the ball's center horizontal position in the playfield
+	 - ~ballY~ :: the ball's center vertical position in the playfield
+	 - ~ballVelX~ :: the ball's horizontal velocity
+	 - ~ballVelY~ :: the ball's vertical velocity
+	 - ~baseSpeed~ :: the ball's speed at the start of a level, increases on new levels
+	 - ~minSpeed~ :: the ball's speed when reset, increases as the ball hits bricks at higher rows 
+
+**** Events
+	 - ~ballMiss~ :: triggered when the paddle misses the ball and it goes below the floor of the playfield
+	 - ~ballReset~ :: triggered when the ball is reset
+	 - ~wallHit~ :: triggered when the ball hits a wall or the ceiling
+	 - ~paddleHit~ :: triggered when the ball hits the paddle
+	 - ~newLevel~ :: triggered after the ball has removed all the bricks and the paddle is hit
+	 - ~brickHit~ :: triggered when the ball hits a brick
+
+*** Power pills
+	When a brick is removed, there's a small chance (defined by the ~PILL_DROP_CHANCE~ constant) a power pill will drop from its position.
+	When the paddle collides with a power pill, it can get a power up or power down, depending on the type of power pill.
+
+**** Data representation
+	 To support different types of power pills, a base class (called ~pillClass~) provides an interface to allow subclasses to implement specific power ups or power downs.
+
+	 When a level is loaded, an array with random pills is created. When a pill needs to drop from a removed brick, the first one from this array is taken and set live, and then sent back to the row for recycling.
+
+***** Global variables and constants
+	  - ~PILL_W~ and ~PILL_H~ :: the width and height, in pixels, of each pill.
+	  - ~PILL_DROP_SPEED~ :: how many pixels a pill will move downwards on each frame when dropping.
+	  - ~PILL_DROP_CHANCE~ :: the probability of a pill being dropped when a brick is removed.
+	  - ~MAX_PILLS~ :: the size of the pills array.
+	  - ~ENABLED_PILLS~ :: a list of the pill subclasses for random selection when initializing the ~pills~ array
+	  - ~pills~ :: the array that contains pill objects.
+
+
+***** ~pillClass~ Properties
+	  - ~imageOffsetX~ and ~imageOffsetY~ :: pill sprites are loaded in a single image. The ~imageOffset~ properties indicate how to find the sprite for a specific pill type.
+	  - ~x~ and ~y~ :: the pill's top left position in pixels
+	  - ~live~ :: if ~true~ the pill will be visible on screen and its vertical position will change on each frame by ~PILL_DROP_SPEED~ pixels (downward)
+	  - ~powerTime~ :: how long (in milliseconds) the power up/down will take effect
+
+***** ~pillClass~ Methods
+	  - ~draw()~ :: draws a pill sprite on screen if it's live
+	  - ~move()~ :: changes a pill's position if it's live
+	  - ~dropFrom(x, y)~ :: makes a pill live and sets its initial position to ~x~ and ~y~.
+	  - ~startPower()~ :: called when the paddle "eats" the pill. This is where the power up/down code is implemented for each pill subclass.
+	  - ~endPower()~ :: called after ~powerTime~ milliseconds have elapsed since ~startPower~ was called. This is where the code to disable the power up/down is implemented for each pill subclass.
+	  - ~reset()~ :: sets ~live~ to ~false~. Called when the pill moves off screen, or is eaten by the paddle.
+
+**** Creating your own pill type
+
+	 Since the base ~pillClass~ does most of the heavy-lifting, creating a pill subclass is super-easy!
+	 All that's needed is to set the ~imageOffset~ properties so it selects a specific sprite, the ~powerTime~ variable to set how long the pill's effect will last, and implement ~startPower~ and ~endPower~.
+
+	 See the ~ghostPill~ power down for example::
+
+#+BEGIN_SRC javascript
+ghostPill.prototype = new pillClass();
+function ghostPill() {
+	this.imageOffsetX = PILL_W;
+	this.imageOffsetY = PILL_H;
+	this.powerTime = 7000;
+
+	this.startPower = function () {
+		paddleAlpha = 0.08;
+	}
+
+	this.endPower = function () {
+		paddleAlpha = 1;
+	}
+}
+#+END_SRC
+
