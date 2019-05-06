@@ -7,6 +7,8 @@ var brick4Pic = document.createElement("img");
 var livesPic = document.createElement("img");
 var titlePic = document.createElement("img");
 var pillsPic = document.createElement("img");
+var pupilPic = document.createElement("img");
+var eyeballPic = document.createElement("img");
 var imageList = [
 	{varName: ballPic, theFile: "../images/ball.png"},
 	{varName: paddlePic, theFile: "../images/paddle.png"},
@@ -16,7 +18,9 @@ var imageList = [
 	{varName: brick4Pic, theFile: "../images/brick4.png"},
 	{varName: livesPic, theFile: "../images/lifeicon.png"},
 	{varName: titlePic, theFile: "../images/title.png"},
-	{varName: pillsPic, theFile: "../images/pills.png"}
+	{varName: pillsPic, theFile: "../images/pills.png"},
+	{varName: pupilPic, theFile: "../images/pupil.png"},
+	{varName: eyeballPic, theFile: "../images/eyeball.png"}
 ];
 var picsToLoad = imageList.length;
 var allImagesLoadedEvent = new CustomEvent('allImagesLoaded');

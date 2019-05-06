@@ -13,10 +13,28 @@ function movePaddleOnMouseMove(evt) {
 	}
 }
 
+// draw googly eyes that follow the ball just for fun =)
+function drawGooglyEyes() {
+	var eyeX = paddleX + 8;
+	var eyeY = PADDLE_Y + 21;
+	var eyeSpacing = 61;
+	var pupilDistance = 4; // how much movement
+	var angle = Math.atan2(ballY-PADDLE_Y, ballX-paddleX);
+	// whites
+	drawBitMap(eyeballPic,eyeX,eyeY);
+	drawBitMap(eyeballPic,eyeX+eyeSpacing,eyeY);
+	// pupils
+	eyeX += pupilDistance * Math.cos(angle) + 3;
+	eyeY += pupilDistance * Math.sin(angle) + 3;
+	drawBitMap(pupilPic,eyeX,eyeY);
+	drawBitMap(pupilPic,eyeX+eyeSpacing,eyeY);
+}
+
 function drawPaddle() {
 	canvasContext.save();
 	canvasContext.globalAlpha = paddleAlpha;
 	canvasContext.scale(paddleScale.x, paddleScale.y);
 	drawBitMap(paddlePic, Math.floor(paddleX/paddleScale.x), PADDLE_Y + 5);
+	drawGooglyEyes();
 	canvasContext.restore();
 }
