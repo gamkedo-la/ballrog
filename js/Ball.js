@@ -71,8 +71,7 @@ function ballMove() {
 		if (ballY + BALL_RADIUS > PADDLE_Y && ballY - BALL_RADIUS < PADDLE_Y + PADDLE_THICKNESS && ballVelY > 0) { //ball hits the paddle
 			if (ballX + BALL_RADIUS > paddleX && ballX - BALL_RADIUS < paddleX + PADDLE_W) {
 				if(stickyBall){
-					ballX = paddleX;
-					ballY = paddleY;
+					ballHeld = true;
 				}
 				let deltaX = ballX - (paddleX + PADDLE_W/2);
 				updateVelocity(deltaX*0.44, -1*ballVelY);
