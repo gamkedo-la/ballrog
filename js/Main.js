@@ -60,6 +60,12 @@ window.onload = function() {
 				ballHeld = false;
 			}
 		});
+		window.addEventListener('focus', function () {
+			gamePaused = false;
+		});
+		window.addEventListener('blur', function () {
+			gamePaused = true;
+		});
 		ballReset();
 		setupInput();
 	});
