@@ -63,12 +63,17 @@ function ballMove() {
 	if (!ballHeld) {
 		ballX += ballVelX;
 		ballY += ballVelY;
-		if ((ballX + BALL_RADIUS > canvas.width && ballVelX > 0) || (ballX - BALL_RADIUS < 0 && ballVelX < 0)){
+		if ((ballX + BALL_RADIUS > canvas.width && ballVelX > 0) || (ballX - BALL_RADIUS < 0 && ballVelX < 0)){  //keeps ball within screen (sides and top)
 			updateVelocity(-1*ballVelX, ballVelY);
 			canvas.dispatchEvent(wallHitEvent);
 		}
-		if (ballY + BALL_RADIUS > PADDLE_Y && ballY - BALL_RADIUS < PADDLE_Y + PADDLE_THICKNESS && ballVelY > 0) {
+		console.log(stickyBall);
+		if (ballY + BALL_RADIUS > PADDLE_Y && ballY - BALL_RADIUS < PADDLE_Y + PADDLE_THICKNESS && ballVelY > 0) { //ball hits the paddle
 			if (ballX + BALL_RADIUS > paddleX && ballX - BALL_RADIUS < paddleX + PADDLE_W) {
+				if(stickyBall){
+					ballX = paddleX;
+					ballY = paddleY;
+				}
 				let deltaX = ballX - (paddleX + PADDLE_W/2);
 				updateVelocity(deltaX*0.44, -1*ballVelY);
 				let currentSpeed = getSpeedFromVelocity(ballVelX, ballVelY);
