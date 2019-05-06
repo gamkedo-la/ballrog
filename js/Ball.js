@@ -78,14 +78,6 @@ function ballMove() {
 				passingThrough = false;
 				let paddleHitEvent = new CustomEvent('paddleHit');
 				canvas.dispatchEvent(paddleHitEvent);
-				if (resetBricksOnNextPaddleHit) {
-					resetBricks();
-					let newLevelEvent = new CustomEvent('newLevel');
-					canvas.dispatchEvent(newLevelEvent);
-					baseSpeed += 10;
-					maxSpeed += 10;
-					resetBricksOnNextPaddleHit = false;
-				}
 			}
 		}
 		if (ballY > canvas.height) {

@@ -13,7 +13,9 @@ var ballHeld = true;
 //game states
 var showTitle = true;
 var gamePaused = false;
+var levelTransition = false;
 var lastScore = score;
+var currentLevelIndex = 0;
 var sounds = {
 	paddleHit: new SoundOverlapsClass("audio/paddleHit"),
 	brickHit: new SoundOverlapsClass("audio/brickHit"),
@@ -48,10 +50,10 @@ window.onload = function() {
 		// canvas.addEventListener('paddleHit', sounds.paddleHit.play);
 		// canvas.addEventListener('wallHit', sounds.wallHit.play);
 		canvas.addEventListener('outaLives', resetGame);
+		canvas.addEventListener('noMoreBricks', loadNextLevel);
 		// canvas.addEventListener('outaLives', sounds.gameOver.play);
 		canvas.addEventListener('scoreIncrease', checkAndRewardPlayer);
 		// canvas.addEventListener('newLevel', sounds.newLevel.play);
-		canvas.addEventListener('newLevel', resetPills);
 		canvas.addEventListener('mousedown', function(evt) {
 			if (showTitle) {
 				showTitle = false;
@@ -72,6 +74,7 @@ window.onload = function() {
 }
 
 function resetGame() {
+	currentLevelIndex = 0;
 	lastScore = score;
 	baseSpeed = INITIAL_SPEED;
 	maxSpeed = INITIAL_MAX_SPEED;
@@ -82,6 +85,26 @@ function resetGame() {
 	lives = INITIAL_LIVES;
 	showTitle = true;
 	initPills();
+}
+
+function loadNextLevel() {
+	setTimeout(function () {
+		levelTransition = true;
+		currentLevelIndex++;
+		if (currentLevelIndex >= LEVEL_SEQ.length) {
+			currentLevelIndex = 0;
+		}
+		setTimeout(function () {
+			resetBricks();
+			resetPills();
+			ballReset();
+			baseSpeed += 10;
+			maxSpeed += 10;
+			levelTransition = false;
+			let newLevelEvent = new CustomEvent('newLevel');
+			canvas.dispatchEvent(newLevelEvent);
+		}, 1500);
+	}, 600 - getSpeedFromVelocity(ballVelX, ballVelY));
 }
 
 function dropLife() {
@@ -136,11 +159,22 @@ function drawPauseScreen() {
 	canvasContext.fillText("PAUSED", canvas.width/2, line);
 }
 
+function drawLevelTransition() {
+	var line = 120;
+	colorRect(0, 0, canvas.width, canvas.height, 'black');
+	canvasContext.fillStyle = 'white';
+	canvasContext.textAlign = 'center';
+	canvasContext.fillText("LOADING NEW LEVEL", canvas.width/2, line);
+	canvasContext.fillText("GET PSYCHED!", canvas.width/2, line + 20);
+}
+
 function drawEverything() {
 	if (showTitle) {
 		drawTitleScreen();
 	} else if(gamePaused){
 		drawPauseScreen();
+	} else if (levelTransition) {
+		drawLevelTransition();
 	} else {
 		colorRect(0, 0, canvas.width, canvas.height, 'rgb(75,105,47 )');
 		canvasContext.fillStyle = 'white';
@@ -156,7 +190,7 @@ function drawEverything() {
 }
 
 function moveEverything() {
-	if (!showTitle && !gamePaused) {
+	if (!showTitle && !gamePaused && !levelTransition) {
 		ballMove();
 		pillsMove();
 	}

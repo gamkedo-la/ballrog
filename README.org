@@ -48,12 +48,20 @@ This should help write cleaner code and functions that do one thing well :)
 
 **** Events
 	 - ~brickRemoved~ :: triggered when a brick in the grid changes it value to ~BRICK_TYPES.empty~ (0)
+	 - ~noMoreBricks~ :: triggered after the last breakable brick in the level is removed
 
 **** Utility functions
 	 - ~getBrickAtTileCoord(column, row)~ :: returns the brick integer value from the bricks array for the column and row coordinates
 	 - ~brickToTileIndex(column, row)~ :: returns the array index for the brick located at the column and row coordinates
 	 - ~getColXCoord(column)~ :: return the column's left edge position in pixels
 	 - ~getRowYCoord(row)~ :: return the row's top edge position in pixels
+
+**** Creating new levels
+
+	 The game supports multiple levels. As explained before, levels are nothing but an array of integers.
+
+	 All the game levels are defined in the levelData.js file.
+	 New level arrays can be added to the ~LEVELS~ object, and the key to such level must be added to the ~LEVEL_SEQ~ array in order for the level to be playable.
 
 *** Paddle
 	The paddle responds to mouse inputs and balls bounce off of it.

@@ -19,25 +19,8 @@ const BRICK_IMAGES = {
 	[BRICK_TYPES.threehit]: brick3Pic,
 	[BRICK_TYPES.unbreakable]: brick4Pic
 };
-const masterGrid = [
-	0, 0, 0, 0, 1, 1, 0, 0, 0, 0,
-	0, 0, 0, 1, 1, 1, 1, 0, 0, 0,
-	0, 0, 1, 1, 1, 1, 1, 1, 0, 0,
-	0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-	1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-	2, 0, 2, 0, 2, 2, 0, 2, 0, 2,
-	0, 0, 0, 0, 0, 3, 0, 0, 0, 0,
-	0, 0, 0, 4, 0, 3, 0, 0, 0, 0,
-	0, 0, 0, 0, 4, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-];
 var brickGrid = new Array(BRICK_COLS * BRICK_ROWS);
 var bricksLeft = 0;
-var resetBricksOnNextPaddleHit = false;
 
 function drawBricks() {
 	for (var eachCol=0; eachCol<BRICK_COLS; eachCol++) {
@@ -57,11 +40,10 @@ function drawBricks() {
 }
 
 function resetBricks() {
-	brickGrid = masterGrid.slice();
+	brickGrid = LEVELS[LEVEL_SEQ[currentLevelIndex]].slice();
 	bricksLeft = brickGrid.filter(
 		brick => brick != BRICK_TYPES.empty && brick != BRICK_TYPES.unbreakable
 	).length;
-	// TODO fire bricksReset event and connect that to initPills
 }
 
 function getBrickAtTileCoord(brickTileCol, brickTileRow) {
@@ -87,10 +69,14 @@ function handleBrickHit(evt) {
 		brickGrid[evt.detail.index] -= 1;
 		if (brickGrid[evt.detail.index] == BRICK_TYPES.empty) {
 			bricksLeft--;
-			resetBricksOnNextPaddleHit = bricksLeft <= 0;
+			// resetBricksOnNextPaddleHit = bricksLeft <= 0;
 			let brickRemovedEvent = new CustomEvent('brickRemoved', {
 				detail: evt.detail
 			});
+			if (bricksLeft <= 0) {
+				let noMoreBricksEvent = new CustomEvent('noMoreBricks');
+				canvas.dispatchEvent(noMoreBricksEvent);
+			}
 			canvas.dispatchEvent(brickRemovedEvent);
 		}
 	}
