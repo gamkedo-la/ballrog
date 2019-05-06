@@ -6,6 +6,7 @@ var canvas;
 var canvasContext;
 var framesPerSecond = 30;
 var score = 0;
+var highScore = 0;
 var lives = INITIAL_LIVES;
 var outaLivesEvent = new CustomEvent('outaLives');
 var ballHeld = true;
@@ -93,6 +94,9 @@ function increaseScore(points) {
 		points = BRICK_HIT_POINTS;
 	}
 	score += points;
+	if(highScore < score){
+		highScore = score;
+	}
 	var scoreIncreaseEvent = new CustomEvent('scoreIncrease');
 	canvas.dispatchEvent(scoreIncreaseEvent);
 }
@@ -136,6 +140,7 @@ function drawEverything() {
 		canvasContext.fillStyle = 'white';
 		canvasContext.textAlign = 'center';
 		canvasContext.fillText(score.toString(), canvas.width/2, 10);
+		canvasContext.fillText('High Score: ' + highScore.toString(), 50, 10);
 		drawPaddle();
 		drawBall();
 		drawBricks();

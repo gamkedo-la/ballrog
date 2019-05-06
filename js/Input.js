@@ -13,7 +13,6 @@ function calculateMousePos(evt) {
 
 function setupInput() {
   document.addEventListener('keydown', keyPressed);
-  document.addEventListener('keyup', keyReleased);
 }
 
 function keyPressed(evt) {
