@@ -14,20 +14,34 @@ function movePaddleOnMouseMove(evt) {
 }
 
 // draw googly eyes that follow the ball just for fun =)
+var blinkCounter = 0;
 function drawGooglyEyes() {
+
 	var eyeX = paddleX + 8;
 	var eyeY = PADDLE_Y + 21;
 	var eyeSpacing = 61;
 	var pupilDistance = 4; // how much movement
 	var angle = Math.atan2(ballY-PADDLE_Y, ballX-paddleX);
-	// whites
-	drawBitMap(eyeballPic,eyeX,eyeY);
-	drawBitMap(eyeballPic,eyeX+eyeSpacing,eyeY);
-	// pupils
-	eyeX += pupilDistance * Math.cos(angle) + 3;
-	eyeY += pupilDistance * Math.sin(angle) + 3;
-	drawBitMap(pupilPic,eyeX,eyeY);
-	drawBitMap(pupilPic,eyeX+eyeSpacing,eyeY);
+	
+	// blink occasionally
+	if (blinkCounter) {
+		drawBitMap(eyelidsPic,eyeX,eyeY);
+		drawBitMap(eyelidsPic,eyeX+eyeSpacing,eyeY);
+		blinkCounter--;
+	} else {
+		// whites
+		drawBitMap(eyeballPic,eyeX,eyeY);
+		drawBitMap(eyeballPic,eyeX+eyeSpacing,eyeY);
+		// pupils
+		eyeX += pupilDistance * Math.cos(angle) + 3;
+		eyeY += pupilDistance * Math.sin(angle) + 3;
+		drawBitMap(pupilPic,eyeX,eyeY);
+		drawBitMap(pupilPic,eyeX+eyeSpacing,eyeY);
+	}
+	
+	if (Math.random() < 0.01) { // maybe start a new blink or stay closed longer
+		blinkCounter = 5; // frames of closed eyes
+	}
 }
 
 function drawPaddle() {
