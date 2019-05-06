@@ -3,7 +3,7 @@ const PILL_H = 20;
 const PILL_DROP_SPEED = 10;
 const PILL_DROP_CHANCE = 0.4;
 const MAX_PILLS = 40;
-const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill];
+const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, stickyBallPill];
 var pills = [];
 
 
@@ -36,15 +36,17 @@ function stretchPill() {
 	}
 }
 
+
 volcanoPill.prototype = new pillClass();
 function volcanoPill() {
 	this.imageOffsetX = 0;
 	this.imageOffsetY = PILL_H;
 	this.powerTime = 4000;
 	this.startPower = function () {
+		stickyBall = true;
 	}
-
 	this.endPower = function () {
+		stickyBall = false;
 	}
 }
 
@@ -59,6 +61,20 @@ function ghostPill() {
 
 	this.endPower = function () {
 		paddleAlpha = 1;
+	}
+}
+
+stickyBallPill.prototype = new pillClass();
+function stickyBallPill() {
+	this.imageOffsetX = 0;
+	this.imageOffsetY = PILL_H * 3;
+	this.powerTime = 4000;
+	this.startPower = function () {
+		stickyBall = true;
+	}
+
+	this.endPower = function () {
+		stickyBall = false;
 	}
 }
 

@@ -1,4 +1,5 @@
 var ballPic = document.createElement("img");
+var letterBrickPic = document.createElement("img");
 var paddlePic = document.createElement("img");
 var brick1Pic = document.createElement("img");
 var brick2Pic = document.createElement("img");
@@ -20,6 +21,7 @@ var imageList = [
 	{varName: livesPic, theFile: "../images/lifeicon.png"},
 	{varName: titlePic, theFile: "../images/title.png"},
 	{varName: pillsPic, theFile: "../images/pills.png"},
+	{varName: letterBrickPic, theFile: "../images/letterBricks.png"},
 	{varName: pupilPic, theFile: "../images/pupil.png"},
 	{varName: eyeballPic, theFile: "../images/eyeball.png"},
 	{varName: eyelidsPic, theFile: "../images/eyelids.png"}

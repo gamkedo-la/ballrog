@@ -10,6 +10,8 @@ var highScore = 0;
 var lives = INITIAL_LIVES;
 var outaLivesEvent = new CustomEvent('outaLives');
 var ballHeld = true;
+//power ups
+var stickyBall = false;
 //game states
 var showTitle = true;
 var gamePaused = false;
@@ -60,6 +62,7 @@ window.onload = function() {
 				sounds.gameStart.play();
 			} else {
 				ballHeld = false;
+				stickyBall = false;
 			}
 		});
 		window.addEventListener('focus', function () {
