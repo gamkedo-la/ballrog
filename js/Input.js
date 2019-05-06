@@ -1,3 +1,5 @@
+const KEY_P = 80
+
 function calculateMousePos(evt) {
 	var rect = canvas.getBoundingClientRect();
 	var root = document.documentElement;
@@ -7,4 +9,20 @@ function calculateMousePos(evt) {
 		x: mouseX,
 		y: mouseY
 	}
+}
+
+function setupInput() {
+  document.addEventListener('keydown', keyPressed);
+}
+
+function keyPressed(evt) {
+  console.log(evt);
+  var paused = KEY_P;
+  if (evt.keyCode == paused) {
+    if (gamePaused) {
+      gamePaused = false;
+    } else {
+      gamePaused = true;
+    }
+  }
 }

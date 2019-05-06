@@ -6,10 +6,13 @@ var canvas;
 var canvasContext;
 var framesPerSecond = 30;
 var score = 0;
+var highScore = 0;
 var lives = INITIAL_LIVES;
 var outaLivesEvent = new CustomEvent('outaLives');
 var ballHeld = true;
+//game states
 var showTitle = true;
+var gamePaused = false;
 var lastScore = score;
 var sounds = {
 	paddleHit: new SoundOverlapsClass("audio/paddleHit"),
@@ -57,7 +60,14 @@ window.onload = function() {
 				ballHeld = false;
 			}
 		});
+		window.addEventListener('focus', function () {
+			gamePaused = false;
+		});
+		window.addEventListener('blur', function () {
+			gamePaused = true;
+		});
 		ballReset();
+		setupInput();
 	});
 }
 
@@ -90,6 +100,9 @@ function increaseScore(points) {
 		points = BRICK_HIT_POINTS;
 	}
 	score += points;
+	if(highScore < score){
+		highScore = score;
+	}
 	var scoreIncreaseEvent = new CustomEvent('scoreIncrease');
 	canvas.dispatchEvent(scoreIncreaseEvent);
 }
@@ -115,14 +128,25 @@ function drawTitleScreen() {
 	canvasContext.fillText("GET A NEW LIFE ON EVERY " + NEW_LIFE_SCORE_MILESTONE + " POINTS!", canvas.width/2, line);
 }
 
+function drawPauseScreen() {
+	var line = 120;
+	colorRect(0, 0, canvas.width, canvas.height, 'black');
+	canvasContext.fillStyle = 'white';
+	canvasContext.textAlign = 'center';
+	canvasContext.fillText("PAUSED", canvas.width/2, line);
+}
+
 function drawEverything() {
 	if (showTitle) {
 		drawTitleScreen();
+	} else if(gamePaused){
+		drawPauseScreen();
 	} else {
 		colorRect(0, 0, canvas.width, canvas.height, 'rgb(75,105,47 )');
 		canvasContext.fillStyle = 'white';
 		canvasContext.textAlign = 'center';
 		canvasContext.fillText(score.toString(), canvas.width/2, 10);
+		canvasContext.fillText('High Score: ' + highScore.toString(), 50, 10);
 		drawPaddle();
 		drawBall();
 		drawBricks();
@@ -132,7 +156,7 @@ function drawEverything() {
 }
 
 function moveEverything() {
-	if (!showTitle) {
+	if (!showTitle && !gamePaused) {
 		ballMove();
 		pillsMove();
 	}
