@@ -17,9 +17,9 @@ function movePaddleOnMouseMove(evt) {
 var blinkCounter = 0;
 function drawGooglyEyes() {
 
-	var eyeX = paddleX + 8;
+	var eyeX = paddleX + 7;
 	var eyeY = PADDLE_Y + 21;
-	var eyeSpacing = 61;
+	var eyeSpacing = 62;
 	var pupilDistance = 4; // how much movement
 	var angle = Math.atan2(ballY-PADDLE_Y, ballX-paddleX);
 	
