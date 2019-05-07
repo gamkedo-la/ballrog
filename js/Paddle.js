@@ -20,7 +20,7 @@ function movePaddleOnMouseMove(evt) {
 var blinkCounter = 0;
 function drawGooglyEyes() {
 
-	var eyeX = paddleX + 7;
+	var eyeX = Math.floor((paddleX)/paddleScale.x) + 7;
 	var eyeY = PADDLE_Y + 21;
 	var eyeSpacing = 62;
 	var pupilDistance = 4; // how much movement
