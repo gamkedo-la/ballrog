@@ -101,8 +101,8 @@ function loadNextLevel() {
 			resetBricks();
 			resetPills();
 			ballReset();
-			baseSpeed += 10;
-			maxSpeed += 10;
+			baseSpeed += 6;
+			maxSpeed += 6;
 			levelTransition = false;
 			let newLevelEvent = new CustomEvent('newLevel');
 			canvas.dispatchEvent(newLevelEvent);

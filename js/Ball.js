@@ -1,6 +1,6 @@
 const BALL_RADIUS = 10;
 const INITIAL_SPEED = 8;
-const INITIAL_MAX_SPEED = 40;
+const INITIAL_MAX_SPEED = 30;
 var ballX;
 var ballY;
 var ballVelX = 6;
@@ -72,7 +72,7 @@ function ballMove() {
 				if(stickyBall){
 					ballHeld = true;
 				}
-				let deltaX = ballX - (paddleX + PADDLE_W/2);
+				let deltaX = ballX - (paddleX + PADDLE_W/(2*paddleScale.x));
 				updateVelocity(deltaX*0.44, -1*ballVelY);
 				let currentSpeed = getSpeedFromVelocity(ballVelX, ballVelY);
 				if (currentSpeed < minSpeed) {
