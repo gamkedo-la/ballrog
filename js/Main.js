@@ -49,7 +49,7 @@ window.onload = function() {
 		canvas.addEventListener('brickRemoved', increaseScore);
 		canvas.addEventListener('brickRemoved', increaseSpeed);
 		canvas.addEventListener('brickRemoved', maybeDropPowerPill);
-		// canvas.addEventListener('paddleHit', sounds.paddleHit.play);
+		canvas.addEventListener('paddleHit', sounds.paddleHit.play);
 		// canvas.addEventListener('wallHit', sounds.wallHit.play);
 		canvas.addEventListener('outaLives', resetGame);
 		canvas.addEventListener('noMoreBricks', loadNextLevel);
