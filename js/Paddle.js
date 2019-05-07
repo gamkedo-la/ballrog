@@ -11,9 +11,6 @@ function movePaddleOnMouseMove(evt) {
 	if (ballHeld) {
 		ballX = paddleX + PADDLE_W/2;
 	}
-	if (stickyBall) {
-		ballX = paddleX + PADDLE_W/2;
-	}
 }
 
 // draw googly eyes that follow the ball just for fun =)

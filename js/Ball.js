@@ -67,7 +67,6 @@ function ballMove() {
 			updateVelocity(-1*ballVelX, ballVelY);
 			canvas.dispatchEvent(wallHitEvent);
 		}
-		console.log(stickyBall);
 		if (ballY + BALL_RADIUS > PADDLE_Y && ballY - BALL_RADIUS < PADDLE_Y + PADDLE_THICKNESS && ballVelY > 0) { //ball hits the paddle
 			if (ballX + BALL_RADIUS > paddleX && ballX - BALL_RADIUS < paddleX + PADDLE_W) {
 				if(stickyBall){
