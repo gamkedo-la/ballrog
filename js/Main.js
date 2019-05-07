@@ -45,7 +45,7 @@ window.onload = function() {
 		canvas.addEventListener('ballMiss', dropLife);
 		// canvas.addEventListener('ballMiss', sounds.lifeLost.play);
 		canvas.addEventListener('brickHit', handleBrickHit);
-		// canvas.addEventListener('brickHit', sounds.brickHit.play);
+		canvas.addEventListener('brickHit', sounds.brickHit.play);
 		canvas.addEventListener('brickRemoved', increaseScore);
 		canvas.addEventListener('brickRemoved', increaseSpeed);
 		canvas.addEventListener('brickRemoved', maybeDropPowerPill);
