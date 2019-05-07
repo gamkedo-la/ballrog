@@ -11,6 +11,7 @@ var pillsPic = document.createElement("img");
 var pupilPic = document.createElement("img");
 var eyeballPic = document.createElement("img");
 var eyelidsPic = document.createElement("img");
+var ballTrailPic = document.createElement("img");
 var imageList = [
 	{varName: ballPic, theFile: "../images/ball.png"},
 	{varName: paddlePic, theFile: "../images/paddle.png"},
@@ -24,7 +25,8 @@ var imageList = [
 	{varName: letterBrickPic, theFile: "../images/letterBricks.png"},
 	{varName: pupilPic, theFile: "../images/pupil.png"},
 	{varName: eyeballPic, theFile: "../images/eyeball.png"},
-	{varName: eyelidsPic, theFile: "../images/eyelids.png"}
+	{varName: eyelidsPic, theFile: "../images/eyelids.png"},
+	{varName: ballTrailPic, theFile: "../images/ballTrail.png"},
 ];
 var picsToLoad = imageList.length;
 var allImagesLoadedEvent = new CustomEvent('allImagesLoaded');

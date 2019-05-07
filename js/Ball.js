@@ -13,6 +13,7 @@ var ballResetEvent = new CustomEvent('ballReset');
 var highestHitRow = BRICK_ROWS;
 var passingThrough = false;
 var wallHitEvent = new CustomEvent('wallHit');
+var ballTrail = new TrailFX(ballTrailPic);
 
 
 function ballReset() {
@@ -98,6 +99,9 @@ function ballMove() {
 			ballY + Math.sign(ballVelY)*BALL_RADIUS
 		);
 	}
+
+	ballTrail.update(ballX,ballY);
+
 }
 
 function breakAndBounceOffBrickAtPixelCoord(pixelX, pixelY) {
@@ -172,5 +176,6 @@ function breakAndBounceOffBrickAtPixelCoord(pixelX, pixelY) {
 }
 
 function drawBall() {
+	ballTrail.draw();
 	drawBitMap(ballPic, ballX - BALL_RADIUS, ballY - BALL_RADIUS);
 }

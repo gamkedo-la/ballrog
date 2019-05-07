@@ -186,6 +186,7 @@ function drawEverything() {
 		drawBricks();
 		drawLives();
 		drawPills();
+		
 	}
 }
 
