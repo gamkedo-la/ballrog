@@ -21,8 +21,19 @@ function keyPressed(evt) {
   if (evt.keyCode == paused) {
     if (gamePaused) {
       gamePaused = false;
+	  resetLetters();
     } else {
-      gamePaused = true;
+		gamePaused = true;
+		var letter = new letterP(200, 300); // Initiate letters P A U S E
+		letters.push(letter);
+		var letter = new letterA(300, 300);
+		letters.push(letter);
+		var letter = new letterU(400, 300);
+		letters.push(letter);
+		var letter = new letterS(500, 300);
+		letters.push(letter);
+		var letter = new letterE(600, 300);
+		letters.push(letter);
     }
   }
 }

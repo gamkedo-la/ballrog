@@ -156,16 +156,6 @@ function drawTitleScreen() {
 
 function drawPauseScreen() {
 	colorRect(0, 0, canvas.width, canvas.height, 'black'); //clears screen
-	var letter = new letterP(200, canvas.height/2+10);
-	letters.push(letter);
-	var letter = new letterA(300, canvas.height/2+10);
-	letters.push(letter);
-	var letter = new letterU(400, canvas.height/2+10);
-	letters.push(letter);
-	var letter = new letterS(500, canvas.height/2+10);
-	letters.push(letter);
-	var letter = new letterE(600, canvas.height/2+10);
-	letters.push(letter);
 	drawLetters();
 }
 
@@ -203,6 +193,9 @@ function moveEverything() {
 	if (!showTitle && !gamePaused && !levelTransition) {
 		ballMove();
 		pillsMove();
+	}
+	if (gamePaused){
+		lettersMove();
 	}
 }
 

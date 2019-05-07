@@ -1,5 +1,5 @@
-LETTER_H = 20;
-LETTER_W = 80;
+const LETTER_H = 20;
+const LETTER_W = 80;
 var letters = [];
 
 
@@ -50,13 +50,26 @@ function drawLetters() {
 	}
 }
 
+function lettersMove() {
+	for (var i=0; i<letters.length; i++) {
+		letters[i].move();
+	}
+}
+
+function resetLetters(){
+	for (var i=0; i<letters.length; i++) {
+		letters[i].reset();
+	}
+}
+
 function letterClass() {
 	this.imageOffsetX = 0;
 	this.imageOffsetY = 0;
 	this.x = 0
 	this.y = 0;
+	this.letterSpeed = 1;
 	this.live = true;
-	
+
 	this.draw = function () {
 		if (this.live) {
 			canvasContext.drawImage(letterBrickPic, this.imageOffsetX, this.imageOffsetY, LETTER_W, LETTER_H, this.x, this.y, LETTER_W, LETTER_H);
@@ -69,10 +82,14 @@ function letterClass() {
 		this.y = dropY;
 	};
 	
-	this.move = function (stopY) {
+	this.move = function () {
 		if (this.live) {
-			if(this.y < stopY){
-			this.y += LETTER_DROP_SPEED;
+			console.log(this.y);
+			if(this.y <= 100 || this.y >= 500) {
+				this.letterSpeed = this.letterSpeed * -1;
+				this.y += this.letterSpeed;
+			} else {
+				this.y += this.letterSpeed;
 			}
 		}
 	};
