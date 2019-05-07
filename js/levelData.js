@@ -1,4 +1,4 @@
-const LEVEL_SEQ = [0, 1, 2];
+const LEVEL_SEQ = [0, 1, 2, 3];
 const LEVELS = {
 	0: [ // Level that's easy to finish to test level transitions
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -61,8 +61,7 @@ const LEVELS = {
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-	],
-	3: [
-		]
+	]
 };
