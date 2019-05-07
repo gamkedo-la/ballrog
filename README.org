@@ -35,7 +35,7 @@ This should help write cleaner code and functions that do one thing well :)
 
 	Bricks are layed in a (currently 10x14) grid at the top of the screen (with a top margin of 2 times the brick height, to leave room to display the score and lives).
 
-	There's three different types of bricks, as defined by the ~BRICK_TYPES~ constant:
+	There's four different types of bricks, as defined by the ~BRICK_TYPES~ constant:
 	- one hit
 	- two hit
 	- three hit
