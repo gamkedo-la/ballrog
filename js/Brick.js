@@ -19,12 +19,15 @@ const BRICK_IMAGES = {
 	[BRICK_TYPES.threehit]: brick3Pic,
 	[BRICK_TYPES.unbreakable]: brick4Pic
 };
+
+var brickInfo = [];
+var bricksInPlace = false;
 var brickGrid = new Array(BRICK_COLS * BRICK_ROWS);
 var bricksLeft = 0;
 
 var brickShineEffect = new ShineFX(shinePic); // a glint animation on hit
 
-function drawBricks() {
+function getBrickInfo() {
 	for (var eachCol=0; eachCol<BRICK_COLS; eachCol++) {
 		for (var eachRow=0; eachRow<BRICK_ROWS; eachRow++) {
 			var brick = getBrickAtTileCoord(eachCol, eachRow);
@@ -32,18 +35,54 @@ function drawBricks() {
 				// TODO: get brick index here to find brick type
 				var brickLeftEdgeX = getColXCoord(eachCol);
 				var brickTopEdgeY = getRowYCoord(eachRow);
-				if (typeof(BRICK_IMAGES[brick]) == "undefined") {
-					console.log("BAD IMAGE FOR", brick);
+				brickInfo.push({x:brickLeftEdgeX, y: -BRICK_H, homeY: brickTopEdgeY, image: BRICK_IMAGES[brick]});
+			} 
+		} // end of for eachRow
+	} // end of for eachCol
+} // end of getbrickInfo
+
+function drawBricks() {
+	for (var eachCol=0; eachCol<BRICK_COLS; eachCol++) {
+		for (var eachRow=0; eachRow<BRICK_ROWS; eachRow++) {
+			var brick = getBrickAtTileCoord(eachCol, eachRow);
+			if (!bricksInPlace) {
+				//colorRect(0, 0, canvas.width, canvas.height, 'rgb(75,105,47 )');
+				easeBricksbricksInPlace();
+				return;
+			} else {
+				if(typeof(brick) != "undefined" && brick != BRICK_TYPES.empty) {
+					// TODO: get brick index here to find brick type
+					var brickLeftEdgeX = getColXCoord(eachCol);
+					var brickTopEdgeY = getRowYCoord(eachRow);
+					if (typeof(BRICK_IMAGES[brick]) == "undefined") {
+						console.log("BAD IMAGE FOR", brick);
+					}
+					drawBitMap(BRICK_IMAGES[brick], brickLeftEdgeX, brickTopEdgeY);
 				}
-				drawBitMap(BRICK_IMAGES[brick], brickLeftEdgeX, brickTopEdgeY);
-		  }
+		  	}
 		}
 	}
 	brickShineEffect.draw();
 }
 
+function easeBricksbricksInPlace() {
+	for (var b = 0; b < brickInfo.length; b++) {
+		var brick = brickInfo[b];
+		brick.y = lerp(brick.y, brick.homeY, 0.18);
+		if (b == brickInfo.length - 1) {
+			if (Math.ceil(brick.y) == brick.homeY) {
+				bricksInPlace = true;
+			}
+		} 
+		drawBitMap(brick.image, brick.x, brick.y);
+	} // end of for b < brickInfo.length
+} // end of easeBricksbricksInPlace();
+
 function resetBricks() {
 	brickGrid = LEVELS[LEVEL_SEQ[currentLevelIndex]].slice();
+	brickInfo = [];
+	getBrickInfo();
+	bricksInPlace = false;
 	bricksLeft = brickGrid.filter(
 		brick => brick != BRICK_TYPES.empty && brick != BRICK_TYPES.unbreakable
 	).length;

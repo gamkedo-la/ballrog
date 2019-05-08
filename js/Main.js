@@ -61,9 +61,12 @@ window.onload = function() {
 			if (showTitle) {
 				showTitle = false;
 				sounds.gameStart.play();
+				resetBricks();
 			} else {
-				ballHeld = false;
-				stickyBall = false;
+				if (bricksInPlace) {
+					ballHeld = false;
+					stickyBall = false;
+				}
 			}
 		});
 		window.addEventListener('focus', function () {
@@ -94,6 +97,7 @@ function resetGame() {
 function loadNextLevel() {
 	setTimeout(function () {
 		levelTransition = true;
+		bricksInPlace = false;
 		currentLevelIndex++;
 		if (currentLevelIndex >= LEVEL_SEQ.length) {
 			currentLevelIndex = 0;
@@ -183,7 +187,6 @@ function drawEverything() {
 		drawBricks();
 		drawLives();
 		drawPills();
-		
 	}
 }
 
@@ -203,4 +206,8 @@ function drawLives() {
 	for (var i=0; i<lives; i++) {
 		drawBitMap(livesPic, posX - i*20, posY);
 	}
+}
+
+function lerp(startPos, endPos, value) {
+	return (endPos - startPos) * value + startPos;
 }
