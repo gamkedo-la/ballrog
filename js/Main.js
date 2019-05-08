@@ -54,7 +54,7 @@ window.onload = function() {
 		canvas.addEventListener('wallHit', sounds.wallHit.play);
 		canvas.addEventListener('outaLives', resetGame);
 		canvas.addEventListener('noMoreBricks', loadNextLevel);
-		// canvas.addEventListener('outaLives', sounds.gameOver.play);
+		canvas.addEventListener('outaLives', sounds.gameOver.play);
 		canvas.addEventListener('scoreIncrease', checkAndRewardPlayer);
 		// canvas.addEventListener('newLevel', sounds.newLevel.play);
 		canvas.addEventListener('mousedown', function(evt) {
