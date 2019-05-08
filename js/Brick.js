@@ -20,6 +20,9 @@ const BRICK_IMAGES = {
 	[BRICK_TYPES.unbreakable]: brick4Pic
 };
 
+var activePills = 0;
+var waitForLastPills = false;
+
 var brickInfo = [];
 var bricksInPlace = false;
 var brickGrid = new Array(BRICK_COLS * BRICK_ROWS);
@@ -35,7 +38,7 @@ function getBrickInfo() {
 				// TODO: get brick index here to find brick type
 				var brickLeftEdgeX = getColXCoord(eachCol);
 				var brickTopEdgeY = getRowYCoord(eachRow);
-				brickInfo.push({x:brickLeftEdgeX, y: -BRICK_H, homeY: brickTopEdgeY, image: BRICK_IMAGES[brick]});
+				brickInfo.push({x:brickLeftEdgeX, y: brickTopEdgeY - canvas.height, homeY: brickTopEdgeY, image: BRICK_IMAGES[brick]});
 			} 
 		} // end of for eachRow
 	} // end of for eachCol
@@ -68,7 +71,10 @@ function drawBricks() {
 function easeBricksbricksInPlace() {
 	for (var b = 0; b < brickInfo.length; b++) {
 		var brick = brickInfo[b];
-		brick.y = lerp(brick.y, brick.homeY, 0.18);
+		if (b % BRICK_COLS == 0) {
+			setTimeout(function(){},200);
+		}
+		brick.y = lerp(brick.y, brick.homeY, 0.2);
 		if (b == brickInfo.length - 1) {
 			if (Math.ceil(brick.y) == brick.homeY) {
 				bricksInPlace = true;
@@ -116,8 +122,18 @@ function handleBrickHit(evt) {
 				detail: evt.detail
 			});
 			if (bricksLeft <= 0) {
-				let noMoreBricksEvent = new CustomEvent('noMoreBricks');
-				canvas.dispatchEvent(noMoreBricksEvent);
+				canvas.dispatchEvent(brickRemovedEvent);
+				checkPillsLive();
+				//console.log(activePills);
+				if (activePills <= 0) {
+					setTimeout(function() {
+						let noMoreBricksEvent = new CustomEvent('noMoreBricks');
+						canvas.dispatchEvent(noMoreBricksEvent);
+					}, 500)	
+				} else {
+					waitForLastPills = true;
+				}
+				return;
 			}
 			canvas.dispatchEvent(brickRemovedEvent);
 		} 

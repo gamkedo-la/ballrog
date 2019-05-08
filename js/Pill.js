@@ -150,8 +150,6 @@ function jumpPill() {
 	}
 }
 
-
-
 function initPills() {
 	pills = [];
 	for (var i=0; i<MAX_PILLS; i++) { // Replace MAX_PILLS with bricksLeft
@@ -159,6 +157,11 @@ function initPills() {
 		var pill = new pillType();
 		pills.push(pill);
 	}
+}
+
+function checkPillsLive() {
+	activePills = pills.filter(
+		pill => pill.live).length;
 }
 
 function resetPills() {

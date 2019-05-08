@@ -22,8 +22,8 @@ var sounds = {
 	paddleHit: new SoundOverlapsClass("audio/paddleHit"),
 	brickHit: new SoundOverlapsClass("audio/brickHit"),
 	wallHit: new SoundOverlapsClass("audio/wallHit"),
-	gameStart: new SoundOverlapsClass("audio/gameStart"),
-	newLevel: new SoundOverlapsClass("audio/newLevel"),
+	// FIXME: gameStart: new SoundOverlapsClass("audio/gameStart"),
+	// FIXME: newLevel: new SoundOverlapsClass("audio/newLevel"),
 	lifeGet: new SoundOverlapsClass("audio/lifeGet"),
 	lifeLost: new SoundOverlapsClass("audio/lifeLost"),
 	gameOver: new SoundOverlapsClass("audio/gameOver")
@@ -40,6 +40,7 @@ window.onload = function() {
 		setInterval(function() {
 			moveEverything();
 			drawEverything();
+			gameLogic();
 		}, 1000/framesPerSecond);
 		canvas.addEventListener('mousemove', movePaddleOnMouseMove);
 		canvas.addEventListener('ballMiss', dropLife);
@@ -55,12 +56,12 @@ window.onload = function() {
 		canvas.addEventListener('noMoreBricks', loadNextLevel);
 		canvas.addEventListener('outaLives', sounds.gameOver.play);
 		canvas.addEventListener('scoreIncrease', checkAndRewardPlayer);
-		// canvas.addEventListener('newLevel', sounds.newLevel.play);
+		//FIXME: canvas.addEventListener('newLevel', sounds.newLevel.play);
 		canvas.addEventListener('ballMiss', sounds.lifeLost.play);
 		canvas.addEventListener('mousedown', function(evt) {
 			if (showTitle) {
 				showTitle = false;
-				sounds.gameStart.play();
+				// FIXME: sounds.gameStart.play();
 				resetBricks();
 			} else {
 				if (bricksInPlace) {
@@ -106,6 +107,7 @@ function loadNextLevel() {
 			resetBricks();
 			resetPills();
 			ballReset();
+			activePills = 0;
 			baseSpeed += 6;
 			maxSpeed += 6;
 			levelTransition = false;
@@ -187,6 +189,20 @@ function drawEverything() {
 		drawBricks();
 		drawLives();
 		drawPills();
+	}
+}
+
+function gameLogic() {
+	if (waitForLastPills) {
+		checkPillsLive();
+		if (activePills > 0) {
+			return;
+		}
+		
+		setTimeout(function() {
+			let noMoreBricksEvent = new CustomEvent('noMoreBricks');
+			canvas.dispatchEvent(noMoreBricksEvent);
+		}, 500)	
 	}
 }
 
