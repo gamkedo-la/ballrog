@@ -19,7 +19,7 @@ var ballTrail = new TrailFX(ballTrailPic);
 function ballReset() {
 	minSpeed = baseSpeed;
 	ballX = paddleX + PADDLE_W/2;
-	ballY = PADDLE_Y - BALL_RADIUS/2;
+	ballY = paddleY - BALL_RADIUS/2;
 	updateVelocity(ballVelX, ballVelY > 0 ? -ballVelY : ballVelY);
 	updateSpeed(minSpeed);
 	highestHitRow = BRICK_ROWS;
@@ -68,7 +68,7 @@ function ballMove() {
 			updateVelocity(-1*ballVelX, ballVelY);
 			canvas.dispatchEvent(wallHitEvent);
 		}
-		if (ballY + BALL_RADIUS > PADDLE_Y && ballY - BALL_RADIUS < PADDLE_Y + PADDLE_THICKNESS && ballVelY > 0) { //ball hits the paddle
+		if (ballY + BALL_RADIUS > paddleY && ballY - BALL_RADIUS < paddleY + PADDLE_THICKNESS && ballVelY > 0) { //ball hits the paddle
 			if (ballX + BALL_RADIUS > paddleX && ballX - BALL_RADIUS < paddleX + PADDLE_W) {
 				if(stickyBall){
 					ballHeld = true;

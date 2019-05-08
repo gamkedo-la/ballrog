@@ -3,7 +3,7 @@ const PILL_H = 20;
 const PILL_DROP_SPEED = 10;
 const PILL_DROP_CHANCE = 0.4;
 const MAX_PILLS = 40;
-const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill];
+const ENABLED_PILLS = [moveUpPill];
 var pills = [];
 
 
@@ -128,11 +128,13 @@ function moveUpPill() {
 	this.imageOffsetY = PILL_H * 5;
 	this.powerTime = 10000;
 	this.startPower = function () {
-		//needs to be added
+		if (paddleY = 540) {
+			paddleY -= PADDLE_THICKNESS * 2;
+		}
 	}
 
 	this.endPower = function () {
-		//needs to be added2;
+		paddleY = 540;
 	}
 }
 
@@ -221,7 +223,7 @@ function pillClass() {
 	this.move = function () {
 		if (this.live) {
 			this.y += PILL_DROP_SPEED;
-			if (this.x > paddleX - PILL_W - 1 && this.x < paddleX + PADDLE_W && this.y > PADDLE_Y - PILL_H/2) {
+			if (this.x > paddleX - PILL_W - 1 && this.x < paddleX + PADDLE_W && this.y > paddleY - PILL_H/2) {
 				this.startPower();
 				setTimeout(this.endPower, this.powerTime);
 				this.reset();

@@ -38,7 +38,9 @@ function getBrickInfo() {
 				// TODO: get brick index here to find brick type
 				var brickLeftEdgeX = getColXCoord(eachCol);
 				var brickTopEdgeY = getRowYCoord(eachRow);
-				brickInfo.push({x:brickLeftEdgeX, y: brickTopEdgeY - canvas.height, homeY: brickTopEdgeY, image: BRICK_IMAGES[brick]});
+				let offscreenY = brickTopEdgeY - canvas.height;
+				offscreenY -= Math.floor(Math.random() * (BRICK_H * BRICK_H));
+				brickInfo.push({x:brickLeftEdgeX, y: offscreenY, homeY: brickTopEdgeY, image: BRICK_IMAGES[brick]});
 			} 
 		} // end of for eachRow
 	} // end of for eachCol
@@ -77,6 +79,7 @@ function easeBricksbricksInPlace() {
 		brick.y = lerp(brick.y, brick.homeY, 0.2);
 		if (b == brickInfo.length - 1) {
 			if (Math.ceil(brick.y) == brick.homeY) {
+				// FIXME: Possible future issue, brick.y isn't a round number
 				bricksInPlace = true;
 			}
 		} 

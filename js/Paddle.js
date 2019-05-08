@@ -1,9 +1,9 @@
 var PADDLE_W = 100;
 const PADDLE_THICKNESS = 48;
 var paddleX = (800 - PADDLE_W)/2;
+var paddleY = 540;
 var paddleAlpha = 1;
 var paddleScale = {x: 1, y: 1};
-const PADDLE_Y = 540;
 
 function movePaddleOnMouseMove(evt) {
 	var mousePos = calculateMousePos(evt);
@@ -23,10 +23,10 @@ var blinkCounter = 0;
 function drawGooglyEyes() {
 
 	var eyeX = Math.floor((paddleX)/paddleScale.x) + 7;
-	var eyeY = PADDLE_Y + 21;
+	var eyeY = paddleY + 21;
 	var eyeSpacing = 62;
 	var pupilDistance = 4; // how much movement
-	var angle = Math.atan2(ballY-PADDLE_Y, ballX-paddleX);
+	var angle = Math.atan2(ballY-paddleY, ballX-paddleX);
 	
 	// blink occasionally
 	if (blinkCounter) {
@@ -53,7 +53,7 @@ function drawPaddle() {
 	canvasContext.save();
 	canvasContext.globalAlpha = paddleAlpha;
 	canvasContext.scale(paddleScale.x, paddleScale.y);
-	drawBitMap(paddlePic, Math.floor(paddleX/paddleScale.x), PADDLE_Y + 5);
+	drawBitMap(paddlePic, Math.floor(paddleX/paddleScale.x), paddleY + 5);
 	drawGooglyEyes();
 	canvasContext.restore();
 }

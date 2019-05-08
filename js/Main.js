@@ -198,7 +198,7 @@ function gameLogic() {
 		if (activePills > 0) {
 			return;
 		}
-		
+		waitForLastPills = false;
 		setTimeout(function() {
 			let noMoreBricksEvent = new CustomEvent('noMoreBricks');
 			canvas.dispatchEvent(noMoreBricksEvent);
