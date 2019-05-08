@@ -3,7 +3,7 @@ const PILL_H = 20;
 const PILL_DROP_SPEED = 10;
 const PILL_DROP_CHANCE = 0.4;
 const MAX_PILLS = 40;
-const ENABLED_PILLS = [moveUpPill];
+const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill];
 var pills = [];
 
 
