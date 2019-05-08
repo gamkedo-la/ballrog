@@ -21,11 +21,25 @@ function ShineFX(shineImage) {
     this.draw = function() {
     
         if (this.active) {
-            canvasContext.drawImage(
+            
+            if (this.frame < this.frameCount / 2) { // first half: grow on left
+                canvasContext.drawImage(
                 this.img,0,0,this.w,this.h,
-                this.x,this.y,this.w*(this.frame/this.frameCount),this.h);
+                this.x,
+                this.y,
+                this.w*(this.frame/this.frameCount),this.h);
+            } 
+            else { // second half - shrink on right
+                canvasContext.drawImage(
+                    this.img,0,0,this.w,this.h,
+                    this.x+this.w*(this.frame/this.frameCount),
+                    this.y,
+                    this.w*(1-(this.frame/this.frameCount)),this.h);
+            }
+            
             this.frame++;
             this.active = this.frame < this.frameCount;
+
         }
 
     }
