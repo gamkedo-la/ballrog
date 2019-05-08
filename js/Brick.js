@@ -22,6 +22,8 @@ const BRICK_IMAGES = {
 var brickGrid = new Array(BRICK_COLS * BRICK_ROWS);
 var bricksLeft = 0;
 
+var brickShineEffect = new ShineFX(shinePic); // a glint animation on hit
+
 function drawBricks() {
 	for (var eachCol=0; eachCol<BRICK_COLS; eachCol++) {
 		for (var eachRow=0; eachRow<BRICK_ROWS; eachRow++) {
@@ -34,9 +36,10 @@ function drawBricks() {
 					console.log("BAD IMAGE FOR", brick);
 				}
 				drawBitMap(BRICK_IMAGES[brick], brickLeftEdgeX, brickTopEdgeY);
-		    }
+		  }
 		}
 	}
+	brickShineEffect.draw();
 }
 
 function resetBricks() {
@@ -78,6 +81,11 @@ function handleBrickHit(evt) {
 				canvas.dispatchEvent(noMoreBricksEvent);
 			}
 			canvas.dispatchEvent(brickRemovedEvent);
+		} 
+		else { // did not get destroyed
+			var effectX = evt.detail.col * BRICK_W;
+			var effectY = evt.detail.row * BRICK_H + BRICK_H + BRICK_H;
+			brickShineEffect.trigger(effectX,effectY);
 		}
 	}
 }
