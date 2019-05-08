@@ -194,7 +194,6 @@ function moveEverything() {
 	}
 	if (gamePaused){
 		lettersMove();
-		pauseBallMove()
 	}
 }
 
