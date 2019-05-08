@@ -3,7 +3,7 @@ const PILL_H = 20;
 const PILL_DROP_SPEED = 10;
 const PILL_DROP_CHANCE = 0.4;
 const MAX_PILLS = 40;
-const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, stickyBallPill];
+const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill];
 var pills = [];
 
 
@@ -77,6 +77,80 @@ function stickyBallPill() {
 		stickyBall = false;
 	}
 }
+
+shrinkPill.prototype = new pillClass();
+function shrinkPill() {
+	this.imageOffsetX = 0;
+	this.imageOffsetY = PILL_H * 4;
+	this.powerTime = 10000;
+	this.startPower = function () {
+		paddleScale.x = 0.5;
+		PADDLE_W *= 0.5
+	}
+
+	this.endPower = function () {
+		paddleScale.x = 1;
+		PADDLE_W *= 2;
+	}
+}
+
+accellPill.prototype = new pillClass();
+function accellPill() {
+	this.imageOffsetX = PILL_W;
+	this.imageOffsetY = PILL_H * 4;
+	this.powerTime = 10000;
+	this.startPower = function () {
+		//needs to be added
+	}
+
+	this.endPower = function () {
+		//needs to be added
+	}
+}
+
+invaderPill.prototype = new pillClass();
+function invaderPill() {
+	this.imageOffsetX = PILL_W; //needs to be added to pills Sprite
+	this.imageOffsetY = PILL_H * 4;  //needs to be added to pills Sprite
+	this.powerTime = 10000;
+	this.startPower = function () {
+		//needs to be added
+	}
+
+	this.endPower = function () {
+		//needs to be added
+	}
+}
+
+moveUpPill.prototype = new pillClass();
+function moveUpPill() {
+	this.imageOffsetX = 0;
+	this.imageOffsetY = PILL_H * 5;
+	this.powerTime = 10000;
+	this.startPower = function () {
+		//needs to be added
+	}
+
+	this.endPower = function () {
+		//needs to be added2;
+	}
+}
+
+jumpPill.prototype = new pillClass();
+function jumpPill() {
+	this.imageOffsetX = PILL_W;
+	this.imageOffsetY = PILL_H * 5;
+	this.powerTime = 10000;
+	this.startPower = function () {
+		//needs to be added
+	}
+
+	this.endPower = function () {
+		//needs to be added
+	}
+}
+
+
 
 function initPills() {
 	pills = [];

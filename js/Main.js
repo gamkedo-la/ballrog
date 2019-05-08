@@ -43,7 +43,6 @@ window.onload = function() {
 		}, 1000/framesPerSecond);
 		canvas.addEventListener('mousemove', movePaddleOnMouseMove);
 		canvas.addEventListener('ballMiss', dropLife);
-		// canvas.addEventListener('ballMiss', sounds.lifeLost.play);
 		canvas.addEventListener('brickHit', handleBrickHit);
 		canvas.addEventListener('brickHit', sounds.brickHit.play);
 		canvas.addEventListener('brickRemoved', increaseScore);
@@ -57,6 +56,7 @@ window.onload = function() {
 		canvas.addEventListener('outaLives', sounds.gameOver.play);
 		canvas.addEventListener('scoreIncrease', checkAndRewardPlayer);
 		// canvas.addEventListener('newLevel', sounds.newLevel.play);
+		canvas.addEventListener('ballMiss', sounds.lifeLost.play);
 		canvas.addEventListener('mousedown', function(evt) {
 			if (showTitle) {
 				showTitle = false;
