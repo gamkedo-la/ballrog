@@ -13,6 +13,11 @@ function movePaddleOnMouseMove(evt) {
 	}
 }
 
+// the paddle blinks when it hits the ball, the impact is felt
+function paddleBlink() {
+	blinkCounter = 5;
+}
+
 // draw googly eyes that follow the ball just for fun =)
 var blinkCounter = 0;
 function drawGooglyEyes() {
