@@ -75,7 +75,6 @@ function ballMove() {
 				}
 				let deltaX = ballX - (paddleX + PADDLE_W/(2*paddleScale.x));
 				var randomAngle = (Math.random() *0.1);
-				console.log(randomAngle);
 				updateVelocity(deltaX*0.44, -1*ballVelY);
 				let currentSpeed = getSpeedFromVelocity(ballVelX, ballVelY);
 				if (currentSpeed < minSpeed) {

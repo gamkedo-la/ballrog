@@ -155,10 +155,6 @@ function drawTitleScreen() {
 	canvasContext.fillText("GET A NEW LIFE ON EVERY " + NEW_LIFE_SCORE_MILESTONE + " POINTS!", canvas.width/2, line);
 }
 
-function drawPauseScreen() {
-	colorRect(0, 0, canvas.width, canvas.height, 'black'); //clears screen
-	drawLetters();
-}
 
 function drawLevelTransition() {
 	var line = 120;
@@ -198,6 +194,7 @@ function moveEverything() {
 	}
 	if (gamePaused){
 		lettersMove();
+		pauseBallMove()
 	}
 }
 

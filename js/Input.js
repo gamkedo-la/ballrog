@@ -24,15 +24,15 @@ function keyPressed(evt) {
 	  resetLetters();
     } else {
 		gamePaused = true;
-		var letter = new letterP(200, 300); // Initiate letters P A U S E
+		var letter = new letterP(73, 300); // Initiate letters P A U S E
 		letters.push(letter);
-		var letter = new letterA(300, 300);
+		var letter = new letterA(219, 300);
 		letters.push(letter);
-		var letter = new letterU(400, 300);
+		var letter = new letterU(365, 300);
 		letters.push(letter);
-		var letter = new letterS(500, 300);
+		var letter = new letterS(511, 300);
 		letters.push(letter);
-		var letter = new letterE(600, 300);
+		var letter = new letterE(657, 300);
 		letters.push(letter);
     }
   }

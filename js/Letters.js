@@ -84,7 +84,6 @@ function letterClass() {
 	
 	this.move = function () {
 		if (this.live) {
-			console.log(this.y);
 			if(this.y <= 100 || this.y >= 500) {
 				this.letterSpeed = this.letterSpeed * -1;
 				this.y += this.letterSpeed;
