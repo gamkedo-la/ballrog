@@ -3,7 +3,7 @@ const PILL_H = 20;
 const PILL_DROP_SPEED = 10;
 const PILL_DROP_CHANCE = 0.4;
 const MAX_PILLS = 40;
-const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill];
+const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, extraLifePill];
 var pills = [];
 
 
@@ -149,6 +149,16 @@ function jumpPill() {
 
 	this.endPower = function () {
 		//needs to be added
+	}
+}
+
+extraLifePill.prototype = new pillClass();
+function extraLifePill() {
+	this.imageOffsetX = 0;
+	this.imageOffsetY = PILL_H * 6;
+
+	this.startPower = function() {
+		lives++;
 	}
 }
 
