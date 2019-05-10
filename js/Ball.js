@@ -1,11 +1,11 @@
 const BALL_RADIUS = 10;
-const COLLISION_STEP = 4; // higher = faster, lower = precise
-const INITIAL_SPEED = 8;
-const INITIAL_MAX_SPEED = 30;
+const COLLISION_STEP = 2; // higher = faster, lower = precise
+const INITIAL_SPEED = 4;
+const INITIAL_MAX_SPEED = 12;
 var ballX;
 var ballY;
-var ballVelX = 6;
-var ballVelY = -4;
+var ballVelX = 3;
+var ballVelY = -2;
 var maxSpeed = INITIAL_MAX_SPEED;
 var baseSpeed = INITIAL_SPEED;
 var minSpeed = baseSpeed;
@@ -75,13 +75,12 @@ function ballMove() {
 					ballHeld = true;
 				}
 				let deltaX = ballX - (paddleX + PADDLE_W/(2*paddleScale.x));
-				var randomAngle = (Math.random() *0.1);
-				updateVelocity(deltaX*0.44, -1*ballVelY);
+				var randomAngle = (Math.random() * 0.1);
+				updateVelocity(deltaX*0.22, -1*ballVelY);
 				let currentSpeed = getSpeedFromVelocity(ballVelX, ballVelY);
 				if (currentSpeed < minSpeed) {
 					updateSpeed(minSpeed) * randomAngle;
 				}
-				passingThrough = false;
 				let paddleHitEvent = new CustomEvent('paddleHit');
 				canvas.dispatchEvent(paddleHitEvent);
 			}
@@ -141,8 +140,6 @@ function breakAndBounceOffBrickAtPixelCoord(pixelX, pixelY) {
 			(dir.y < 0 ? pixelY - nextY : nextY - pixelY) > 0));
 
 	if (isValidBrick(brickGrid[brickIndex])) {
-		ballX = nextX;
-		ballY = nextY;
 		var prevTileCol = Math.floor(prevBallX / BRICK_W);
 		if (prevTileCol != tileCol) {
 			prevTileCol = tileCol + Math.sign(ballVelX);

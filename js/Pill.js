@@ -1,6 +1,6 @@
 const PILL_W = 50;
 const PILL_H = 20;
-const PILL_DROP_SPEED = 10;
+const PILL_DROP_SPEED = 4;
 const PILL_DROP_CHANCE = 0.4;
 const MAX_PILLS = 40;
 const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, extraLifePill];
