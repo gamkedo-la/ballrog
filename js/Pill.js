@@ -192,6 +192,13 @@ function drawPills() {
 	for (var i=0; i<pills.length; i++) {
 		pills[i].draw();
 	}
+	if (debugMode) {
+		for (var i=0; i<Math.floor(canvas.width/PILL_W); i++) {
+			let pill = pills[i];
+			let x = i*PILL_W;
+			canvasContext.drawImage(pillsPic, pill.imageOffsetX, pill.imageOffsetY, PILL_W, PILL_H, x, 0, PILL_W, PILL_H);
+		}
+	}
 }
 
 function maybeDropPowerPill(evt) {
