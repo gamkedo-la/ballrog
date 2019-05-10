@@ -93,7 +93,6 @@ function ballMove() {
 		if (ballY < 0) {
 			updateVelocity(ballVelX, -1*ballVelY);
 			canvas.dispatchEvent(wallHitEvent);
-			passingThrough = false;
 		}
 		breakAndBounceOffBrickAtPixelCoord(
 			ballX + Math.sign(ballVelX)*BALL_RADIUS,
@@ -119,14 +118,15 @@ function breakAndBounceOffBrickAtPixelCoord(pixelX, pixelY) {
 	do {
 		nextX = srcX + dir.x*COLLISION_STEP;
 		nextY = srcY + dir.y*COLLISION_STEP;
-		var tileCol = Math.floor(pixelX / BRICK_W);
-		var tileRow = Math.floor((pixelY - TOP_MARGIN) / BRICK_H);
-		brickIndex = brickToTileIndex(tileCol, tileRow);
+		var tileCol = Math.floor(nextX / BRICK_W);
+		var tileRow = Math.floor((nextY - TOP_MARGIN) / BRICK_H);
 		srcX = nextX;
 		srcY = nextY;
-	} while (brickGrid[brickIndex] == BRICK_TYPES.empty && (pixelX - nextX > 0));
+		brickIndex = brickToTileIndex(tileCol, tileRow);
+	} while (nextY < TOP_MARGIN || (
+		isValidBrick(brickGrid[brickIndex]) && pixelX - nextX > 0 && pixelY - nextY > 0));
 
-	if (brickGrid[brickIndex] != BRICK_TYPES.empty) {
+	if (isValidBrick(brickGrid[brickIndex])) {
 		ballX = nextX;
 		ballY = nextY;
 		var prevTileCol = Math.floor(prevBallX / BRICK_W);

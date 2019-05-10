@@ -147,3 +147,10 @@ function handleBrickHit(evt) {
 		}
 	}
 }
+
+function isValidBrick(brickValue) {
+	return (brickValue === BRICK_TYPES.onehit ||
+			brickValue === BRICK_TYPES.twohit ||
+			brickValue === BRICK_TYPES.threehit ||
+			brickValue === BRICK_TYPES.unbreakable);
+}
