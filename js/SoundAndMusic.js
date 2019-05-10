@@ -17,7 +17,6 @@ function SoundOverlapsClass(filenameWithPath) {
     
     this.play = function() {
 		if(gameMuted == false){
-			console.log("Sound should be playing.");
 			if (altSoundTurn) {
 				altSound.currentTime = 0;
 				altSound.play();

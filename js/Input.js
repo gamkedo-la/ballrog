@@ -41,7 +41,6 @@ function keyPressed(evt) {
     }// end pause else
   }//end pause if 
 	if(evt.keyCode == muted){
-		console.log(gameMuted);
 		if(gameMuted){
 			gameMuted = false;
 		} else{
