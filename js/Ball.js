@@ -117,14 +117,28 @@ function breakAndBounceOffBrickAtPixelCoord(pixelX, pixelY) {
 	var dir = getVelocityDir(ballVelX, ballVelY);
 	do {
 		nextX = srcX + dir.x*COLLISION_STEP;
+		if (nextX < 0) {
+			nextX = 0;
+		}
+		if (nextX > canvas.width) {
+			nextX = canvas.width;
+		}
 		nextY = srcY + dir.y*COLLISION_STEP;
+		if (nextY < 0) {
+			nextY = 0;
+		}
+		if (nextY > canvas.height) {
+			nextY = canvas.height;
+		}
 		var tileCol = Math.floor(nextX / BRICK_W);
 		var tileRow = Math.floor((nextY - TOP_MARGIN) / BRICK_H);
 		srcX = nextX;
 		srcY = nextY;
 		brickIndex = brickToTileIndex(tileCol, tileRow);
 	} while (nextY < TOP_MARGIN || (
-		isValidBrick(brickGrid[brickIndex]) && pixelX - nextX > 0 && pixelY - nextY > 0));
+		!isValidBrick(brickGrid[brickIndex]) &&
+			(dir.x > 0 ? pixelX - nextX : nextX - pixelX) > 0 &&
+			(dir.y < 0 ? pixelY - nextY : nextY - pixelY) > 0));
 
 	if (isValidBrick(brickGrid[brickIndex])) {
 		ballX = nextX;
@@ -161,7 +175,7 @@ function breakAndBounceOffBrickAtPixelCoord(pixelX, pixelY) {
 		}
 		if (prevTileRow != tileRow) { // must have come in vertically
 		    var adjacentBrickIndex = brickToTileIndex(tileCol, prevTileRow);
-		    if (brickGrid[adjacentBrickIndex] == BRICK_TYPES.empty) {
+		    if (prevTileRow < 0 || brickGrid[adjacentBrickIndex] == BRICK_TYPES.empty) {
 				updateVelocity(ballVelX, -1*ballVelY);
 				bothTestsFailed = false;
 		    }
