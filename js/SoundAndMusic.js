@@ -16,32 +16,38 @@ function SoundOverlapsClass(filenameWithPath) {
     var altSound = new Audio(filenameWithPath + audioFormat);
     
     this.play = function() {
-		if (altSoundTurn) {
-			altSound.currentTime = 0;
-			altSound.play();
-		} else {
-			mainSound.currentTime = 0;
-			mainSound.play();
-		}
+		if(gameMuted == false){
+			console.log("Sound should be playing.");
+			if (altSoundTurn) {
+				altSound.currentTime = 0;
+				altSound.play();
+			} else {
+				mainSound.currentTime = 0;
+				mainSound.play();
+			}
+		}//end check for gameMuted
 		altSoundTurn = !altSoundTurn;
-    }
-}  
+    }// end play() function
+}//End soundOverlapClass  
 
 function BackgroundMusicClass() {
     var musicSound = null;
+	
     this.loopSong = function(filenameWithPath) {
 		setFormat();
-
-		if (musicSound != null) {
-			musicSound.pause();
-			musicSound = null;
-		}
-		musicSound = new Audio(filenameWithPath + audioFormat);
-		musicSound.loop = true;
-		musicSound.play();
+		if(gameMuted == false){
+			if (musicSound != null) {
+				musicSound.pause();
+				musicSound = null;
+			}
+			musicSound = new Audio(filenameWithPath + audioFormat);
+			musicSound.loop = true;
+			musicSound.play();
+		}//end check for gameMuted
     }
 
     this.startOrStopMusic = function() {
+		
 		if (musicSound.paused) {
 			musicSound.play();
 		} else {

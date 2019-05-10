@@ -18,6 +18,7 @@ var gamePaused = false;
 var levelTransition = false;
 var lastScore = score;
 var currentLevelIndex = 0;
+var gameMuted = false;
 var sounds = {
 	paddleHit: new SoundOverlapsClass("audio/paddleHit"),
 	brickHit: new SoundOverlapsClass("audio/brickHit"),

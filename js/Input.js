@@ -1,4 +1,5 @@
 const KEY_P = 80
+const KEY_M = 77;
 
 function calculateMousePos(evt) {
 	var rect = canvas.getBoundingClientRect();
@@ -17,7 +18,10 @@ function setupInput() {
 
 function keyPressed(evt) {
   console.log(evt);
+  
   var paused = KEY_P;
+  var muted = KEY_M;
+  
   if (evt.keyCode == paused) {
     if (gamePaused) {
       gamePaused = false;
@@ -34,6 +38,14 @@ function keyPressed(evt) {
 		letters.push(letter);
 		var letter = new letterE(657, 300);
 		letters.push(letter);
-    }
-  }
-}
+    }// end pause else
+  }//end pause if 
+	if(evt.keyCode == muted){
+		console.log(gameMuted);
+		if(gameMuted){
+			gameMuted = false;
+		} else{
+			gameMuted = true;			
+		}//end muted else
+	}//end muted if
+ }//end keyPressed function
