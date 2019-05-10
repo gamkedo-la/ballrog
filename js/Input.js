@@ -1,5 +1,7 @@
-const KEY_P = 80
-const KEY_M = 77;
+const PAUSE_KEY = 'p';
+const MUTE_KEY = 'm';
+const DEBUG_KEY = 'd';
+
 
 function calculateMousePos(evt) {
 	var rect = canvas.getBoundingClientRect();
@@ -18,11 +20,7 @@ function setupInput() {
 
 function keyPressed(evt) {
   console.log(evt);
-  
-  var paused = KEY_P;
-  var muted = KEY_M;
-  
-  if (evt.keyCode == paused) {
+  if (evt.key == PAUSE_KEY) {
     if (gamePaused) {
       gamePaused = false;
 	  resetLetters();
@@ -40,11 +38,38 @@ function keyPressed(evt) {
 		letters.push(letter);
     }// end pause else
   }//end pause if 
-	if(evt.keyCode == muted){
+	if(evt.key == MUTE_KEY){
 		if(gameMuted){
 			gameMuted = false;
 		} else{
 			gameMuted = true;			
 		}//end muted else
 	}//end muted if
+	if (evt.key == DEBUG_KEY) {
+		debugMode = !debugMode;
+	}
+	if (debugMode) {
+		messageArea.innerHTML = '<strong>DEBUG MODE ENABLED</strong><br>left and right arrow keys move through levels<br>"r" key reloads current level';
+		switch (evt.key) {
+		case 'ArrowRight':
+			currentLevelIndex++;
+			if (currentLevelIndex >= LEVEL_SEQ.length) {
+				currentLevelIndex = 0;
+			}
+			resetLevel();
+			break;
+		case 'ArrowLeft':
+			currentLevelIndex--;
+			if (currentLevelIndex < 0) {
+				currentLevelIndex = LEVEL_SEQ.length - 1;
+			}
+			resetLevel();
+			break;
+		case 'r':
+			resetLevel();
+			break;
+		}
+	} else {
+		messageArea.innerHTML = '';
+	}
  }//end keyPressed function

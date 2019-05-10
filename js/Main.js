@@ -1,6 +1,7 @@
 const INITIAL_LIVES = 3;
 const BRICK_HIT_POINTS = 100;
 const NEW_LIFE_SCORE_MILESTONE = 3000;
+var debugMode = false;
 var canvas;
 var canvasContext;
 var framesPerSecond = 60;
@@ -28,10 +29,13 @@ var sounds = {
 	lifeLost: new SoundOverlapsClass("audio/lifeLost"),
 	gameOver: new SoundOverlapsClass("audio/gameOver")
 };
+var messageArea;
 
 window.onload = function() {
 	canvas = document.getElementById('gameCanvas');
 	canvasContext = canvas.getContext('2d');
+	messageArea = document.createElement('p');
+	canvas.parentNode.insertBefore(messageArea, canvas.nextSibling);
 	loadImages();
 	canvas.addEventListener('allImagesLoaded', function() {
 		canvas.removeEventListener('allImagesLoaded', this);
@@ -95,6 +99,13 @@ function resetGame() {
 	initPills();
 }
 
+function resetLevel() {
+	resetBricks();
+	resetPills();
+	ballReset();
+	activePills = 0;
+}
+
 function loadNextLevel() {
 	setTimeout(function () {
 		levelTransition = true;
@@ -104,12 +115,9 @@ function loadNextLevel() {
 			currentLevelIndex = 0;
 		}
 		setTimeout(function () {
-			resetBricks();
-			resetPills();
-			ballReset();
-			activePills = 0;
-			baseSpeed += 6;
-			maxSpeed += 6;
+			resetLevel();
+			baseSpeed += 3;
+			maxSpeed += 3;
 			levelTransition = false;
 			let newLevelEvent = new CustomEvent('newLevel');
 			canvas.dispatchEvent(newLevelEvent);
@@ -184,10 +192,10 @@ function drawEverything() {
 		canvasContext.textAlign = 'center';
 		canvasContext.fillText(score.toString(), canvas.width/2, 10);
 		canvasContext.fillText('High Score: ' + highScore.toString(), 50, 10);
-		drawPaddle();
-		drawBall();
-		drawBricks();
 		drawLives();
+		drawPaddle();
+		drawBricks();
+		drawBall();
 		drawPills();
 	}
 }

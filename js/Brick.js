@@ -47,25 +47,47 @@ function getBrickInfo() {
 } // end of getbrickInfo
 
 function drawBricks() {
+	canvasContext.fillStyle = 'white';
+	canvasContext.textAlign = 'left';
 	for (var eachCol=0; eachCol<BRICK_COLS; eachCol++) {
 		for (var eachRow=0; eachRow<BRICK_ROWS; eachRow++) {
-			var brick = getBrickAtTileCoord(eachCol, eachRow);
+			var brickLeftEdgeX = getColXCoord(eachCol);
+			var brickTopEdgeY = getRowYCoord(eachRow);
 			if (!bricksInPlace) {
 				//colorRect(0, 0, canvas.width, canvas.height, 'rgb(75,105,47 )');
 				easeBricksbricksInPlace();
 				return;
 			} else {
+				var brick = getBrickAtTileCoord(eachCol, eachRow);
 				if(typeof(brick) != "undefined" && brick != BRICK_TYPES.empty) {
 					// TODO: get brick index here to find brick type
-					var brickLeftEdgeX = getColXCoord(eachCol);
-					var brickTopEdgeY = getRowYCoord(eachRow);
 					if (typeof(BRICK_IMAGES[brick]) == "undefined") {
 						console.log("BAD IMAGE FOR", brick);
 					}
 					drawBitMap(BRICK_IMAGES[brick], brickLeftEdgeX, brickTopEdgeY);
 				}
 		  	}
+			if (debugMode) {
+				canvasContext.fillText(eachRow, 2, brickTopEdgeY + ROW_H/2 + 4);
+				canvasContext.beginPath();
+				canvasContext.moveTo(0, brickTopEdgeY);
+				canvasContext.lineTo(canvas.width, brickTopEdgeY);
+				canvasContext.stroke();
+			}
 		}
+		if (debugMode) {
+			canvasContext.fillText(eachCol, brickLeftEdgeX + COL_W/2 - 2, TOP_MARGIN);
+			canvasContext.beginPath();
+			canvasContext.moveTo(brickLeftEdgeX, TOP_MARGIN);
+			canvasContext.lineTo(brickLeftEdgeX, TOP_MARGIN + BRICK_H*BRICK_ROWS);
+			canvasContext.stroke();
+		}
+	}
+	if (debugMode) {	
+		canvasContext.beginPath();
+		canvasContext.moveTo(0, TOP_MARGIN + BRICK_H*BRICK_ROWS);
+		canvasContext.lineTo(canvas.width, TOP_MARGIN + BRICK_H*BRICK_ROWS);
+		canvasContext.stroke();
 	}
 	brickShineEffect.draw();
 }

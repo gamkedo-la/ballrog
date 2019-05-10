@@ -157,3 +157,9 @@ function ghostPill() {
 }
 #+END_SRC
 
+** Debug mode
+
+You can press 'd' during gameplay to enable debug mode.
+
+While in debug mode, the left and right arrow keys allow navigating through levels enabled in ~LEVEL_SEQ~, and the 'r' key reloads the current level.
+
