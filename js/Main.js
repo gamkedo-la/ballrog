@@ -31,7 +31,8 @@ var sounds = {
 	// FIXME: newLevel: new SoundOverlapsClass("audio/newLevel"),
 	lifeGet: new SoundOverlapsClass("audio/lifeGet"),
 	lifeLost: new SoundOverlapsClass("audio/lifeLost"),
-	gameOver: new SoundOverlapsClass("audio/gameOver")
+	gameOver: new SoundOverlapsClass("audio/gameOver"),
+
 };
 
 var arrayOfBrickHitSounds = [sounds.brickHit, sounds.brickHitHalfStepDown, sounds.brickHitHalfStepUp,
@@ -73,6 +74,7 @@ window.onload = function() {
 			if (showTitle) {
 				showTitle = false;
 				// FIXME: sounds.gameStart.play();
+				testBackgroundMusic.play();
 				resetBricks();
 			} else {
 				if (bricksInPlace) {
@@ -90,6 +92,10 @@ window.onload = function() {
 		ballReset();
 		setupInput();
 	});
+	testBackgroundMusic = new Audio("audio/pong6-19" + audioFormat);
+	testBackgroundMusic.loop = true;
+	testBackgroundMusic.volume = 0.7;
+
 }
 
 function resetGame() {
@@ -223,6 +229,8 @@ function gameLogic() {
 
 function moveEverything() {
 	if (!showTitle && !gamePaused && !levelTransition) {
+		console.log(playbackRateForBackgroundMusic);
+		testBackgroundMusic.playbackRate = playbackRateForBackgroundMusic;
 		ballMove();
 		pillsMove();
 	}

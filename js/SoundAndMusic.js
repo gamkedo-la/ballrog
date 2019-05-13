@@ -72,3 +72,9 @@ function playMultiSound(arrayOfSoundsToVarietize) {
   randomSoundFromArray.volume = randomVolume;
   randomSoundFromArray.play();
 }
+
+var testBackgroundMusic;
+
+function changeBackgroundMusicSpeed(currentBackgroundMusicObject, playbackRateForBackgroundMusic) {
+  currentBackgroundMusicObject.playbackRate = playbackRateForBackgroundMusic;
+}
