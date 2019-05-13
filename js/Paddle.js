@@ -13,6 +13,24 @@ function movePaddleOnMouseMove(evt) {
 	}
 }
 
+function moveComputerPaddle() {
+	var speed = getSpeedFromVelocity(ballVelX, ballVelY)*0.96;
+	var checkX = ballX;
+	if (ballVelY > 0) {
+		if (checkX > paddleX + PADDLE_W*0.75) {
+			paddleX += speed;
+		} else if (checkX < paddleX + PADDLE_W*0.25) {
+			paddleX -= speed;
+		}
+	}
+	if (paddleX + PADDLE_W > canvas.width) {
+		paddleX = canvas.width - PADDLE_W;
+	}
+	if (paddleX < 0) {
+		paddleX = 0;
+	}
+}
+
 // the paddle blinks when it hits the ball, the impact is felt
 function paddleBlink() {
 	blinkCounter = 5;
