@@ -12,6 +12,14 @@ var outaLivesEvent = new CustomEvent('outaLives');
 var ballHeld = true;
 //power ups
 var stickyBall = false;
+var letterG = false;
+var letterA = false;
+var letterM = false;
+var letterK = false;
+var letterE = false;
+var letterD = false;
+var letterO = false;
+var gamkedo = false;
 //game states
 var showTitle = true;
 var gamePaused = false;

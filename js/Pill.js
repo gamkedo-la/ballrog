@@ -162,6 +162,93 @@ function extraLifePill() {
 	}
 }
 
+letterG.prototype = new pillClass();
+function letterG() {
+	this.imageOffsetX = 0;
+	this.imageOffsetY = PILL_H * 7;
+	
+	this.startPower = function() {
+		letterG = true;
+	}
+	checkForGAMKEDO();
+}
+
+letterA.prototype = new pillClass();
+function letterA() {
+	this.imageOffsetX = 0;
+	this.imageOffsetY = PILL_H * 8;
+	
+	this.startPower = function() {
+		letterA = true;
+	}
+	checkForGAMKEDO();
+}
+
+letterM.prototype = new pillClass();
+function letterM() {
+	this.imageOffsetX = 0;
+	this.imageOffsetY = PILL_H * 9;
+	
+	this.startPower = function() {
+		letterM = true;
+	}
+	checkForGAMKEDO();
+}
+
+letterK.prototype = new pillClass();
+function letterK() {
+	this.imageOffsetX = PILL_W;
+	this.imageOffsetY = PILL_H * 7;
+	
+	this.startPower = function() {
+		letterK = true;
+	}
+	checkForGAMKEDO();
+}
+
+letterE.prototype = new pillClass();
+function letterE() {
+	this.imageOffsetX = PILL_W;
+	this.imageOffsetY = PILL_H * 8;
+	
+	this.startPower = function() {
+		letterE = true;
+	}
+	checkForGAMKEDO();
+}
+
+letterD.prototype = new pillClass();
+function letterD() {
+	this.imageOffsetX = PILL_W;
+	this.imageOffsetY = PILL_H * 9;
+	
+	this.startPower = function() {
+		letterD = true;
+	}
+	checkForGAMKEDO();
+}
+
+letterO.prototype = new pillClass();
+function letterO() {
+	this.imageOffsetX = PILL_W;
+	this.imageOffsetY = PILL_H * 10;
+	
+	this.startPower = function() {
+		letterO = true;
+	}
+	checkForGAMKEDO();
+}
+
+
+
+function checkForGAMKEDO(){
+	if(letterG && letterA && letterM && letterK && letterE && letterD && letterO &&){
+		gamkedo = true; //unlocks GAMKEDO level
+	}
+	
+}
+
+
 function initPills() {
 	pills = [];
 	for (var i=0; i<MAX_PILLS; i++) { // Replace MAX_PILLS with bricksLeft
