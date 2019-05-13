@@ -242,10 +242,9 @@ function letterO() {
 
 
 function checkForGAMKEDO(){
-	if(letterG && letterA && letterM && letterK && letterE && letterD && letterO &&){
+	if(letterG && letterA && letterM && letterK && letterE && letterD && letterO){
 		gamkedo = true; //unlocks GAMKEDO level
 	}
-	
 }
 
 
