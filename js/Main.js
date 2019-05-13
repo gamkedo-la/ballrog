@@ -113,11 +113,22 @@ function resetGame() {
 	maxSpeed = INITIAL_MAX_SPEED;
 	resetBricks();
 	resetScore();
+	resetGAMKEDO();
 	ballHeld = true;
 	ballReset();
 	lives = INITIAL_LIVES;
 	showTitle = true;
 	initPills();
+}
+
+function resetGAMKEDO(){
+	letterG = false;
+	letterA = false;
+	letterM = false;
+	letterK = false;
+	letterE = false;
+	letterD = false;
+	letterO = false;
 }
 
 function resetLevel() {
@@ -155,6 +166,16 @@ function dropLife() {
 
 function resetScore() {
 	score = 0;
+}
+
+function drawGAMKEDO(){
+	var letterPills = [letterG, letterA, letterM, letterK, letterE, letterD, letterD];
+	var letters = ['G','A','M','K','E','D','O']
+	for(i = 0; i < 7; i++){
+		if(letterPills[i]){
+			canvasContext.fillText(letters[i], 130 + ([i]*10), 10);
+		}
+	}
 }
 
 function increaseScore(points) {
@@ -214,6 +235,7 @@ function drawEverything() {
 		canvasContext.fillText(score.toString(), canvas.width/2, 10);
 		canvasContext.fillText('High Score: ' + highScore.toString(), 50, 10);
 		drawLives();
+		drawGAMKEDO();
 		drawPaddle();
 		drawBricks();
 		drawBall();
