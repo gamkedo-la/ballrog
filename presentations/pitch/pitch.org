@@ -1,0 +1,93 @@
+#+OPTIONS: reveal_title_slide:nil reveal_center:t reveal_progress:t reveal_history:nil reveal_control:t
+#+OPTIONS: reveal_rolling_links:t reveal_keyboard:t reveal_overview:t num:nil
+#+OPTIONS: toc:0
+#+REVEAL_ROOT: https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/
+#+REVEAL_MARGIN: 0.2
+#+REVEAL_MIN_SCALE: 0.9
+#+REVEAL_TRANS: fast
+#+REVEAL_THEME: solarized
+
+
+* Ballrog
+#+ATTR_HTML: :style float:left;width:54%;display:block;
+[[./demo/images/title.png]]
+
+#+ATTR_HTML: :style float:right;width:40%;display:block;
+  - Pitch date :: May 5, 2019
+  - Release date :: June 16, 2019
+  - Team lead :: Gonzalo Delgado
+				
+* About me
+  - Member since December 2018
+  - Game Changer Q1 2019
+  - 78% done on Hands-On Intro to Game Programming
+  - Contributed to:
+	- Flail of the Nordic Tentacles :: art, some animation, and code
+	- Falldale :: mostly art and animation, some code
+
+* What is Ballrog?
+It's an arcade-style, brick-breaker game built with HTML5 Canvas and Javascript
+#+ATTR_HTML: :width 640 :height 480
+[[./images/ballrog-gameplay.png]]
+
+* Inspiration
+
+**  Cave Story
+
+  [[./images/CaveStoryBalrogScreenshot.png]]
+
+**  Arkanoid
+  [[./images/arkanoid.gif]]
+
+**  Rise of the Triad
+  [[./images/rise-of-the-triad-screenshot.jpg]]
+
+* Demo
+#+BEGIN_export html
+<iframe src="./demo/index.html" width="820" height="620"></iframe>
+#+END_export
+* Vision
+  - Arcade feel
+  - 100% Silly
+  - Simple core
+  - Adding things is easy and fun
+  - Boss battle
+  - Bonus rounds
+* Schedule
+
+#+BEGIN_export html
+<blockquote class="trello-board-compact">
+  <a href="https://trello.com/b/IhdcMwsh/ballrog">Ballrog Schedule</a>
+</blockquote>
+<script src="https://p.trellocdn.com/embed.min.js"></script>
+#+END_export
+
+* Roles
+** Code
+   - Ball movement bugfixes
+   - Level editor
+   - Power-ups and power-downs
+   - Boss battle
+   - Level transitions
+   - Bonus rounds
+** Art
+   - Player animation
+   - Level backgrounds
+   - Brick sprites and animation
+   - Boss sprites and animation
+   - Title and Game Over screens
+** Audio
+   - Music
+	 - title screen
+	 - game over
+	 - gameplay
+	 - boss battle
+   - Sound effects
+	 - ball hit
+	 - power up/down
+	 - other game events: game start, gain life, ball drop, new level, etc.
+* Who's in?
+
+
+
+

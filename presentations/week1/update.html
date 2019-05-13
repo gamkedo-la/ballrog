@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title></title>
+<meta name="author" content="Gonzalo"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/css/theme/solarized.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+<section id="slide-orgb8a52b6">
+<h2 id="orgb8a52b6">Ballrog Week 1 Update</h2>
+
+<div class="figure">
+<p><img src="../pitch/images/ballrog-gameplay.png" alt="ballrog-gameplay.png" style="float:left;width:49%;display:block;" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="./images/gameplay.png" alt="gameplay.png" style="float:right;width:49%;display:block;" />
+</p>
+</div>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org0bc6e77">
+<h2 id="org0bc6e77">Accomplishments</h2>
+<div class="outline-text-2" id="text-org0bc6e77">
+</div>
+</section>
+<section id="slide-org7f51ec2">
+<h3 id="org7f51ec2">Art</h3>
+<ul>
+<li><b>Christer "McFunkypants" Kaitila</b>
+<ul>
+<li>blinking googly eyes <img src="./demo/images/eyelids.png" alt="eyelids.png" /></li>
+<li>Ball motion blur trail <img src="./demo/images/ballTrail.png" alt="ballTrail.png" /></li>
+<li>Brick hit shine <img src="./demo/images/shine.png" alt="shine.png" /></li>
+
+</ul></li>
+<li><b>Cyriel De Neve</b>
+<ul>
+<li>Extra life power-up <img src="./images/lifeup.png" alt="lifeup.png" /></li>
+
+</ul></li>
+
+</ul>
+</section>
+<section>
+<ul>
+<li><b>Vince McKeown</b>
+<ul>
+<li>Pause screen letter bricks <img src="./demo/images/letterBricks.png" alt="letterBricks.png" /></li>
+<li>Shrink power pill <img src="./images/shrink.png" alt="shrink.png" /></li>
+<li>Elevate power pill <img src="./images/elevate.png" alt="elevate.png" /></li>
+<li>Accelerate power pill <img src="./images/accelerate.png" alt="accelerate.png" /></li>
+<li>Jump power pill <img src="./images/jump.png" alt="jump.png" /></li>
+
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-orga690225">
+<h3 id="orga690225">Code</h3>
+<ul>
+<li><b>Brian Nielsen</b>
+<ul>
+<li>Mute game on "M" key press</li>
+
+</ul></li>
+<li><b>Christer "McFunkypants" Kaitila</b>
+<ul>
+<li>HTML title</li>
+<li>Ball motion blur effect</li>
+<li>Brick hit shine effect</li>
+
+</ul></li>
+<li><b>Cyriel De Neve</b>
+<ul>
+<li>Extra life power-up</li>
+
+</ul></li>
+<li><b>Gonzalo Delgado</b>
+<ul>
+<li>Multiple level support</li>
+<li>Collision detection bugfixes</li>
+
+</ul></li>
+
+</ul>
+</section>
+<section>
+<ul>
+<li><b>Terrence McDonnell</b>
+<ul>
+<li>Brick easing effect on level load</li>
+<li>Wait for dropping pill before loading new level</li>
+
+</ul></li>
+<li><b>Tyler Funk</b>
+<ul>
+<li>Ball speed adjustment</li>
+<li>Streched paddle eye offset bugfix</li>
+<li>Stretched paddle ball speed bugfix</li>
+
+</ul></li>
+<li><b>Vince McKeown</b>
+<ul>
+<li>Animated pause screen on "P" key press or window focus lost</li>
+<li>High score display</li>
+<li>Sticky ball power-up</li>
+<li>Random ball angle after collision</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org5849668">
+<h3 id="org5849668">Audio</h3>
+<ul>
+<li><b>Vince McKeown</b>
+<ul>
+<li>Ball-brick collision <audio controls><source src="./demo/audio/brickHit.mp3" type="audio/ogg"><source src="./demo/audio/brickHit.ogg" type="audio/mpeg"></audio></li>
+<li>Ball-paddle collision <audio controls><source src="./demo/audio/paddleHit.mp3" type="audio/ogg"><source src="./demo/audio/paddleHit.ogg" type="audio/mpeg"></audio></li>
+<li>Ball-wall collision <audio controls><source src="./demo/audio/wallHit.mp3" type="audio/ogg"><source src="./demo/audio/wallHit.ogg" type="audio/mpeg"></audio></li>
+<li>Ball-boss collision <audio controls><source src="./demo/audio/bossHit.mp3" type="audio/ogg"><source src="./demo/audio/bossHit.ogg" type="audio/mpeg"></audio></li>
+<li>Ball-enemy collision <audio controls><source src="./demo/audio/enemyHit.mp3" type="audio/ogg"><source src="./demo/audio/enemyHit.ogg" type="audio/mpeg"></audio></li>
+<li>Game over <audio controls><source src="./demo/audio/gameOver.mp3" type="audio/ogg"><source src="./demo/audio/gameOver.ogg" type="audio/mpeg"></audio></li>
+<li>Life lost <audio controls><source src="./demo/audio/lifeLost.mp3" type="audio/ogg"><source src="./demo/audio/lifeLost.ogg" type="audio/mpeg"></audio></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org18ca9c8">
+<h2 id="org18ca9c8">Demo</h2>
+<iframe src="demo/index.html" width="820" height="720"></iframe>
+
+</section>
+</section>
+<section>
+<section id="slide-org4669b35">
+<h2 id="org4669b35">Schedule</h2>
+<blockquote class="trello-board-compact">
+  <a href="https://trello.com/b/IhdcMwsh/ballrog">Ballrog Schedule</a>
+</blockquote>
+<script src="https://p.trellocdn.com/embed.min.js"></script>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/lib/js/head.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/js/reveal.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: true,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+pdfSeparateFragments: true,
+
+overview: true,
+margin: 0.20,
+minScale: 0.90,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'fast', // see README of reveal.js for options
+transitionSpeed: 'default',
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+</script>
+</body>
+</html>

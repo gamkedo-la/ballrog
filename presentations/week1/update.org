@@ -1,0 +1,83 @@
+#+OPTIONS: reveal_title_slide:nil reveal_center:t reveal_progress:t reveal_history:nil reveal_control:t
+#+OPTIONS: reveal_rolling_links:t reveal_keyboard:t reveal_overview:t num:nil
+#+OPTIONS: toc:0
+#+REVEAL_ROOT: https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/
+#+REVEAL_MARGIN: 0.2
+#+REVEAL_MIN_SCALE: 0.9
+#+REVEAL_TRANS: fast
+#+REVEAL_THEME: solarized
+
+* Ballrog Week 1 Update
+
+#+ATTR_HTML: :style float:left;width:49%;display:block;
+  [[../pitch/images/ballrog-gameplay.png]]
+
+#+ATTR_HTML: :style float:right;width:49%;display:block;
+  [[./images/gameplay.png]]
+
+
+* Accomplishments
+
+** Art
+   - *Christer "McFunkypants" Kaitila*
+	 - blinking googly eyes [[./demo/images/eyelids.png]]
+	 - Ball motion blur trail [[./demo/images/ballTrail.png]]
+	 - Brick hit shine [[./demo/images/shine.png]]
+   - *Cyriel De Neve*
+	 - Extra life power-up [[./images/lifeup.png]]
+#+REVEAL: split
+   - *Vince McKeown*
+	 - Pause screen letter bricks [[./demo/images/letterBricks.png]]
+	 - Shrink power pill [[./images/shrink.png]]
+	 - Elevate power pill [[./images/elevate.png]]
+	 - Accelerate power pill [[./images/accelerate.png]]
+	 - Jump power pill [[./images/jump.png]]
+** Code
+   - *Brian Nielsen*
+	 - Mute game on "M" key press
+   - *Christer "McFunkypants" Kaitila*
+	 - HTML title
+	 - Ball motion blur effect
+	 - Brick hit shine effect
+   - *Cyriel De Neve*
+	 - Extra life power-up
+   - *Gonzalo Delgado*
+	 - Multiple level support
+	 - Collision detection bugfixes
+#+REVEAL: split
+   - *Terrence McDonnell*
+	 - Brick easing effect on level load
+	 - Wait for dropping pill before loading new level
+   - *Tyler Funk*
+	 - Ball speed adjustment
+	 - Streched paddle eye offset bugfix
+	 - Stretched paddle ball speed bugfix
+   - *Vince McKeown*
+	 - Animated pause screen on "P" key press or window focus lost
+	 - High score display
+	 - Sticky ball power-up
+	 - Random ball angle after collision
+
+** Audio
+   - *Vince McKeown*
+	 - Ball-brick collision @@html:<audio controls><source src="./demo/audio/brickHit.mp3" type="audio/ogg"><source src="./demo/audio/brickHit.ogg" type="audio/mpeg"></audio>@@
+	 - Ball-paddle collision @@html:<audio controls><source src="./demo/audio/paddleHit.mp3" type="audio/ogg"><source src="./demo/audio/paddleHit.ogg" type="audio/mpeg"></audio>@@
+	 - Ball-wall collision @@html:<audio controls><source src="./demo/audio/wallHit.mp3" type="audio/ogg"><source src="./demo/audio/wallHit.ogg" type="audio/mpeg"></audio>@@
+	 - Ball-boss collision @@html:<audio controls><source src="./demo/audio/bossHit.mp3" type="audio/ogg"><source src="./demo/audio/bossHit.ogg" type="audio/mpeg"></audio>@@
+	 - Ball-enemy collision @@html:<audio controls><source src="./demo/audio/enemyHit.mp3" type="audio/ogg"><source src="./demo/audio/enemyHit.ogg" type="audio/mpeg"></audio>@@
+	 - Game over @@html:<audio controls><source src="./demo/audio/gameOver.mp3" type="audio/ogg"><source src="./demo/audio/gameOver.ogg" type="audio/mpeg"></audio>@@
+	 - Life lost @@html:<audio controls><source src="./demo/audio/lifeLost.mp3" type="audio/ogg"><source src="./demo/audio/lifeLost.ogg" type="audio/mpeg"></audio>@@
+
+* Demo
+#+BEGIN_export html
+<iframe src="demo/index.html" width="820" height="720"></iframe>
+#+END_export
+
+* Schedule
+
+#+BEGIN_export html
+<blockquote class="trello-board-compact">
+  <a href="https://trello.com/b/IhdcMwsh/ballrog">Ballrog Schedule</a>
+</blockquote>
+<script src="https://p.trellocdn.com/embed.min.js"></script>
+#+END_export
