@@ -3,7 +3,7 @@ const PILL_H = 20;
 const PILL_DROP_SPEED = 4;
 const PILL_DROP_CHANCE = 0.4;
 const MAX_PILLS = 40;
-const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, extraLifePill];
+const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, extraLifePill, letterGPill, letterAPill, letterMPill, letterKPill, letterEPill, letterDPill, letterOPill];
 var pills = [];
 
 
@@ -162,8 +162,8 @@ function extraLifePill() {
 	}
 }
 
-letterG.prototype = new pillClass();
-function letterG() {
+letterGPill.prototype = new pillClass();
+function letterGPill() {
 	this.imageOffsetX = 0;
 	this.imageOffsetY = PILL_H * 7;
 	
@@ -173,8 +173,8 @@ function letterG() {
 	checkForGAMKEDO();
 }
 
-letterA.prototype = new pillClass();
-function letterA() {
+letterAPill.prototype = new pillClass();
+function letterAPill() {
 	this.imageOffsetX = 0;
 	this.imageOffsetY = PILL_H * 8;
 	
@@ -184,8 +184,8 @@ function letterA() {
 	checkForGAMKEDO();
 }
 
-letterM.prototype = new pillClass();
-function letterM() {
+letterMPill.prototype = new pillClass();
+function letterMPill() {
 	this.imageOffsetX = 0;
 	this.imageOffsetY = PILL_H * 9;
 	
@@ -195,8 +195,8 @@ function letterM() {
 	checkForGAMKEDO();
 }
 
-letterK.prototype = new pillClass();
-function letterK() {
+letterKPill.prototype = new pillClass();
+function letterKPill() {
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H * 7;
 	
@@ -206,8 +206,8 @@ function letterK() {
 	checkForGAMKEDO();
 }
 
-letterE.prototype = new pillClass();
-function letterE() {
+letterEPill.prototype = new pillClass();
+function letterEPill() {
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H * 8;
 	
@@ -217,8 +217,8 @@ function letterE() {
 	checkForGAMKEDO();
 }
 
-letterD.prototype = new pillClass();
-function letterD() {
+letterDPill.prototype = new pillClass();
+function letterDPill() {
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H * 9;
 	
@@ -228,8 +228,8 @@ function letterD() {
 	checkForGAMKEDO();
 }
 
-letterO.prototype = new pillClass();
-function letterO() {
+letterOPill.prototype = new pillClass();
+function letterOPill() {
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H * 10;
 	
