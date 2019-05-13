@@ -14,7 +14,7 @@ function SoundOverlapsClass(filenameWithPath) {
     var altSoundTurn = false;
     var mainSound = new Audio(filenameWithPath + audioFormat);
     var altSound = new Audio(filenameWithPath + audioFormat);
-    
+
     this.play = function() {
 		if(gameMuted == false){
 			if (altSoundTurn) {
@@ -27,11 +27,11 @@ function SoundOverlapsClass(filenameWithPath) {
 		}//end check for gameMuted
 		altSoundTurn = !altSoundTurn;
     }// end play() function
-}//End soundOverlapClass  
+}//End soundOverlapClass
 
 function BackgroundMusicClass() {
     var musicSound = null;
-	
+
     this.loopSong = function(filenameWithPath) {
 		setFormat();
 		if(gameMuted == false){
@@ -46,11 +46,35 @@ function BackgroundMusicClass() {
     }
 
     this.startOrStopMusic = function() {
-		
+
 		if (musicSound.paused) {
 			musicSound.play();
 		} else {
 			musicSound.pause();
 		}
     }
+}
+
+function getRandomInt(min, max) {
+  let randomInt = min + Math.floor(Math.random() * (max - min + 1));
+  return randomInt;
+}
+
+//multisound is the name of the function from FMOD that is intended to add variety to repetitive sounds to help increase
+//aural aesthetics and prevent ear fatigue, this is a basic version using pitch shifted audio files based on the original
+//sound and volume randomization
+function playMultiSound(arrayOfSoundsToVarietize) {
+  let arrayLength = arrayOfSoundsToVarietize.length;
+  let randomArrayIndex = getRandomInt(0, arrayLength - 1);
+  let randomSoundFromArray = arrayOfSoundsToVarietize[randomArrayIndex];
+  let randomVolume = getRandomInt(8,10);
+  randomVolume = randomVolume/10;
+  randomSoundFromArray.volume = randomVolume;
+  randomSoundFromArray.play();
+}
+
+var testBackgroundMusic;
+
+function changeBackgroundMusicSpeed(currentBackgroundMusicObject, playbackRateForBackgroundMusic) {
+  currentBackgroundMusicObject.playbackRate = playbackRateForBackgroundMusic;
 }

@@ -52,7 +52,12 @@ function increaseSpeed(evt) {
 	}
 }
 
+var playbackRateForBackgroundMusic;
+
 function getSpeedFromVelocity(velX, velY) {
+	let currentVisualVelocity = Math.sqrt(Math.pow(velX, 2) + Math.pow(velY, 2));
+	let conversionRate = 1/7.5;
+	playbackRateForBackgroundMusic = currentVisualVelocity*conversionRate;
 	return Math.sqrt(Math.pow(velX, 2) + Math.pow(velY, 2));
 }
 

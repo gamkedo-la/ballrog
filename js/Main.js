@@ -22,13 +22,21 @@ var gameMuted = false;
 var sounds = {
 	paddleHit: new SoundOverlapsClass("audio/paddleHit"),
 	brickHit: new SoundOverlapsClass("audio/brickHit"),
+	brickHitHalfStepDown: new SoundOverlapsClass("audio/brickHitHalfStepDown"),
+	brickHitHalfStepUp: new SoundOverlapsClass("audio/brickHitHalfStepUp"),
+	brickHitWholeStepDown: new SoundOverlapsClass("audio/brickHitWholeStepDown"),
+	brickHitWholeStepUp: new SoundOverlapsClass("audio/brickHitWholeStepUp"),
 	wallHit: new SoundOverlapsClass("audio/wallHit"),
 	// FIXME: gameStart: new SoundOverlapsClass("audio/gameStart"),
 	// FIXME: newLevel: new SoundOverlapsClass("audio/newLevel"),
 	lifeGet: new SoundOverlapsClass("audio/lifeGet"),
 	lifeLost: new SoundOverlapsClass("audio/lifeLost"),
-	gameOver: new SoundOverlapsClass("audio/gameOver")
+	gameOver: new SoundOverlapsClass("audio/gameOver"),
+
 };
+
+var arrayOfBrickHitSounds = [sounds.brickHit, sounds.brickHitHalfStepDown, sounds.brickHitHalfStepUp,
+														 sounds.brickHitWholeStepDown, sounds.brickHitWholeStepUp];
 var messageArea;
 
 window.onload = function() {
@@ -49,7 +57,7 @@ window.onload = function() {
 		canvas.addEventListener('mousemove', movePaddleOnMouseMove);
 		canvas.addEventListener('ballMiss', dropLife);
 		canvas.addEventListener('brickHit', handleBrickHit);
-		canvas.addEventListener('brickHit', sounds.brickHit.play);
+		canvas.addEventListener('brickHit', function() {playMultiSound(arrayOfBrickHitSounds)});
 		canvas.addEventListener('brickRemoved', increaseScore);
 		canvas.addEventListener('brickRemoved', increaseSpeed);
 		canvas.addEventListener('brickRemoved', maybeDropPowerPill);
@@ -66,6 +74,7 @@ window.onload = function() {
 			if (showTitle) {
 				showTitle = false;
 				// FIXME: sounds.gameStart.play();
+				testBackgroundMusic.play();
 				resetBricks();
 			} else {
 				if (bricksInPlace) {
@@ -83,6 +92,10 @@ window.onload = function() {
 		ballReset();
 		setupInput();
 	});
+	testBackgroundMusic = new Audio("audio/pong6-19" + audioFormat);
+	testBackgroundMusic.loop = true;
+	testBackgroundMusic.volume = 0.7;
+
 }
 
 function resetGame() {
@@ -210,12 +223,14 @@ function gameLogic() {
 		setTimeout(function() {
 			let noMoreBricksEvent = new CustomEvent('noMoreBricks');
 			canvas.dispatchEvent(noMoreBricksEvent);
-		}, 500)	
+		}, 500)
 	}
 }
 
 function moveEverything() {
 	if (!showTitle && !gamePaused && !levelTransition) {
+		console.log(playbackRateForBackgroundMusic);
+		testBackgroundMusic.playbackRate = playbackRateForBackgroundMusic;
 		ballMove();
 		pillsMove();
 	}
