@@ -22,6 +22,7 @@ var letterO = false;
 var gamkedo = false;
 //game states
 var showTitle = true;
+var demoScreen = false;
 var gamePaused = false;
 var levelTransition = false;
 var lastScore = score;
@@ -103,7 +104,6 @@ window.onload = function() {
 	testBackgroundMusic = new Audio("audio/pong6-19" + audioFormat);
 	testBackgroundMusic.loop = true;
 	testBackgroundMusic.volume = 0.7;
-
 }
 
 function resetGame() {
@@ -224,6 +224,12 @@ function drawLevelTransition() {
 function drawEverything() {
 	if (showTitle) {
 		drawTitleScreen();
+		if(titleScreenTimer < 1000){
+			titleScreenKeepTime();
+		}
+	} else if (demoScreen) {
+		demoKeepTime();
+		drawDemoScreen();
 	} else if(gamePaused){
 		drawPauseScreen();
 	} else if (levelTransition) {
