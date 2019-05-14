@@ -74,7 +74,11 @@ function playMultiSound(arrayOfSoundsToVarietize) {
 }
 
 var testBackgroundMusic;
+var musicSpeedIncrementForLevel;
 
-function changeBackgroundMusicSpeed(currentBackgroundMusicObject, playbackRateForBackgroundMusic) {
-  currentBackgroundMusicObject.playbackRate = playbackRateForBackgroundMusic;
+function calculateMusicSpeedUpPace(bricksAtStartOfLevel) {
+  bricksAtStartOfLevel = bricksLeft;
+  let percentIncreaseForMusicSpeed = 1/bricksAtStartOfLevel;
+  let ratioForIncreaseMusicSpeedBasedOnPlaybackRateRange = 0.5;
+  musicSpeedIncrementForLevel = percentIncreaseForMusicSpeed*ratioForIncreaseMusicSpeedBasedOnPlaybackRateRange;
 }

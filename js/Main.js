@@ -238,6 +238,7 @@ function drawEverything() {
 		drawGAMKEDO();
 		drawPaddle();
 		drawBricks();
+		console.log(bricksLeft);
 		drawBall();
 		drawPills();
 	}
@@ -259,8 +260,6 @@ function gameLogic() {
 
 function moveEverything() {
 	if (!showTitle && !gamePaused && !levelTransition) {
-		console.log(playbackRateForBackgroundMusic);
-		testBackgroundMusic.playbackRate = playbackRateForBackgroundMusic;
 		ballMove();
 		pillsMove();
 	}

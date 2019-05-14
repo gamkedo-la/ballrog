@@ -41,7 +41,7 @@ function getBrickInfo() {
 				let offscreenY = brickTopEdgeY - canvas.height;
 				offscreenY -= Math.floor(Math.random() * (BRICK_H * BRICK_H));
 				brickInfo.push({x:brickLeftEdgeX, y: offscreenY, homeY: brickTopEdgeY, image: BRICK_IMAGES[brick]});
-			} 
+			}
 		} // end of for eachRow
 	} // end of for eachCol
 } // end of getbrickInfo
@@ -83,7 +83,7 @@ function drawBricks() {
 			canvasContext.stroke();
 		}
 	}
-	if (debugMode) {	
+	if (debugMode) {
 		canvasContext.beginPath();
 		canvasContext.moveTo(0, TOP_MARGIN + BRICK_H*BRICK_ROWS);
 		canvasContext.lineTo(canvas.width, TOP_MARGIN + BRICK_H*BRICK_ROWS);
@@ -104,7 +104,7 @@ function easeBricksbricksInPlace() {
 				// FIXME: Possible future issue, brick.y isn't a round number
 				bricksInPlace = true;
 			}
-		} 
+		}
 		drawBitMap(brick.image, brick.x, brick.y);
 	} // end of for b < brickInfo.length
 } // end of easeBricksbricksInPlace();
@@ -117,6 +117,9 @@ function resetBricks() {
 	bricksLeft = brickGrid.filter(
 		brick => brick != BRICK_TYPES.empty && brick != BRICK_TYPES.unbreakable
 	).length;
+	console.log(bricksLeft);
+	calculateMusicSpeedUpPace();
+	testBackgroundMusic.playbackRate = 1;
 }
 
 function getBrickAtTileCoord(brickTileCol, brickTileRow) {
@@ -142,6 +145,7 @@ function handleBrickHit(evt) {
 		brickGrid[evt.detail.index] -= 1;
 		if (brickGrid[evt.detail.index] == BRICK_TYPES.empty) {
 			bricksLeft--;
+			testBackgroundMusic.playbackRate += musicSpeedIncrementForLevel;
 			// resetBricksOnNextPaddleHit = bricksLeft <= 0;
 			let brickRemovedEvent = new CustomEvent('brickRemoved', {
 				detail: evt.detail
@@ -154,14 +158,14 @@ function handleBrickHit(evt) {
 					setTimeout(function() {
 						let noMoreBricksEvent = new CustomEvent('noMoreBricks');
 						canvas.dispatchEvent(noMoreBricksEvent);
-					}, 500)	
+					}, 500)
 				} else {
 					waitForLastPills = true;
 				}
 				return;
 			}
 			canvas.dispatchEvent(brickRemovedEvent);
-		} 
+		}
 		else { // did not get destroyed
 			var effectX = evt.detail.col * BRICK_W;
 			var effectY = evt.detail.row * BRICK_H + BRICK_H + BRICK_H;
