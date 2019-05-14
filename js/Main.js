@@ -85,6 +85,9 @@ window.onload = function() {
 				// FIXME: sounds.gameStart.play();
 				testBackgroundMusic.play();
 				resetBricks();
+			} else if (demoScreen) {
+				demoScreen = false;
+				showTitle = true;
 			} else {
 				if (bricksInPlace) {
 					ballHeld = false;
