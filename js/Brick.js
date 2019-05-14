@@ -119,7 +119,9 @@ function resetBricks() {
 	).length;
 	console.log(bricksLeft);
 	calculateMusicSpeedUpPace();
+	calculateMusicVolumeIncreasPace();
 	testBackgroundMusic.playbackRate = 1;
+	testBackgroundMusic.volume = 0.05;
 }
 
 function getBrickAtTileCoord(brickTileCol, brickTileRow) {
@@ -146,6 +148,7 @@ function handleBrickHit(evt) {
 		if (brickGrid[evt.detail.index] == BRICK_TYPES.empty) {
 			bricksLeft--;
 			testBackgroundMusic.playbackRate += musicSpeedIncrementForLevel;
+			testBackgroundMusic.volume += musicVolumeIncrementForLevel;
 			// resetBricksOnNextPaddleHit = bricksLeft <= 0;
 			let brickRemovedEvent = new CustomEvent('brickRemoved', {
 				detail: evt.detail

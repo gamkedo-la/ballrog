@@ -75,10 +75,17 @@ function playMultiSound(arrayOfSoundsToVarietize) {
 
 var testBackgroundMusic;
 var musicSpeedIncrementForLevel;
+var musicVolumeIncrementForLevel;
 
 function calculateMusicSpeedUpPace(bricksAtStartOfLevel) {
   bricksAtStartOfLevel = bricksLeft;
   let percentIncreaseForMusicSpeed = 1/bricksAtStartOfLevel;
   let ratioForIncreaseMusicSpeedBasedOnPlaybackRateRange = 0.5;
   musicSpeedIncrementForLevel = percentIncreaseForMusicSpeed*ratioForIncreaseMusicSpeedBasedOnPlaybackRateRange;
+}
+
+function calculateMusicVolumeIncreasPace(bricksAtStartOfLevel) {
+  bricksAtStartOfLevel = bricksLeft;
+  musicVolumeIncrementForLevel = (2/bricksAtStartOfLevel)*0.1;
+  console.log(musicVolumeIncrementForLevel);
 }

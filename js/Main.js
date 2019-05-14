@@ -106,7 +106,7 @@ window.onload = function() {
 	});
 	testBackgroundMusic = new Audio("audio/pong6-19" + audioFormat);
 	testBackgroundMusic.loop = true;
-	testBackgroundMusic.volume = 0.1;
+	testBackgroundMusic.volume = 0.05;
 }
 
 function resetGame() {
@@ -247,6 +247,7 @@ function drawEverything() {
 		drawBricks();
 		drawBall();
 		drawPills();
+		console.log(testBackgroundMusic.volume);
 	}
 }
 
