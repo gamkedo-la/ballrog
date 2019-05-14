@@ -183,7 +183,7 @@ function increaseScore(points) {
 		points = BRICK_HIT_POINTS;
 	}
 	score += points;
-	if(highScore < score){
+	if(highScore < score && !demoScreen){
 		highScore = score;
 	}
 	var scoreIncreaseEvent = new CustomEvent('scoreIncrease');
@@ -244,7 +244,6 @@ function drawEverything() {
 		drawGAMKEDO();
 		drawPaddle();
 		drawBricks();
-		console.log(bricksLeft);
 		drawBall();
 		drawPills();
 	}
@@ -268,6 +267,9 @@ function moveEverything() {
 	if (!showTitle && !gamePaused && !levelTransition) {
 		ballMove();
 		pillsMove();
+		if(demoScreen){
+			moveComputerPaddle();
+		}
 	}
 	if (gamePaused){
 		lettersMove();
