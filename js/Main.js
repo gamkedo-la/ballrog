@@ -173,7 +173,7 @@ function drawGAMKEDO(){
 	var letters = ['G','A','M','K','E','D','O']
 	for(i = 0; i < 7; i++){
 		if(letterPills[i]){
-			canvasContext.fillText(letters[i], 130 + ([i]*10), 10);
+			colorText(letters[i], 180 + ([i]*15), 20, 'white');
 		}
 	}
 }
@@ -205,10 +205,10 @@ function drawTitleScreen() {
 	canvasContext.fillStyle = 'white';
 	canvasContext.textAlign = 'center';
 	if (lastScore > 0) {
-		canvasContext.fillText("LAST SCORE " + lastScore.toString(), canvas.width/2, line);
+		ccolorText("LAST SCORE " + lastScore.toString(), canvas.width/2, line);
 		line += 20;
 	}
-	canvasContext.fillText("GET A NEW LIFE ON EVERY " + NEW_LIFE_SCORE_MILESTONE + " POINTS!", canvas.width/2, line);
+	colorTextCentered("GET A NEW LIFE ON EVERY " + NEW_LIFE_SCORE_MILESTONE + " POINTS!", canvas.width/2, line);
 }
 
 
@@ -217,8 +217,8 @@ function drawLevelTransition() {
 	colorRect(0, 0, canvas.width, canvas.height, 'black');
 	canvasContext.fillStyle = 'white';
 	canvasContext.textAlign = 'center';
-	canvasContext.fillText("LOADING NEW LEVEL", canvas.width/2, line);
-	canvasContext.fillText("GET PSYCHED!", canvas.width/2, line + 20);
+	colorTextCentered("LOADING NEW LEVEL", canvas.width/2, line);
+	colorTextCentered("GET PSYCHED!", canvas.width/2, line + 20);
 }
 
 function drawEverything() {
@@ -236,10 +236,8 @@ function drawEverything() {
 		drawLevelTransition();
 	} else {
 		colorRect(0, 0, canvas.width, canvas.height, 'rgb(75,105,47 )');
-		canvasContext.fillStyle = 'white';
-		canvasContext.textAlign = 'center';
-		canvasContext.fillText(score.toString(), canvas.width/2, 10);
-		canvasContext.fillText('High Score: ' + highScore.toString(), 50, 10);
+		colorText(score.toString(), canvas.width/2, 20, 'white');
+		colorText('High Score: ' + highScore.toString(), 10, 20, 'white');
 		drawLives();
 		drawGAMKEDO();
 		drawPaddle();

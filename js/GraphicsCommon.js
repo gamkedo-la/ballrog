@@ -24,3 +24,24 @@ function drawBitmapCenteredWithRotation(useBitmap, atX, atY, withAng) {
 	canvasContext.drawImage(useBitmap, -useBitmap.width / 2, -useBitmap.height / 2);
 	canvasContext.restore();
   }
+
+function colorText(showWords, textX, textY, fillColor, font = "14px Arial Black") {
+  canvasContext.textAlign = "left";
+  canvasContext.fillStyle = fillColor;
+  canvasContext.font = font;
+  canvasContext.fillText(showWords, textX, textY);
+}
+
+function colorTextCentered(showWords, textX, textY, fillColor, font = "14px Arial Black") {
+  canvasContext.textAlign = "center";
+  canvasContext.fillStyle = fillColor;
+  canvasContext.font = font;
+  canvasContext.fillText(showWords, textX, textY);
+}
+
+function largerColorText(showWords, textX, textY, fillColor, font = "56px Arial Black") {
+  canvasContext.textAlign = "left";
+  canvasContext.fillStyle = fillColor;
+  canvasContext.font = font;
+  canvasContext.fillText(showWords, textX, textY);
+}
