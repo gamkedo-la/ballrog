@@ -7,7 +7,9 @@ var paddleScale = {x: 1, y: 1};
 
 function movePaddleOnMouseMove(evt) {
 	var mousePos = calculateMousePos(evt);
-	paddleX = mousePos.x - (PADDLE_W/2);
+	if(!demoScreen){
+		paddleX = mousePos.x - (PADDLE_W/2);
+	}
 	if (ballHeld) {
 		ballX = paddleX + PADDLE_W/2;
 	}
