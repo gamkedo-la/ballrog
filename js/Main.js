@@ -249,8 +249,9 @@ function drawEverything() {
 		drawPaddle();
 		drawBricks();
 		ballOne.drawBall();
+		allBalls.forEach(function (ball) { ball.drawBall(); }); // multiball
 		drawPills();
-		console.log(testBackgroundMusic.volume);
+		//console.log(testBackgroundMusic.volume);
 	}
 }
 
@@ -271,6 +272,7 @@ function gameLogic() {
 function moveEverything() {
 	if (!showTitle && !gamePaused && !levelTransition) {
 		ballOne.ballMove();
+		allBalls.forEach(function (ball) { ball.ballMove(); }); // multiball
 		pillsMove();
 		if(demoScreen){
 			moveComputerPaddle(ballOne);

@@ -3,11 +3,11 @@ const COLLISION_STEP = 2; // higher = faster, lower = precise
 const INITIAL_SPEED = 4;
 const INITIAL_MAX_SPEED = 12;
 
-function ballClass(){
-	this.X;
-	this.Y;
-	this.VelX = 3;
-	this.VelY = -2;
+function ballClass(x,y,vx,vy){
+	this.X = x || 0;
+	this.Y = y || 0;
+	this.VelX = vx || 3;
+	this.VelY = vy || -2;
 	this.maxSpeed = INITIAL_MAX_SPEED;
 	this.baseSpeed = INITIAL_SPEED;
 	this.minSpeed = this.baseSpeed;
@@ -202,4 +202,19 @@ function ballClass(){
 		drawBitMap(ballPic, this.X - BALL_RADIUS, this.Y - BALL_RADIUS);
 	}
 
+}
+
+var allBalls = [];
+function startMultiBall(quantity) {
+	console.log("MULTI BALL x"+quantity);
+	for (let num=0; num < quantity; num++) {
+		
+		var newBall = new ballClass(
+			ballOne.X+Math.random()*32-16,
+			ballOne.Y+Math.random()*8-4,
+			ballOne.velX+Math.random()*8-4,
+			ballOne.velY+Math.random()*8-4);
+
+		allBalls.push(newBall);
+	}
 }

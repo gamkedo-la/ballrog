@@ -51,6 +51,9 @@ function keyPressed(evt) {
 	if (debugMode) {
 		messageArea.innerHTML = '<strong>DEBUG MODE ENABLED</strong><br>left and right arrow keys move through levels<br>"r" key reloads current level';
 		switch (evt.key) {
+		case 'm': // debug test multiball
+			startMultiBall(4);
+			break;
 		case 'ArrowRight':
 			currentLevelIndex++;
 			if (currentLevelIndex >= LEVEL_SEQ.length) {
