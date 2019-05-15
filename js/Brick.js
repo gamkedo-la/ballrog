@@ -143,6 +143,14 @@ function getRowYCoord(row) {
 
 function handleBrickHit(evt) {
 	var brick = brickGrid[evt.detail.index];
+	
+	// add an Arkanoid-inspired "shine" animation on hit bricks
+	if (brick > 1) { // not about to get destroyed
+		var effectX = evt.detail.col * BRICK_W;
+		var effectY = evt.detail.row * BRICK_H + BRICK_H + BRICK_H;
+		brickShineEffect.trigger(effectX,effectY);
+	}
+
 	if (brick != BRICK_TYPES.empty && brick != BRICK_TYPES.unbreakable) {
 		brickGrid[evt.detail.index] -= 1;
 		if (brickGrid[evt.detail.index] == BRICK_TYPES.empty) {
@@ -168,11 +176,6 @@ function handleBrickHit(evt) {
 				return;
 			}
 			canvas.dispatchEvent(brickRemovedEvent);
-		}
-		else { // did not get destroyed
-			var effectX = evt.detail.col * BRICK_W;
-			var effectY = evt.detail.row * BRICK_H + BRICK_H + BRICK_H;
-			brickShineEffect.trigger(effectX,effectY);
 		}
 	}
 }
