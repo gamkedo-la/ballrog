@@ -17,6 +17,7 @@ function ballClass(x,y,vx,vy){
 	this.passingThrough = false;
 	this.wallHitEvent = new CustomEvent('wallHit');
 	this.ballTrail = new TrailFX(ballTrailPic);
+	this.bounceEffect = new BounceFX(bouncePic);
 
 
 	this.ballReset = function() {
@@ -72,6 +73,7 @@ function ballClass(x,y,vx,vy){
 			if ((this.X + BALL_RADIUS > canvas.width && this.VelX > 0) || (this.X - BALL_RADIUS < 0 && this.VelX < 0)){  //keeps ball within screen (sides and top)
 				this.updateVelocity(-1*this.VelX, this.VelY);
 				canvas.dispatchEvent(this.wallHitEvent);
+				this.bounceEffect.trigger(this.X,this.Y);
 			}
 			if (this.Y + BALL_RADIUS > paddleY && this.Y - BALL_RADIUS < paddleY + PADDLE_THICKNESS && this.VelY > 0) { //ball hits the paddle
 				if (this.X + BALL_RADIUS > paddleX && this.X - BALL_RADIUS < paddleX + PADDLE_W) {
@@ -87,6 +89,7 @@ function ballClass(x,y,vx,vy){
 					}
 					let paddleHitEvent = new CustomEvent('paddleHit');
 					canvas.dispatchEvent(paddleHitEvent);
+					this.bounceEffect.trigger(this.X,this.Y);
 				}
 			}
 			if (this.Y > canvas.height) {
@@ -96,6 +99,8 @@ function ballClass(x,y,vx,vy){
 			if (this.Y < 0) {
 				this.updateVelocity(this.VelX, -1*this.VelY);
 				canvas.dispatchEvent(this.wallHitEvent);
+				this.bounceEffect.trigger(this.X,this.Y);
+
 			}
 			this.breakAndBounceOffBrickAtPixelCoord(
 				this.X + Math.sign(this.VelX)*BALL_RADIUS,
@@ -198,7 +203,9 @@ function ballClass(x,y,vx,vy){
 	}
 
 	this.drawBall = function() {
+		
 		this.ballTrail.draw();
+		this.bounceEffect.draw();
 		drawBitMap(ballPic, this.X - BALL_RADIUS, this.Y - BALL_RADIUS);
 	}
 
