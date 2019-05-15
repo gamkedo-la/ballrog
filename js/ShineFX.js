@@ -9,7 +9,7 @@ function ShineFX(shineImage) {
     this.x = 0;
     this.y = 0;
     this.frame = 0;
-    this.frameCount = 8;
+    this.frameCount = 16;
     
     this.trigger = function(x,y) {
         this.active = true;

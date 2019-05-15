@@ -10,7 +10,7 @@ function TrailFX(wooshImage) {
     
     if (!wooshImage) wooshImage = trailImage; // default: see ImageLoading.js
 
-    let trailMaxLength = 5; // for a long trail, try 16
+    let trailMaxLength = 8; // for a long trail, try 16
 
     const CURVY_MODE = false; // chop into many small lines? if false, just one long smooth line
 
