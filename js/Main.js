@@ -259,11 +259,11 @@ function drawEverything() {
 		canvasContext.fillText('High Score: ' + highScore.toString(), 50, 10);
 		drawLives();
 		drawGAMKEDO();
-		drawPaddle();
-		drawBricks();
 		ballOne.drawBall();
 		allBalls.forEach(function (ball) { ball.drawBall(); }); // multiball
+		drawBricks();
 		drawPills();
+		drawPaddle();
 		//console.log(testBackgroundMusic.volume);
 	}
 }
