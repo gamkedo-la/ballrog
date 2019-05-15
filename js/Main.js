@@ -9,6 +9,7 @@ var score = 0;
 var highScore = 0;
 var lives = INITIAL_LIVES;
 var outaLivesEvent = new CustomEvent('outaLives');
+var ballOne = new ballClass();
 var ballHeld = true;
 //power ups
 var stickyBall = false;
@@ -61,14 +62,14 @@ window.onload = function() {
 		setInterval(function() {
 			moveEverything();
 			drawEverything();
-			gameLogic();
+			gameLogic();			
 		}, 1000/framesPerSecond);
 		canvas.addEventListener('mousemove', movePaddleOnMouseMove);
 		canvas.addEventListener('ballMiss', dropLife);
 		canvas.addEventListener('brickHit', handleBrickHit);
 		canvas.addEventListener('brickHit', function() {playMultiSound(arrayOfBrickHitSounds)});
 		canvas.addEventListener('brickRemoved', increaseScore);
-		canvas.addEventListener('brickRemoved', increaseSpeed);
+		canvas.addEventListener('brickRemoved', ballOne.increaseSpeed);
 		canvas.addEventListener('brickRemoved', maybeDropPowerPill);
 		canvas.addEventListener('paddleHit', sounds.paddleHit.play);
 		canvas.addEventListener('paddleHit', paddleBlink);
@@ -85,9 +86,6 @@ window.onload = function() {
 				// FIXME: sounds.gameStart.play();
 				testBackgroundMusic.play();
 				resetBricks();
-			} else if (demoScreen) {
-				demoScreen = false;
-				showTitle = true;
 			} else {
 				if (bricksInPlace) {
 					ballHeld = false;
@@ -101,24 +99,24 @@ window.onload = function() {
 		window.addEventListener('blur', function () {
 			gamePaused = true;
 		});
-		ballReset();
+		ballOne.ballReset();
 		setupInput();
 	});
 	testBackgroundMusic = new Audio("audio/pong6-19" + audioFormat);
 	testBackgroundMusic.loop = true;
-	testBackgroundMusic.volume = 0.05;
+	testBackgroundMusic.volume = 0.7;
 }
 
 function resetGame() {
 	currentLevelIndex = 0;
 	lastScore = score;
-	baseSpeed = INITIAL_SPEED;
-	maxSpeed = INITIAL_MAX_SPEED;
+	ballOne.baseSpeed = INITIAL_SPEED;
+	ballOne.maxSpeed = INITIAL_MAX_SPEED;
 	resetBricks();
 	resetScore();
 	resetGAMKEDO();
 	ballHeld = true;
-	ballReset();
+	ballOne.ballReset();
 	lives = INITIAL_LIVES;
 	showTitle = true;
 	initPills();
@@ -137,7 +135,7 @@ function resetGAMKEDO(){
 function resetLevel() {
 	resetBricks();
 	resetPills();
-	ballReset();
+	ballOne.ballReset();
 	activePills = 0;
 }
 
@@ -151,13 +149,13 @@ function loadNextLevel() {
 		}
 		setTimeout(function () {
 			resetLevel();
-			baseSpeed += 3;
-			maxSpeed += 3;
+			ballOne.baseSpeed += 3;
+			ballOne.maxSpeed += 3;
 			levelTransition = false;
 			let newLevelEvent = new CustomEvent('newLevel');
 			canvas.dispatchEvent(newLevelEvent);
 		}, 1500);
-	}, 600 - getSpeedFromVelocity(ballVelX, ballVelY));
+	}, 600 - ballOne.getSpeedFromVelocity(ballOne.VelX, ballOne.VelY));
 }
 
 function dropLife() {
@@ -176,7 +174,7 @@ function drawGAMKEDO(){
 	var letters = ['G','A','M','K','E','D','O']
 	for(i = 0; i < 7; i++){
 		if(letterPills[i]){
-			colorText(letters[i], 180 + ([i]*15), 20, 'white');
+			canvasContext.fillText(letters[i], 130 + ([i]*10), 10);
 		}
 	}
 }
@@ -208,10 +206,10 @@ function drawTitleScreen() {
 	canvasContext.fillStyle = 'white';
 	canvasContext.textAlign = 'center';
 	if (lastScore > 0) {
-		ccolorText("LAST SCORE " + lastScore.toString(), canvas.width/2, line);
+		canvasContext.fillText("LAST SCORE " + lastScore.toString(), canvas.width/2, line);
 		line += 20;
 	}
-	colorTextCentered("GET A NEW LIFE ON EVERY " + NEW_LIFE_SCORE_MILESTONE + " POINTS!", canvas.width/2, line);
+	canvasContext.fillText("GET A NEW LIFE ON EVERY " + NEW_LIFE_SCORE_MILESTONE + " POINTS!", canvas.width/2, line);
 }
 
 
@@ -220,8 +218,8 @@ function drawLevelTransition() {
 	colorRect(0, 0, canvas.width, canvas.height, 'black');
 	canvasContext.fillStyle = 'white';
 	canvasContext.textAlign = 'center';
-	colorTextCentered("LOADING NEW LEVEL", canvas.width/2, line);
-	colorTextCentered("GET PSYCHED!", canvas.width/2, line + 20);
+	canvasContext.fillText("LOADING NEW LEVEL", canvas.width/2, line);
+	canvasContext.fillText("GET PSYCHED!", canvas.width/2, line + 20);
 }
 
 function drawEverything() {
@@ -239,15 +237,16 @@ function drawEverything() {
 		drawLevelTransition();
 	} else {
 		colorRect(0, 0, canvas.width, canvas.height, 'rgb(75,105,47 )');
-		colorText(score.toString(), canvas.width/2, 20, 'white');
-		colorText('High Score: ' + highScore.toString(), 10, 20, 'white');
+		canvasContext.fillStyle = 'white';
+		canvasContext.textAlign = 'center';
+		canvasContext.fillText(score.toString(), canvas.width/2, 10);
+		canvasContext.fillText('High Score: ' + highScore.toString(), 50, 10);
 		drawLives();
 		drawGAMKEDO();
 		drawPaddle();
 		drawBricks();
-		drawBall();
+		ballOne.drawBall();
 		drawPills();
-		console.log(testBackgroundMusic.volume);
 	}
 }
 
@@ -267,10 +266,10 @@ function gameLogic() {
 
 function moveEverything() {
 	if (!showTitle && !gamePaused && !levelTransition) {
-		ballMove();
+		ballOne.ballMove();
 		pillsMove();
 		if(demoScreen){
-			moveComputerPaddle();
+			moveComputerPaddle(ballOne);
 		}
 	}
 	if (gamePaused){

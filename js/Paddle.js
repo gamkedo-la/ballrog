@@ -11,13 +11,13 @@ function movePaddleOnMouseMove(evt) {
 		paddleX = mousePos.x - (PADDLE_W/2);
 	}
 	if (ballHeld) {
-		ballX = paddleX + PADDLE_W/2;
+		ballOne.X = paddleX + PADDLE_W/2;
 	}
 }
 
-function moveComputerPaddle() {
-	var speed = getSpeedFromVelocity(ballVelX, ballVelY)*0.96;
-	var checkX = ballX;
+function moveComputerPaddle(whichBall) {
+	var speed = getSpeedFromVelocity(whichBall.VelX, whichBall.VelY)*0.96;
+	var checkX = whichBall.X;
 	if (ballVelY > 0) {
 		if (checkX > paddleX + PADDLE_W*0.75) {
 			paddleX += speed;
@@ -40,13 +40,13 @@ function paddleBlink() {
 
 // draw googly eyes that follow the ball just for fun =)
 var blinkCounter = 0;
-function drawGooglyEyes() {
+function drawGooglyEyes(whichBall) {
 
 	var eyeX = Math.floor((paddleX)/paddleScale.x) + 7;
 	var eyeY = paddleY + 21;
 	var eyeSpacing = 62;
 	var pupilDistance = 4; // how much movement
-	var angle = Math.atan2(ballY-paddleY, ballX-paddleX);
+	var angle = Math.atan2(whichBall.Y-paddleY, whichBall.X-paddleX);
 	
 	// blink occasionally
 	if (blinkCounter) {
@@ -74,6 +74,6 @@ function drawPaddle() {
 	canvasContext.globalAlpha = paddleAlpha;
 	canvasContext.scale(paddleScale.x, paddleScale.y);
 	drawBitMap(paddlePic, Math.floor(paddleX/paddleScale.x), paddleY + 5);
-	drawGooglyEyes();
+	drawGooglyEyes(ballOne);
 	canvasContext.restore();
 }
