@@ -103,6 +103,8 @@ window.onload = function() {
 			gamePaused = true;
 		});
 		ballOne.ballReset();
+		//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball
+		allBalls = []; // completely wipe the array
 		setupInput();
 	});
 	testBackgroundMusic = new Audio("audio/pong6-19" + audioFormat);
@@ -113,13 +115,22 @@ window.onload = function() {
 function resetGame() {
 	currentLevelIndex = 0;
 	lastScore = score;
+	
+	// FIXME perhaps this should be in ballReset() function below
 	ballOne.baseSpeed = INITIAL_SPEED;
 	ballOne.maxSpeed = INITIAL_MAX_SPEED;
+	allBalls.forEach(function (ball) { 
+		ball.baseSpeed = INITIAL_SPEED; 
+		ball.maxSpeed = INITIAL_MAX_SPEED; 
+	}); // multiball
+	
 	resetBricks();
 	resetScore();
 	resetGAMKEDO();
 	ballHeld = true;
 	ballOne.ballReset();
+	//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball
+	allBalls = []; // completely wipe the array
 	lives = INITIAL_LIVES;
 	showTitle = true;
 	initPills();
@@ -139,6 +150,8 @@ function resetLevel() {
 	resetBricks();
 	resetPills();
 	ballOne.ballReset();
+	//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball
+	allBalls = []; // completely wipe the array
 	activePills = 0;
 }
 
