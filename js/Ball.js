@@ -23,7 +23,7 @@ function ballClass(x,y,vx,vy){
 	this.ballReset = function(ballCount) {
 		if(ballCount <= 1){			
 			this.minSpeed = this.baseSpeed;
-			this.X = paddleX + PADDLE_W/2;
+			this.X = paddleX + paddleWidth/2;
 			this.Y = paddleY - BALL_RADIUS/2;
 			this.updateVelocity(this.VelX, this.VelY > 0 ? -this.VelY : this.VelY);
 			this.updateSpeed(this.minSpeed);
@@ -83,11 +83,11 @@ function ballClass(x,y,vx,vy){
 			}
 			// bounce off the paddle
 			if (this.Y + BALL_RADIUS > paddleY && this.Y - BALL_RADIUS < paddleY + PADDLE_THICKNESS && this.VelY > 0) { //ball hits the paddle
-				if (this.X + BALL_RADIUS > paddleX && this.X - BALL_RADIUS < paddleX + PADDLE_W) {
+				if (this.X + BALL_RADIUS > paddleX && this.X - BALL_RADIUS < paddleX + paddleWidth) {
 					if(stickyBall){
 						ballHeld = true;
 					}
-					let deltaX = this.X - (paddleX + PADDLE_W/(2*paddleScale.x));
+					let deltaX = this.X - (paddleX + paddleWidth/(2*paddleScale.x));
 					var randomAngle = (Math.random() * 0.1);
 					this.updateVelocity(deltaX*0.22, -1*this.VelY);
 					let currentSpeed = this.getSpeedFromVelocity(this.VelX, this.VelY);

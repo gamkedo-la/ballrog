@@ -70,7 +70,7 @@ This should help write cleaner code and functions that do one thing well :)
 **** Data representation
 
 	 The paddle's current representation is just a few global variables and constants (this may change as the game grows in complexity):
-	 - ~PADDLE_W~ :: the paddle's width. Despite it being uppercase, it's a variable that power pills can change.
+	 - ~paddleWidth~ :: the paddle's width. Despite it being uppercase, it's a variable that power pills can change.
 	 - ~paddleX~ :: the paddle's left edge position (in pixels) in the play field, changes with the mouse position
 	 - ~paddleAlpha~ :: the paddle's opacity, should always be 1 unless changed by some power pill
 	 - ~paddleScale~ :: an object containing the paddle's scaling values in x and y

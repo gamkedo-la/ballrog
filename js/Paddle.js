@@ -1,6 +1,7 @@
-var PADDLE_W = 100;
+var paddleWidth = 100;
+const PADDLE_ORIGINAL_W = 100;
 const PADDLE_THICKNESS = 48;
-var paddleX = (800 - PADDLE_W)/2;
+var paddleX = (800 - paddleWidth)/2;
 var paddleY = 540;
 var paddleAlpha = 1;
 var paddleScale = {x: 1, y: 1};
@@ -8,10 +9,10 @@ var paddleScale = {x: 1, y: 1};
 function movePaddleOnMouseMove(evt) {
 	var mousePos = calculateMousePos(evt);
 	if(!demoScreen){
-		paddleX = mousePos.x - (PADDLE_W/2);
+		paddleX = mousePos.x - (paddleWidth/2);
 	}
 	if (ballHeld) {
-		allBalls[0].X = paddleX + PADDLE_W/2;
+		allBalls[0].X = paddleX + paddleWidth/2;
 	}
 }
 
@@ -19,14 +20,14 @@ function moveComputerPaddle(whichBall) {
 	var speed = getSpeedFromVelocity(whichBall.VelX, whichBall.VelY)*0.96;
 	var checkX = whichBall.X;
 	if (ballVelY > 0) {
-		if (checkX > paddleX + PADDLE_W*0.75) {
+		if (checkX > paddleX + paddleWidth*0.75) {
 			paddleX += speed;
-		} else if (checkX < paddleX + PADDLE_W*0.25) {
+		} else if (checkX < paddleX + paddleWidth*0.25) {
 			paddleX -= speed;
 		}
 	}
-	if (paddleX + PADDLE_W > canvas.width) {
-		paddleX = canvas.width - PADDLE_W;
+	if (paddleX + paddleWidth > canvas.width) {
+		paddleX = canvas.width - paddleWidth;
 	}
 	if (paddleX < 0) {
 		paddleX = 0;

@@ -22,17 +22,24 @@ function pointsPill() {
 
 stretchPill.prototype = new pillClass();
 function stretchPill() {
+	var stretchedPaddle = paddleWidth * 2;
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = 0;
 	this.powerTime = 10000;
 	this.startPower = function () {
+		if (paddleWidth == stretchedPaddle) {
+			return;
+		} 
 		paddleScale.x = 2;
-		PADDLE_W *= 2
+		paddleWidth = stretchedPaddle;
 	}
 
 	this.endPower = function () {
+		if (paddleWidth == PADDLE_ORIGINAL_W) {
+			return;
+		} 
 		paddleScale.x = 1;
-		PADDLE_W /= 2;
+		paddleWidth = PADDLE_ORIGINAL_W;
 	}
 }
 
@@ -80,17 +87,21 @@ function stickyBallPill() {
 
 shrinkPill.prototype = new pillClass();
 function shrinkPill() {
+	var shrunkPaddle = paddleWidth * 0.5
 	this.imageOffsetX = 0;
 	this.imageOffsetY = PILL_H * 4;
 	this.powerTime = 10000;
 	this.startPower = function () {
+		if (paddleWidth == shrunkPaddle) {
+			return;
+		} 
 		paddleScale.x = 0.5;
-		PADDLE_W *= 0.5
+		paddleWidth = shrunkPaddle;
 	}
 
 	this.endPower = function () {
 		paddleScale.x = 1;
-		PADDLE_W *= 2;
+		paddleWidth = PADDLE_ORIGINAL_W;
 	}
 }
 
@@ -128,7 +139,7 @@ function moveUpPill() {
 	this.imageOffsetY = PILL_H * 5;
 	this.powerTime = 10000;
 	this.startPower = function () {
-		if (paddleY = 540) {
+		if (paddleY == 540) {
 			paddleY -= PADDLE_THICKNESS * 2;
 		}
 	}
@@ -326,7 +337,7 @@ function pillClass() {
 	this.move = function () {
 		if (this.live) {
 			this.y += PILL_DROP_SPEED;
-			if (this.x > paddleX - PILL_W - 1 && this.x < paddleX + PADDLE_W && this.y > paddleY - PILL_H/2) {
+			if (this.x > paddleX - PILL_W - 1 && this.x < paddleX + paddleWidth && this.y > paddleY - PILL_H/2) {
 				this.startPower();
 				setTimeout(this.endPower, this.powerTime);
 				this.reset();
