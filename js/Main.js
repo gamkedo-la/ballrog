@@ -11,6 +11,7 @@ var lives = INITIAL_LIVES;
 var outaLivesEvent = new CustomEvent('outaLives');
 var allBalls = [];
 allBalls[0] = new ballClass();
+var ballCount = 1;
 var ballHeld = true;
 //power ups
 var stickyBall = false;
@@ -113,7 +114,9 @@ window.onload = function() {
 		//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball
 		allBalls = []; // completely wipe the array
 		allBalls[0] = new ballClass();
-		allBalls[0].ballReset(allBalls[0]);
+		allBalls[0].ballReset(ballCount);
+		console.log(ballCount);
+		console.log(allBalls.length);
 		setupInput();
 	});
 	testBackgroundMusic = new Audio("audio/pong6-19" + audioFormat);
@@ -126,8 +129,8 @@ function resetGame() {
 	lastScore = score;
 	
 	// FIXME perhaps this should be in ballReset() function below
-	allBalls = []; // completely wipe the array
-	allBalls[0].ballReset(allBalls[0]);
+	//allBalls = []; // completely wipe the array
+	allBalls[0].ballReset(ballCount);
 	allBalls.forEach(function (ball) { 
 		ball.baseSpeed = INITIAL_SPEED; 
 		ball.maxSpeed = INITIAL_MAX_SPEED; 
@@ -160,7 +163,7 @@ function resetLevel() {
 	resetPills();
 	allBalls = []; // completely wipe the array
 	allBalls[0] = new ballClass();
-	allBalls[0].ballReset(allBalls[0])
+	allBalls[0].ballReset(ballCount)
 	//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball	
 	activePills = 0;
 }

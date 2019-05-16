@@ -20,8 +20,8 @@ function ballClass(x,y,vx,vy){
 	this.bounceEffect = new BounceFX(bouncePic);
 
 
-	this.ballReset = function(whichBall) {
-		if(whichBall = allBalls[0]){			
+	this.ballReset = function(ballCount) {
+		if(ballCount <= 1){			
 			this.minSpeed = this.baseSpeed;
 			this.X = paddleX + PADDLE_W/2;
 			this.Y = paddleY - BALL_RADIUS/2;
@@ -33,7 +33,7 @@ function ballClass(x,y,vx,vy){
 			canvas.dispatchEvent(this.ballResetEvent);
 		}//end if
 		else{
-			allBalls.splice(whichBall.id);
+			ballCount -=1;;
 		}
 	}// end ballReset
 
@@ -101,7 +101,7 @@ function ballClass(x,y,vx,vy){
 			}
 			// fell through floor
 			if (this.Y > canvas.height) { 
-				this.ballReset();
+				this.ballReset(ballCount);
 				canvas.dispatchEvent(this.ballMissEvent);
 			}
 			// hit ceiling
