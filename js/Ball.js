@@ -20,17 +20,22 @@ function ballClass(x,y,vx,vy){
 	this.bounceEffect = new BounceFX(bouncePic);
 
 
-	this.ballReset = function() {
-		this.minSpeed = this.baseSpeed;
-		this.X = paddleX + PADDLE_W/2;
-		this.Y = paddleY - BALL_RADIUS/2;
-		this.updateVelocity(this.VelX, this.VelY > 0 ? -this.VelY : this.VelY);
-		this.updateSpeed(this.minSpeed);
-		this.highestHitRow = BRICK_ROWS;
-		passingThrough = false;
-		this.ballResetEvent = new CustomEvent('ballReset');
-		canvas.dispatchEvent(this.ballResetEvent);
-	}
+	this.ballReset = function(whichBall) {
+		if(whichBall = allBalls[0]){			
+			this.minSpeed = this.baseSpeed;
+			this.X = paddleX + PADDLE_W/2;
+			this.Y = paddleY - BALL_RADIUS/2;
+			this.updateVelocity(this.VelX, this.VelY > 0 ? -this.VelY : this.VelY);
+			this.updateSpeed(this.minSpeed);
+			this.highestHitRow = BRICK_ROWS;
+			passingThrough = false;
+			this.ballResetEvent = new CustomEvent('ballReset');
+			canvas.dispatchEvent(this.ballResetEvent);
+		}//end if
+		else{
+			allBalls.splice(whichBall.id);
+		}
+	}// end ballReset
 
 	 this.updateVelocity = function(velX, velY) {
 		this.VelX = velX;
@@ -224,10 +229,10 @@ function startMultiBall(quantity) {
 	for (let num=0; num < quantity; num++) {
 		
 		var newBall = new ballClass(
-			ballOne.X+Math.random()*32-16,
-			ballOne.Y+Math.random()*8-4,
-			ballOne.velX+Math.random()*8-4,
-			ballOne.velY+Math.random()*8-4);
+			allBalls[0].X+Math.random()*32-16,
+			allBalls[0].Y+Math.random()*8-4,
+			allBalls[0].velX+Math.random()*8-4,
+			allBalls[0].velY+Math.random()*8-4);
 
 		allBalls.push(newBall);
 	}

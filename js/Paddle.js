@@ -11,7 +11,7 @@ function movePaddleOnMouseMove(evt) {
 		paddleX = mousePos.x - (PADDLE_W/2);
 	}
 	if (ballHeld) {
-		ballOne.X = paddleX + PADDLE_W/2;
+		allBalls[0].X = paddleX + PADDLE_W/2;
 	}
 }
 
@@ -74,6 +74,6 @@ function drawPaddle() {
 	canvasContext.globalAlpha = paddleAlpha;
 	canvasContext.scale(paddleScale.x, paddleScale.y);
 	drawBitMap(paddlePic, Math.floor(paddleX/paddleScale.x), paddleY + 5);
-	drawGooglyEyes(ballOne);
+	drawGooglyEyes(allBalls[0]);
 	canvasContext.restore();
 }

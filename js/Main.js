@@ -9,7 +9,8 @@ var score = 0;
 var highScore = 0;
 var lives = INITIAL_LIVES;
 var outaLivesEvent = new CustomEvent('outaLives');
-var ballOne = new ballClass();
+var allBalls = [];
+allBalls[0] = new ballClass();
 var ballHeld = true;
 //power ups
 var stickyBall = false;
@@ -69,7 +70,7 @@ window.onload = function() {
 		canvas.addEventListener('brickHit', handleBrickHit);
 		canvas.addEventListener('brickHit', function() {playMultiSound(arrayOfBrickHitSounds)});
 		canvas.addEventListener('brickRemoved', increaseScore);
-		canvas.addEventListener('brickRemoved', ballOne.increaseSpeed);
+		canvas.addEventListener('brickRemoved', allBalls[0].increaseSpeed);
 		canvas.addEventListener('brickRemoved', maybeDropPowerPill);
 		canvas.addEventListener('paddleHit', sounds.paddleHit.play);
 		canvas.addEventListener('paddleHit', paddleBlink);
@@ -102,9 +103,11 @@ window.onload = function() {
 		window.addEventListener('blur', function () {
 			gamePaused = true;
 		});
-		ballOne.ballReset();
+		
 		//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball
 		allBalls = []; // completely wipe the array
+		allBalls[0] = new ballClass();
+		allBalls[0].ballReset(allBalls[0]);
 		setupInput();
 	});
 	testBackgroundMusic = new Audio("audio/pong6-19" + audioFormat);
@@ -117,8 +120,8 @@ function resetGame() {
 	lastScore = score;
 	
 	// FIXME perhaps this should be in ballReset() function below
-	ballOne.baseSpeed = INITIAL_SPEED;
-	ballOne.maxSpeed = INITIAL_MAX_SPEED;
+	allBalls = []; // completely wipe the array
+	allBalls[0].ballReset(allBalls[0]);
 	allBalls.forEach(function (ball) { 
 		ball.baseSpeed = INITIAL_SPEED; 
 		ball.maxSpeed = INITIAL_MAX_SPEED; 
@@ -128,9 +131,9 @@ function resetGame() {
 	resetScore();
 	resetGAMKEDO();
 	ballHeld = true;
-	ballOne.ballReset();
+	
 	//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball
-	allBalls = []; // completely wipe the array
+	
 	lives = INITIAL_LIVES;
 	showTitle = true;
 	initPills();
@@ -149,9 +152,10 @@ function resetGAMKEDO(){
 function resetLevel() {
 	resetBricks();
 	resetPills();
-	ballOne.ballReset();
-	//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball
 	allBalls = []; // completely wipe the array
+	allBalls[0] = new ballClass();
+	allBalls[0].ballReset(allBalls[0])
+	//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball	
 	activePills = 0;
 }
 
@@ -165,13 +169,13 @@ function loadNextLevel() {
 		}
 		setTimeout(function () {
 			resetLevel();
-			ballOne.baseSpeed += 3;
-			ballOne.maxSpeed += 3;
+			allBalls[0].baseSpeed += 3;
+			allBalls[0].maxSpeed += 3;
 			levelTransition = false;
 			let newLevelEvent = new CustomEvent('newLevel');
 			canvas.dispatchEvent(newLevelEvent);
 		}, 1500);
-	}, 600 - ballOne.getSpeedFromVelocity(ballOne.VelX, ballOne.VelY));
+	}, 600 - allBalls[0].getSpeedFromVelocity(allBalls[0].VelX, allBalls[0].VelY));
 }
 
 function dropLife() {
@@ -259,7 +263,7 @@ function drawEverything() {
 		canvasContext.fillText('High Score: ' + highScore.toString(), 50, 10);
 		drawLives();
 		drawGAMKEDO();
-		ballOne.drawBall();
+		allBalls[0].drawBall();
 		allBalls.forEach(function (ball) { ball.drawBall(); }); // multiball
 		drawBricks();
 		drawPills();
@@ -284,11 +288,11 @@ function gameLogic() {
 
 function moveEverything() {
 	if (!showTitle && !gamePaused && !levelTransition) {
-		ballOne.ballMove();
+		allBalls[0].ballMove();
 		allBalls.forEach(function (ball) { ball.ballMove(); }); // multiball
 		pillsMove();
 		if(demoScreen){
-			moveComputerPaddle(ballOne);
+			moveComputerPaddle(allBalls[0]);
 		}
 	}
 	if (gamePaused){
