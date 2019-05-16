@@ -2,7 +2,14 @@ var paddleWidth = 100;
 const PADDLE_ORIGINAL_W = 100;
 const PADDLE_THICKNESS = 48;
 var paddleX = (800 - paddleWidth)/2;
-var paddleY = 540;
+const PADDLE_ORIGINAL_Y = 540;
+var paddleY = PADDLE_ORIGINAL_Y;
+
+var jumpSpeedY = 0;
+var jumpPower = PADDLE_THICKNESS/1.5;
+const GRAVITY = .99;
+const AIR_RESISTANCE = .9;
+
 var paddleAlpha = 1;
 var paddleScale = {x: 1, y: 1};
 
@@ -14,6 +21,16 @@ function movePaddleOnMouseMove(evt) {
 	if (ballHeld) {
 		allBalls[0].X = paddleX + paddleWidth/2;
 	}
+}
+
+function paddleJump() {
+	if (paddleY >= PADDLE_ORIGINAL_Y) {
+		jumpSpeedY = -jumpPower;
+	}
+
+	jumpSpeedY *= AIR_RESISTANCE;
+	jumpSpeedY += GRAVITY;
+	paddleY += jumpSpeedY;
 }
 
 function moveComputerPaddle(whichBall) {

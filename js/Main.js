@@ -14,6 +14,7 @@ allBalls[0] = new ballClass();
 var ballCount = 1;
 var ballHeld = true;
 //power ups
+var paddleJumping = false;
 var stickyBall = false;
 var letterG = false;
 var letterA = false;
@@ -163,6 +164,8 @@ function resetGAMKEDO(){
 function resetLevel() {
 	resetBricks();
 	resetPills();
+	clearPillTimers()
+	clearPillAbilites()
 	allBalls = []; // completely wipe the array
 	allBalls[0] = new ballClass();
 	allBalls[0].ballReset(ballCount)
@@ -304,6 +307,10 @@ function gameLogic() {
 			let noMoreBricksEvent = new CustomEvent('noMoreBricks');
 			canvas.dispatchEvent(noMoreBricksEvent);
 		}, 500)
+	}
+
+	if (paddleJumping) {
+		paddleJump();
 	}
 }
 

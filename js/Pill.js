@@ -1,9 +1,14 @@
 const PILL_W = 50;
 const PILL_H = 20;
 const PILL_DROP_SPEED = 4;
-const PILL_DROP_CHANCE = 0.4;
 const MAX_PILLS = 40;
+const PILL_DROP_CHANCE = 0.4;
 const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, extraLifePill, letterGPill, letterAPill, letterMPill, letterKPill, letterEPill, letterDPill, letterOPill];
+
+// used for testing specific powerups - comment out other initializations
+// const PILL_DROP_CHANCE = 1.1; //Math.random is 0-1 so random will always be < 1.1;
+// const ENABLED_PILLS = [jumpPill]; 
+
 var pills = [];
 
 pointsPill.prototype = new pillClass();
@@ -138,7 +143,7 @@ function moveUpPill() {
 	this.imageOffsetY = PILL_H * 5;
 	this.powerTime = 10000;
 	this.startPower = function () {
-		if (paddleY == 540) {
+		if (paddleY == PADDLE_ORIGINAL_Y) {
 			paddleY -= PADDLE_THICKNESS * 2;
 		}
 	}
@@ -152,13 +157,17 @@ jumpPill.prototype = new pillClass();
 function jumpPill() {
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H * 5;
-	this.powerTime = 10000;
+	this.powerTime = 10000; 
 	this.startPower = function () {
-		//needs to be added
+		paddleJumping = true;
 	}
 
 	this.endPower = function () {
-		//needs to be added
+		if (!paddleJumping) {
+			return;
+		}
+		paddleJumping = false;
+		paddleY = PADDLE_ORIGINAL_Y;
 	}
 }
 
@@ -367,7 +376,8 @@ function clearPillTimers() {
 function clearPillAbilites() {
 	paddleScale.x = 1;
 	paddleWidth = PADDLE_ORIGINAL_W;
+	paddleY = PADDLE_ORIGINAL_Y;
 	stickyBall = false;
+	paddleJumping = false;
 	paddleAlpha = 1;
-	paddleY = 540;
 }
