@@ -2,7 +2,7 @@ const PAUSE_KEY = 'p';
 const MUTE_KEY = 'm';
 const DEBUG_KEY = 'd';
 const EDIT_KEY = 'e';
-
+const DEATH_KEY = 'q';
 
 function calculateMousePos(evt) {
 	var rect = canvas.getBoundingClientRect();
@@ -48,6 +48,9 @@ function keyPressed(evt) {
 	}//end muted if
 	if (evt.key == DEBUG_KEY) {
 		debugMode = !debugMode;
+	}
+	if (evt.key == DEATH_KEY) {
+		canvas.dispatchEvent(outaLivesEvent);
 	}
 	if (evt.key == EDIT_KEY) {
 		levelEditor.enabled = !levelEditor.enabled;

@@ -6,7 +6,6 @@ const MAX_PILLS = 40;
 const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, extraLifePill, letterGPill, letterAPill, letterMPill, letterKPill, letterEPill, letterDPill, letterOPill];
 var pills = [];
 
-
 pointsPill.prototype = new pillClass();
 function pointsPill() {
 	this.imageOffsetX = 0;
@@ -250,8 +249,6 @@ function letterOPill() {
 	checkForGAMKEDO();
 }
 
-
-
 function checkForGAMKEDO(){
 	if(letterG && letterA && letterM && letterK && letterE && letterD && letterO){
 		gamkedo = true; //unlocks GAMKEDO level
@@ -332,6 +329,7 @@ function pillClass() {
 		this.live = true;
 		this.x = dropX;
 		this.y = dropY;
+		this.timer;
 	};
 	
 	this.move = function () {
@@ -339,7 +337,7 @@ function pillClass() {
 			this.y += PILL_DROP_SPEED;
 			if (this.x > paddleX - PILL_W - 1 && this.x < paddleX + paddleWidth && this.y > paddleY - PILL_H/2) {
 				this.startPower();
-				setTimeout(this.endPower, this.powerTime);
+				this.timer = setTimeout(this.endPower, this.powerTime);
 				this.reset();
 			}
 			if (this.y > canvas.height) {
@@ -357,4 +355,19 @@ function pillClass() {
 	this.reset = function() {
 		this.live = false;
 	};
+}
+
+function clearPillTimers() {
+	var timersArrayLength = pills.length;
+	for (var i=0; i<timersArrayLength; i++) {
+  		clearTimeout(pills[i].timer);
+	}
+}
+
+function clearPillAbilites() {
+	paddleScale.x = 1;
+	paddleWidth = PADDLE_ORIGINAL_W;
+	stickyBall = false;
+	paddleAlpha = 1;
+	paddleY = 540;
 }
