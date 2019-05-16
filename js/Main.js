@@ -64,7 +64,7 @@ window.onload = function() {
 		setInterval(function() {
 			moveEverything();
 			drawEverything();
-			gameLogic();			
+			gameLogic();						
 		}, 1000/framesPerSecond);
 		canvas.addEventListener('mousemove', movePaddleOnMouseMove);
 		canvas.addEventListener('mousemove', handleEditorMouseMove);
@@ -114,9 +114,7 @@ window.onload = function() {
 		//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball
 		allBalls = []; // completely wipe the array
 		allBalls[0] = new ballClass();
-		allBalls[0].ballReset(ballCount);
-		console.log(ballCount);
-		console.log(allBalls.length);
+		allBalls[0].ballReset(ballCount);		
 		setupInput();
 	});
 	testBackgroundMusic = new Audio("audio/pong6-19" + audioFormat);
@@ -129,7 +127,9 @@ function resetGame() {
 	lastScore = score;
 	
 	// FIXME perhaps this should be in ballReset() function below
-	//allBalls = []; // completely wipe the array
+	allBalls = []; // completely wipe the array
+	allBalls[0] = new ballClass();
+	ballCount = 1;
 	allBalls[0].ballReset(ballCount);
 	allBalls.forEach(function (ball) { 
 		ball.baseSpeed = INITIAL_SPEED; 

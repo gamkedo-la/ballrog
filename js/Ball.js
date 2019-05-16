@@ -234,7 +234,8 @@ function startMultiBall(quantity) {
 			allBalls[0].velX+Math.random()*8-4,
 			allBalls[0].velY+Math.random()*8-4);
 
-		allBalls.push(newBall);
+		allBalls.push(newBall);		
 	}
+	ballCount = ballCount + quantity;
 }
 
