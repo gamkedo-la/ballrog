@@ -66,6 +66,7 @@ window.onload = function() {
 			gameLogic();			
 		}, 1000/framesPerSecond);
 		canvas.addEventListener('mousemove', movePaddleOnMouseMove);
+		canvas.addEventListener('mousemove', handleEditorMouseMove);
 		canvas.addEventListener('ballMiss', dropLife);
 		canvas.addEventListener('brickHit', handleBrickHit);
 		canvas.addEventListener('brickHit', function() {playMultiSound(arrayOfBrickHitSounds)});
@@ -81,6 +82,11 @@ window.onload = function() {
 		canvas.addEventListener('scoreIncrease', checkAndRewardPlayer);
 		//FIXME: canvas.addEventListener('newLevel', sounds.newLevel.play);
 		canvas.addEventListener('ballMiss', sounds.lifeLost.play);
+		canvas.addEventListener('wheel', handleEditorMouseScroll);
+		canvas.addEventListener('mouseup', setEditorPencilUp);
+		canvas.addEventListener('mousedown', setEditorPencilDown);
+		canvas.addEventListener('mousedown', selectLevelOnMouseDown);
+		canvas.addEventListener('mousedown', pushEditorButton);
 		canvas.addEventListener('mousedown', function(evt) {
 			if (showTitle) {
 				showTitle = false;
@@ -248,6 +254,16 @@ function drawEverything() {
 		if(titleScreenTimer < 1000){
 			titleScreenKeepTime();
 		}
+	} else if (levelEditor.enabled) {
+		for (var col=0; col<Math.floor(canvas.width/editorBackgroundTile.width); col++) {
+			for (var row=0; row<Math.floor(canvas.height/editorBackgroundTile.height); row++) {
+				drawBitMap(editorBackgroundTile, col*editorBackgroundTile.width, row*editorBackgroundTile.height);
+			}
+		}
+		drawBricks();
+		drawSelectedBrickType();
+		drawLevelSelector();
+		drawEditorButtons();
 	} else if (demoScreen) {
 		demoKeepTime();
 		drawDemoScreen();
@@ -287,7 +303,7 @@ function gameLogic() {
 }
 
 function moveEverything() {
-	if (!showTitle && !gamePaused && !levelTransition) {
+	if (!showTitle && !gamePaused && !levelTransition && !levelEditor.enabled) {
 		allBalls[0].ballMove();
 		allBalls.forEach(function (ball) { ball.ballMove(); }); // multiball
 		pillsMove();

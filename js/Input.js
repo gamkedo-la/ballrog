@@ -1,6 +1,7 @@
 const PAUSE_KEY = 'p';
 const MUTE_KEY = 'm';
 const DEBUG_KEY = 'd';
+const EDIT_KEY = 'e';
 
 
 function calculateMousePos(evt) {
@@ -48,7 +49,13 @@ function keyPressed(evt) {
 	if (evt.key == DEBUG_KEY) {
 		debugMode = !debugMode;
 	}
-	if (debugMode) {
+	if (evt.key == EDIT_KEY) {
+		levelEditor.enabled = !levelEditor.enabled;
+	}
+	if (levelEditor.enabled) {
+		initLevelEditor();
+		messageArea.innerHTML = '<strong>LEVEL EDITOR ENABLED</strong>';
+	} else if (debugMode) {
 		messageArea.innerHTML = '<strong>DEBUG MODE ENABLED</strong><br>left and right arrow keys move through levels<br>"r" key reloads current level';
 		switch (evt.key) {
 		case 'm': // debug test multiball

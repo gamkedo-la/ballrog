@@ -163,3 +163,21 @@ You can press 'd' during gameplay to enable debug mode.
 
 While in debug mode, the left and right arrow keys allow navigating through levels enabled in ~LEVEL_SEQ~, and the 'r' key reloads the current level.
 
+** Level Editor
+
+   Pressing the 'e' key during gameplay will launch the level editor (press 'e' again to go back to gameplay).
+
+   You can select any of the available levels by using the blue buttons below the grid.
+
+   To edit a level, simply select one of the brick types using the mouse wheel, and click on the grid cell where you want to place that brick.
+   There's a special type of brick that allows erasing bricks.
+
+   The red /CLEAR/ button on the lower left corner removes *all* bricks from the current level.
+
+   You can download the state of *all levels* using the green /DOWNLOAD/ button on the bottom right. This will produce a ~levelData.js~ file you can place in the ~js~ folder.
+
+*** Caveats
+
+	- There's no /UNDO/ button (yet), you can always reload the page to restore all levels from ~levelData.js~
+	- There's no way to add *new* levels from the editor (yet), but you can add one manually to ~LEVELS~ in ~levelData.js~ and it'll become available to the editor.
+

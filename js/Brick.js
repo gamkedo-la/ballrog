@@ -46,6 +46,10 @@ function getBrickInfo() {
 	} // end of for eachCol
 } // end of getbrickInfo
 
+function drawSingleBrick(brick, leftEdgeX, topEdgeY) {
+	drawBitMap(BRICK_IMAGES[brick], leftEdgeX, topEdgeY);
+}
+
 function drawBricks() {
 	canvasContext.fillStyle = 'white';
 	canvasContext.textAlign = 'left';
@@ -64,10 +68,10 @@ function drawBricks() {
 					if (typeof(BRICK_IMAGES[brick]) == "undefined") {
 						console.log("BAD IMAGE FOR", brick);
 					}
-					drawBitMap(BRICK_IMAGES[brick], brickLeftEdgeX, brickTopEdgeY);
+					drawSingleBrick(brick, brickLeftEdgeX, brickTopEdgeY);
 				}
 		  	}
-			if (debugMode) {
+			if (debugMode || levelEditor.enabled) {
 				canvasContext.fillText(eachRow, 2, brickTopEdgeY + ROW_H/2 + 4);
 				canvasContext.beginPath();
 				canvasContext.moveTo(0, brickTopEdgeY);
@@ -75,15 +79,15 @@ function drawBricks() {
 				canvasContext.stroke();
 			}
 		}
-		if (debugMode) {
-			canvasContext.fillText(eachCol, brickLeftEdgeX + COL_W/2 - 2, TOP_MARGIN);
+		if (debugMode || levelEditor.enabled) {
+			canvasContext.fillText(eachCol, brickLeftEdgeX + COL_W/2 - 2, TOP_MARGIN);			
 			canvasContext.beginPath();
 			canvasContext.moveTo(brickLeftEdgeX, TOP_MARGIN);
 			canvasContext.lineTo(brickLeftEdgeX, TOP_MARGIN + BRICK_H*BRICK_ROWS);
 			canvasContext.stroke();
 		}
 	}
-	if (debugMode) {
+	if (debugMode || levelEditor.enabled) {
 		canvasContext.beginPath();
 		canvasContext.moveTo(0, TOP_MARGIN + BRICK_H*BRICK_ROWS);
 		canvasContext.lineTo(canvas.width, TOP_MARGIN + BRICK_H*BRICK_ROWS);
@@ -109,8 +113,12 @@ function easeBricksbricksInPlace() {
 	} // end of for b < brickInfo.length
 } // end of easeBricksbricksInPlace();
 
-function resetBricks() {
-	brickGrid = LEVELS[LEVEL_SEQ[currentLevelIndex]].slice();
+function resetBricks(grid) {
+	if (typeof(grid) == 'undefined') {
+		brickGrid = LEVELS[LEVEL_SEQ[currentLevelIndex]].slice();
+	} else {
+		brickGrid = grid.slice();
+	}
 	brickInfo = [];
 	getBrickInfo();
 	bricksInPlace = false;
@@ -122,6 +130,13 @@ function resetBricks() {
 	calculateMusicVolumeIncreasPace();
 	testBackgroundMusic.playbackRate = 1;
 	testBackgroundMusic.volume = 0.05;
+}
+
+function getTileForPixelCoord(pixelX, pixelY) {
+	return {
+		col: Math.floor(pixelX/COL_W),
+		row: Math.floor((pixelY - TOP_MARGIN)/ROW_H)
+	}
 }
 
 function getBrickAtTileCoord(brickTileCol, brickTileRow) {
