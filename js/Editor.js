@@ -128,7 +128,7 @@ function handleEditorMouseMove(evt) {
 
 function writeLevelData() {
 	// TODO: write LEVEL_SEQ
-	var output = 'var LEVEL_SEQ = [' + LEVEL_SEQ.toString() + '];\nvar LEVELS = {\n';
+	var output = 'var LEVEL_SEQ = ' + LEVEL_SEQ.toSource() + ';\nvar LEVELS = {\n';
 	for (var i=0; i<levelEditor.editableLevels.length; i++) {
 		let level = LEVELS[levelEditor.editableLevels[i]];
 		output += '\t' + levelEditor.editableLevels[i] + ': [\n';
