@@ -11,8 +11,8 @@ function letterP(xPosition, yPosition) {
 	this.y = yPosition;
 }
 
-letterA.prototype = new letterClass();
-function letterA(xPosition, yPosition) {
+letterAA.prototype = new letterClass();
+function letterAA(xPosition, yPosition) {
 	this.imageOffsetX = 0;
 	this.imageOffsetY = LETTER_H;
 	this.x = xPosition;
@@ -36,8 +36,8 @@ function letterS(xPosition, yPosition) {
 	this.y = yPosition;
 }
 
-letterE.prototype = new letterClass();
-function letterE(xPosition, yPosition) {
+letterEE.prototype = new letterClass();
+function letterEE(xPosition, yPosition) {
 	this.imageOffsetX = 0;
 	this.imageOffsetY = LETTER_H * 4;
 	this.x = xPosition;
