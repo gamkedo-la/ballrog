@@ -11,13 +11,17 @@ const BRICK_TYPES = {
 	onehit: 1,
 	twohit: 2,
 	threehit: 3,
-	unbreakable: 4
+	unbreakable: 4,
+	speedright:5,
+	speedleft:6
 };
 const BRICK_IMAGES = {
 	[BRICK_TYPES.onehit]: brick1Pic,
 	[BRICK_TYPES.twohit]: brick2Pic,
 	[BRICK_TYPES.threehit]: brick3Pic,
-	[BRICK_TYPES.unbreakable]: brick4Pic
+	[BRICK_TYPES.unbreakable]: brick4Pic,
+	[BRICK_TYPES.speedright]:brickRightPic,
+	[BRICK_TYPES.speedleft]:brickLeftPic
 };
 
 var activePills = 0;
@@ -158,40 +162,74 @@ function getRowYCoord(row) {
 
 function handleBrickHit(evt) {
 	var brick = brickGrid[evt.detail.index];
-	
+
+	processBallEffects(brick, evt.detail.ball);
+	processBrickEffects(brick, evt);
+
+	if (brickGrid[evt.detail.index] == BRICK_TYPES.empty) {
+		bricksLeft--;
+		testBackgroundMusic.playbackRate += musicSpeedIncrementForLevel;
+		testBackgroundMusic.volume += musicVolumeIncrementForLevel;
+		// resetBricksOnNextPaddleHit = bricksLeft <= 0;
+		let brickRemovedEvent = new CustomEvent('brickRemoved', {
+			detail: evt.detail
+		});
+		if (bricksLeft <= 0) {
+			canvas.dispatchEvent(brickRemovedEvent);
+			checkPillsLive();
+			//console.log(activePills);
+			if (activePills <= 0) {
+				setTimeout(function() {
+					let noMoreBricksEvent = new CustomEvent('noMoreBricks');
+					canvas.dispatchEvent(noMoreBricksEvent);
+				}, 500)
+			} else {
+				waitForLastPills = true;
+			}
+			return;
+		}
+		canvas.dispatchEvent(brickRemovedEvent);
+	}
+}
+
+function processBallEffects(brick, ball) {
+	if(brick === BRICK_TYPES.speedright) {
+		if(ball.VelX < 0) {
+			ball.VelX = -ball.VelX;
+		} else {
+			ball.VelX = 1.5 * ball.VelX;
+		}
+	} else if(brick === BRICK_TYPES.speedleft) {
+		if(ball.VelX > 0) {
+			ball.VelX = -ball.VelX;
+		} else {
+			ball.VelX = 1.5 * ball.VelX;
+		}
+	}
+}
+
+function processBrickEffects(brick, evt) {
 	// add an Arkanoid-inspired "shine" animation on hit bricks
-	if (brick > 1) { // not about to get destroyed
+	if ((brick > 1) && (brick < 5)) { // not about to get destroyed
 		var effectX = evt.detail.col * BRICK_W;
 		var effectY = evt.detail.row * BRICK_H + BRICK_H + BRICK_H;
 		brickShineEffect.trigger(effectX,effectY);
 	}
 
-	if (brick != BRICK_TYPES.empty && brick != BRICK_TYPES.unbreakable) {
-		brickGrid[evt.detail.index] -= 1;
-		if (brickGrid[evt.detail.index] == BRICK_TYPES.empty) {
-			bricksLeft--;
-			testBackgroundMusic.playbackRate += musicSpeedIncrementForLevel;
-			testBackgroundMusic.volume += musicVolumeIncrementForLevel;
-			// resetBricksOnNextPaddleHit = bricksLeft <= 0;
-			let brickRemovedEvent = new CustomEvent('brickRemoved', {
-				detail: evt.detail
-			});
-			if (bricksLeft <= 0) {
-				canvas.dispatchEvent(brickRemovedEvent);
-				checkPillsLive();
-				//console.log(activePills);
-				if (activePills <= 0) {
-					setTimeout(function() {
-						let noMoreBricksEvent = new CustomEvent('noMoreBricks');
-						canvas.dispatchEvent(noMoreBricksEvent);
-					}, 500)
-				} else {
-					waitForLastPills = true;
-				}
-				return;
-			}
-			canvas.dispatchEvent(brickRemovedEvent);
-		}
+	switch(brick) {
+		case BRICK_TYPES.empty:
+			break;//do nothing for empty spaces
+		case BRICK_TYPES.onehit:
+		case BRICK_TYPES.twohit:
+		case BRICK_TYPES.threehit:
+			brickGrid[evt.detail.index] -= 1;
+			break;
+		case BRICK_TYPES.unbreakable:
+			break;//do nothing for unbreakable
+		case BRICK_TYPES.speedright:
+		case BRICK_TYPES.speedleft:
+			brickGrid[evt.detail.index] = BRICK_TYPES.empty;//these bricks are destroyed in one hit
+			break;
 	}
 }
 

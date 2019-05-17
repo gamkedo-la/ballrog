@@ -202,7 +202,8 @@ function ballClass(x,y,vx,vy){
 				col: tileCol,
 				row: tileRow,
 				x: this.X,
-				y: this.Y
+				y: this.Y,
+				ball:this
 			}});
 			canvas.dispatchEvent(brickHitEvent);
 			
@@ -212,7 +213,6 @@ function ballClass(x,y,vx,vy){
 	}
 
 	this.drawBall = function() {
-		
 		this.ballTrail.draw();
 		this.bounceEffect.draw();
 		drawBitMap(ballPic, this.X - BALL_RADIUS, this.Y - BALL_RADIUS);

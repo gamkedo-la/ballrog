@@ -2,12 +2,12 @@ var demoModeTimer = 0;
 var titleScreenTimer = 0;
 var displayClickToStart = false;
 var clicksBetweenDisplayStartTimer = 0;
-const DEMO_DELAY = 999;
+const TITLE_SCREEN_DELAY = 999;
 
 function titleScreenKeepTime(){
 	titleScreenTimer++
 //	console.log('Title Screen Timer: ' + titleScreenTimer);
-	if(titleScreenTimer > DEMO_DELAY){
+	if(titleScreenTimer > TITLE_SCREEN_DELAY){
 		showTitle = false;
 		demoScreen = true;
 	}
