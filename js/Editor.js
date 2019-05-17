@@ -10,35 +10,61 @@ var levelEditor = {
 	mousePos: {x: 0, y: 0, col: 0, row: 0},
 	currentLevelKey: '0',
 	editableLevels: Object.keys(LEVELS),
+	buttonAreaY: 500,
 	buttons: {
-		download: {
-			text: 'DOWNLOAD',
-			x: 700, y: 500,
-			color: '#37946e',
-			action: writeLevelData
+		create: {
+			x: 0,
+			text: 'NEW LEVEL',
+			color: 'white',
+			textColor: 'black',
+			active: true,
+			action: newLevel
+		},
+		remove: {
+			x: 0,
+			text: 'REMOVE',
+			color: '#ac3232',
+			textColor: 'white',
+			active: true,
+			action: removeLevel
 		},
 		clear: {
+			x: 0,
 			text: 'CLEAR',
-			x: 0, y: 500,
-			color: '#ac3232',
+			color: '#fbf236',
+			textColor: 'black',
+			active: true,
 			action: clearLevel
+		},
+		download: {
+			x: 0,
+			text: 'DOWNLOAD',
+			color: '#37946e',
+			textColor: 'white',
+			active: true,
+			action: writeLevelData
 		}
 	}
 }
 
 function initLevelEditor() {
 	levelEditor.currentLevelKey = LEVEL_SEQ[currentLevelIndex].toString();
-	levelEditor.buttons.download.x = canvas.width - BUTTON_W;
-	levelEditor.buttons.download.y = canvas.height - BUTTON_H;
-	levelEditor.buttons.clear.x = 0;
-	levelEditor.buttons.clear.y = canvas.height - BUTTON_H;
+	levelEditor.buttonAreaY = canvas.height - BUTTON_H;
+	levelEditor.buttons.remove.active = levelEditor.editableLevels.length > 1;
+	var buttons = Object.keys(levelEditor.buttons);
+	buttons.forEach(function(key, i) {
+		let button = levelEditor.buttons[key];
+ 		button.x = i*(canvas.width/buttons.length) + BUTTON_W/2;
+	});
 }
 
+
 function drawEditorButtons() {
-	Object.keys(levelEditor.buttons).forEach(function(key, i) {
+	var buttons = Object.keys(levelEditor.buttons).filter(key => levelEditor.buttons[key].active);
+	buttons.forEach(function(key, i) {
 		let button = levelEditor.buttons[key];
-		colorRect(button.x, button.y, BUTTON_W, BUTTON_H, button.color);
-		colorText(button.text, button.x + 2, button.y + BUTTON_H/2 + 2, 'white');
+		colorRect(button.x, levelEditor.buttonAreaY, BUTTON_W, BUTTON_H, button.color);
+		colorText(button.text, button.x + 2, levelEditor.buttonAreaY + BUTTON_H/2 + 2, button.textColor);
 	});
 }
 
@@ -129,6 +155,47 @@ function clearLevel() {
 	}
 }
 
+function newLevel() {
+	if (!levelEditor.enabled) {
+		return;
+	}
+	var newLevelKey;
+	var newLevel = [];
+	var promptText = "What's the name of this new shiny level?";
+
+	do {
+		newLevelKey = prompt(promptText);
+		if (newLevelKey == null) {
+			return;
+		}
+		promptText = "Oops, that name's taken. You can come up with a better one!";
+	} while (levelEditor.editableLevels.indexOf(newLevelKey) > 0);
+	
+	for (let i=0; i<BRICK_COLS*BRICK_ROWS; i++) {
+		newLevel[i] = BRICK_TYPES.empty;
+	}
+
+	LEVELS[newLevelKey] = newLevel;
+	LEVEL_SEQ.push(newLevelKey);
+	currentLevelIndex = LEVEL_SEQ.length - 1;
+	levelEditor.editableLevels = Object.keys(LEVELS);
+	initLevelEditor();
+	resetBricks(LEVELS[newLevelKey]);
+}
+
+function removeLevel() {
+	if (!levelEditor.enabled || levelEditor.editableLevels.length <= 1) {
+		return;
+	}
+	if (confirm('For real?')) {
+		delete LEVELS[levelEditor.currentLevelKey];
+		LEVEL_SEQ = LEVEL_SEQ.filter(key => key != levelEditor.currentLevelKey);
+		levelEditor.editableLevels = Object.keys(LEVELS);
+		currentLevelIndex = LEVEL_SEQ.length - 1;
+		initLevelEditor();		
+	}
+}
+
 function selectLevelOnMouseDown(evt) {
 	didInteract = true;
 	if (!levelEditor.enabled) {
@@ -165,7 +232,7 @@ function pushEditorButton(evt) {
 	}
 	Object.keys(levelEditor.buttons).forEach(function(key, i) {
 		let button = levelEditor.buttons[key];
-		if (x > button.x && x < button.x + BUTTON_W && y > button.y && y < button.y + BUTTON_H) {
+		if (x > button.x && x < button.x + BUTTON_W && y > levelEditor.buttonAreaY && y < levelEditor.buttonAreaY + BUTTON_H) {
 			button.action();
 		}
 	});	

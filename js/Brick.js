@@ -61,7 +61,7 @@ function drawBricks() {
 		for (var eachRow=0; eachRow<BRICK_ROWS; eachRow++) {
 			var brickLeftEdgeX = getColXCoord(eachCol);
 			var brickTopEdgeY = getRowYCoord(eachRow);
-			if (!bricksInPlace) {
+			if (!(bricksInPlace || levelEditor.enabled) ) {
 				//colorRect(0, 0, canvas.width, canvas.height, 'rgb(75,105,47 )');
 				easeBricksbricksInPlace();
 				return;
