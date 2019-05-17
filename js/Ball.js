@@ -21,7 +21,7 @@ function ballClass(x,y,vx,vy){
 
 
 	this.ballReset = function(ballCount) {
-		if(ballCount <= 1){			
+		if(ballCount == 1){			
 			this.minSpeed = this.baseSpeed;
 			this.X = paddleX + paddleWidth/2;
 			this.Y = paddleY - BALL_RADIUS/2;
@@ -31,10 +31,7 @@ function ballClass(x,y,vx,vy){
 			passingThrough = false;
 			this.ballResetEvent = new CustomEvent('ballReset');
 			canvas.dispatchEvent(this.ballResetEvent);
-		}//end if
-		else{
-			ballCount -=1;;
-		}
+		}//end if		
 	}// end ballReset
 
 	 this.updateVelocity = function(velX, velY) {
@@ -100,7 +97,7 @@ function ballClass(x,y,vx,vy){
 				}
 			}
 			// fell through floor
-			if (this.Y > canvas.height) { 
+			if (this.Y > canvas.height) {				
 				this.ballReset(ballCount);
 				canvas.dispatchEvent(this.ballMissEvent);
 			}

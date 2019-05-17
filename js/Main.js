@@ -65,7 +65,7 @@ window.onload = function() {
 		setInterval(function() {
 			moveEverything();
 			drawEverything();
-			gameLogic();						
+			gameLogic();				
 		}, 1000/framesPerSecond);
 		canvas.addEventListener('mousemove', movePaddleOnMouseMove);
 		canvas.addEventListener('mousemove', handleEditorMouseMove);
@@ -192,8 +192,10 @@ function loadNextLevel() {
 	}, 600 - allBalls[0].getSpeedFromVelocity(allBalls[0].VelX, allBalls[0].VelY));
 }
 
-function dropLife() {
+function dropLife() {	
+	if(ballCount ==1){
 	lives--;
+	}
 	if (lives < 0) {
 		canvas.dispatchEvent(outaLivesEvent);
 	}
@@ -287,7 +289,7 @@ function drawEverything() {
 		canvasContext.fillText('High Score: ' + highScore.toString(), 50, 10);
 		drawLives();
 		drawGAMKEDO();
-		allBalls[0].drawBall();
+		//allBalls[0].drawBall();
 		allBalls.forEach(function (ball) { ball.drawBall(); }); // multiball
 		drawBricks();
 		drawPills();
