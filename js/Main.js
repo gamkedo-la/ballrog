@@ -146,6 +146,7 @@ function resetGame() {
 	
 	lives = INITIAL_LIVES;
 	showTitle = true;
+	titleScreenTimer = 0;
 	clearPillTimers();
 	clearPillAbilites();
 	initPills();

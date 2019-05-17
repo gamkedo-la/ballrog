@@ -3,6 +3,7 @@ const MUTE_KEY = 'm';
 const DEBUG_KEY = 'd';
 const EDIT_KEY = 'e';
 const DEATH_KEY = 'q';
+let didInteract = false;
 
 function calculateMousePos(evt) {
 	var rect = canvas.getBoundingClientRect();
@@ -21,12 +22,13 @@ function setupInput() {
 
 function keyPressed(evt) {
   console.log(evt);
+  didInteract = true;
   if (evt.key == PAUSE_KEY) {
     if (gamePaused) {
       gamePaused = false;
 	  resetLetters();
     } else {
-			var letter;
+		var letter;
 		gamePaused = true;
 		letter = new letterP(73, 300); // Initiate letters P A U S E
 		letters.push(letter);

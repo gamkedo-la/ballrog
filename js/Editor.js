@@ -130,6 +130,7 @@ function clearLevel() {
 }
 
 function selectLevelOnMouseDown(evt) {
+	didInteract = true;
 	if (!levelEditor.enabled) {
 		return;
 	}
