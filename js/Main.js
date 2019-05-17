@@ -118,7 +118,7 @@ window.onload = function() {
 		allBalls[0].ballReset(ballCount);		
 		setupInput();
 	});
-	testBackgroundMusic = new Audio("audio/pong6-19" + audioFormat);
+	testBackgroundMusic = new Audio("audio/gameplayMusic" + audioFormat);
 	testBackgroundMusic.loop = true;
 	testBackgroundMusic.volume = 0.05;
 }
