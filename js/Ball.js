@@ -31,7 +31,7 @@ function ballClass(x,y,vx,vy){
 			passingThrough = false;
 			this.ballResetEvent = new CustomEvent('ballReset');
 			canvas.dispatchEvent(this.ballResetEvent);
-		}//end if		
+		}//end if
 	}// end ballReset
 
 	 this.updateVelocity = function(velX, velY) {
@@ -97,10 +97,18 @@ function ballClass(x,y,vx,vy){
 				}
 			}
 			// fell through floor
-			if (this.Y > canvas.height) {				
+			if (this.Y > canvas.height) {
 				this.ballReset(ballCount);
 				canvas.dispatchEvent(this.ballMissEvent);
-			}
+					if(ballCount != 1){
+						ballCount--;
+						for(var i = 0; i < allBalls.length; i++){
+							if(allBalls[i] === this){
+							allBalls.splice(i, 1); //destroy extra ball that falls through floor
+							}//end if
+						}//end for							
+					}//end if				
+			}//end if
 			// hit ceiling
 			if (this.Y < 0) { 
 				this.updateVelocity(this.VelX, -1*this.VelY);
