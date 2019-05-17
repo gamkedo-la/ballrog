@@ -34,9 +34,9 @@ function paddleJump() {
 }
 
 function moveComputerPaddle(whichBall) {
-	var speed = getSpeedFromVelocity(whichBall.VelX, whichBall.VelY)*0.96;
+	var speed = whichBall.getSpeedFromVelocity(whichBall.VelX, whichBall.VelY)*0.96;
 	var checkX = whichBall.X;
-	if (ballVelY > 0) {
+	if (whichBall.VelY > 0) {
 		if (checkX > paddleX + paddleWidth*0.75) {
 			paddleX += speed;
 		} else if (checkX < paddleX + paddleWidth*0.25) {
