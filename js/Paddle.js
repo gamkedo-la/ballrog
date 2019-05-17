@@ -6,7 +6,8 @@ const PADDLE_ORIGINAL_Y = 540;
 var paddleY = PADDLE_ORIGINAL_Y;
 
 var jumpSpeedY = 0;
-var jumpPower = PADDLE_THICKNESS/1.5;
+var currentJumpFactorIndex = 0;
+const JUMP_POWER_FACTORS = [1.2, 1.5, 1.8];
 const GRAVITY = .99;
 const AIR_RESISTANCE = .9;
 
@@ -25,7 +26,12 @@ function movePaddleOnMouseMove(evt) {
 
 function paddleJump() {
 	if (paddleY >= PADDLE_ORIGINAL_Y) {
-		jumpSpeedY = -jumpPower;
+		let power = PADDLE_THICKNESS/JUMP_POWER_FACTORS[currentJumpFactorIndex];
+		jumpSpeedY = -power;
+		currentJumpFactorIndex++;
+		if (currentJumpFactorIndex >= JUMP_POWER_FACTORS.length) {
+			currentJumpFactorIndex = 0;
+		}
 	}
 
 	jumpSpeedY *= AIR_RESISTANCE;
