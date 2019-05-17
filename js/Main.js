@@ -168,6 +168,7 @@ function resetLevel() {
 	clearPillTimers()
 	clearPillAbilites()
 	allBalls = []; // completely wipe the array
+	ballCount = 1; 
 	allBalls[0] = new ballClass();
 	allBalls[0].ballReset(ballCount)
 	//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball	
