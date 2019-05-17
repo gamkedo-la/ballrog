@@ -5,7 +5,7 @@ var clicksBetweenDisplayStartTimer = 0;
 
 function titleScreenKeepTime(){
 	titleScreenTimer++
-	console.log('Title Screen Timer: ' + titleScreenTimer);
+//	console.log('Title Screen Timer: ' + titleScreenTimer);
 	if(titleScreenTimer > 999){
 		showTitle = false;
 		demoScreen = true;

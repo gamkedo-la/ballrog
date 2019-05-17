@@ -196,8 +196,12 @@ function handleBrickHit(evt) {
 }
 
 function isValidBrick(brickValue) {
-	return (brickValue === BRICK_TYPES.onehit ||
-			brickValue === BRICK_TYPES.twohit ||
-			brickValue === BRICK_TYPES.threehit ||
-			brickValue === BRICK_TYPES.unbreakable);
+	const typeKeys = Object.keys(BRICK_TYPES);
+	for(let i = 0; i < typeKeys.length; i++) {
+		if(typeKeys[i] === "empty") continue; //want to ignore the "empty" brick type
+		
+		if(brickValue === BRICK_TYPES[typeKeys[i]]) return true;
+	}
+
+	return false;
 }

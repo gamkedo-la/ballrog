@@ -42,7 +42,7 @@ var sounds = {
 	wallHit: new SoundOverlapsClass("audio/wallHit"),
 	// FIXME: gameStart: new SoundOverlapsClass("audio/gameStart"),
 	// FIXME: newLevel: new SoundOverlapsClass("audio/newLevel"),
-	lifeGet: new SoundOverlapsClass("audio/lifeGet"),
+	// FIXME: lifeGet: new SoundOverlapsClass("audio/lifeGet"),//this file is missing, causing a 404 error
 	lifeLost: new SoundOverlapsClass("audio/lifeLost"),
 	gameOver: new SoundOverlapsClass("audio/gameOver"),
 
