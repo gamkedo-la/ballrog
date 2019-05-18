@@ -70,52 +70,23 @@ function ballClass(x,y,vx,vy){
 
 	 this.ballMove = function() {
 		if (!ballHeld) {
+			//update ball position using current velocity
 			this.X += this.VelX;
 			this.Y += this.VelY;
-			// bounce off side walls
-			if ((this.X + BALL_RADIUS > canvas.width && this.VelX > 0) || (this.X - BALL_RADIUS < 0 && this.VelX < 0)){  //keeps ball within screen (sides and top)
-				this.bounceEffect.trigger(this.X+(this.VelX>0?BALL_RADIUS:-BALL_RADIUS),this.Y);
-				this.updateVelocity(-1*this.VelX, this.VelY);
-				canvas.dispatchEvent(this.wallHitEvent);
-			}
-			// bounce off the paddle
-			if (this.Y + BALL_RADIUS > paddleY && this.Y - BALL_RADIUS < paddleY + PADDLE_THICKNESS && this.VelY > 0) { //ball hits the paddle
-				if (this.X + BALL_RADIUS > paddleX && this.X - BALL_RADIUS < paddleX + paddleWidth) {
-					if(stickyBall){
-						ballHeld = true;
-					}
-					let deltaX = this.X - (paddleX + paddleWidth/(2*paddleScale.x));
-					var randomAngle = (Math.random() * 0.1);
-					this.updateVelocity(deltaX*0.16, -1*this.VelY);
-					let currentSpeed = this.getSpeedFromVelocity(this.VelX, this.VelY);
-					if (currentSpeed < this.minSpeed) {
-						this.updateSpeed(this.minSpeed) * randomAngle;
-					}
-					let paddleHitEvent = new CustomEvent('paddleHit');
-					canvas.dispatchEvent(paddleHitEvent);
-					this.bounceEffect.trigger(this.X,this.Y+BALL_RADIUS+5);
-				}
-			}
-			// fell through floor
-			if (this.Y > canvas.height) {
-				this.ballReset(ballCount);
-				canvas.dispatchEvent(this.ballMissEvent);
-					if(ballCount != 1){
-						ballCount--;
-						for(var i = 0; i < allBalls.length; i++){
-							if(allBalls[i] === this){
-							allBalls.splice(i, 1); //destroy extra ball that falls through floor
-							}//end if
-						}//end for							
-					}//end if				
-			}//end if
-			// hit ceiling
-			if (this.Y < 0) { 
-				this.updateVelocity(this.VelX, -1*this.VelY);
-				canvas.dispatchEvent(this.wallHitEvent);
-				this.bounceEffect.trigger(this.X,this.Y-BALL_RADIUS);
 
-			}
+			// bounce off side walls
+			this.bounceOffSidesIfAppropriate();
+
+			// bounce off the paddle
+			this.bounceOffPaddleIfAppropriate();
+
+			// fell through floor
+			this.fallThroughFloorIfAppropriate();
+
+			// hit ceiling
+			this.bounceOffCeilingIfAppropriate();
+
+			// break a brick
 			this.breakAndBounceOffBrickAtPixelCoord(
 				this.X + Math.sign(this.VelX)*BALL_RADIUS,
 				this.Y + Math.sign(this.VelY)*BALL_RADIUS
@@ -123,8 +94,75 @@ function ballClass(x,y,vx,vy){
 		}
 
 		this.ballTrail.update(this.X,this.Y);
+	 }
 
-	}
+	 this.bounceOffSidesIfAppropriate = function() {
+		if ((this.X + BALL_RADIUS > canvas.width && this.VelX > 0) || 
+		    (this.X - BALL_RADIUS < 0 && this.VelX < 0)) {  //keeps ball within screen
+			this.bounceEffect.trigger(this.X+(this.VelX>0?BALL_RADIUS:-BALL_RADIUS),this.Y);
+			this.updateVelocity(-1*this.VelX, this.VelY);
+			canvas.dispatchEvent(this.wallHitEvent);
+		}
+	 }
+
+	 this.bounceOffPaddleIfAppropriate = function() {
+		if (this.didHitPaddle()) { //ball hit the paddle
+			if(stickyBall) {
+				ballHeld = true;
+			}
+
+			let deltaX = this.X - (paddleX + paddleWidth/(2*paddleScale.x));
+			var randomAngle = (Math.random() * 0.1);
+			this.updateVelocity(deltaX*0.16, -1*this.VelY);
+			let currentSpeed = this.getSpeedFromVelocity(this.VelX, this.VelY);
+			
+			if (currentSpeed < this.minSpeed) {
+				this.updateSpeed(this.minSpeed) * randomAngle;
+			}
+
+			let paddleHitEvent = new CustomEvent('paddleHit');
+			canvas.dispatchEvent(paddleHitEvent);
+			this.bounceEffect.trigger(this.X,this.Y+BALL_RADIUS+5);
+		}
+	 }
+
+	 this.didHitPaddle = function() {
+		let result = false;
+		if ((this.Y + BALL_RADIUS > paddleY) && 
+			(this.Y - BALL_RADIUS < paddleY + PADDLE_THICKNESS) && 
+			(this.VelY > 0)) { //same vertical position as paddle
+				if ((this.X + BALL_RADIUS > paddleX) && 
+				    (this.X - BALL_RADIUS < paddleX + paddleWidth)) { //same horizontal position as paddle
+					//ball hits the paddle
+					result = true;
+				}
+			}
+
+		return result;
+	 }
+
+	 this.fallThroughFloorIfAppropriate = function() {
+		if (this.Y > canvas.height) {
+			this.ballReset(ballCount);
+			canvas.dispatchEvent(this.ballMissEvent);
+				if(ballCount != 1) {
+					ballCount--;
+					for(var i = 0; i < allBalls.length; i++) {
+						if(allBalls[i] === this) {
+						allBalls.splice(i, 1); //destroy extra ball that falls through floor
+						}//end if
+					}//end for							
+				}//end if				
+		}//end if
+	 }
+
+	 this.bounceOffCeilingIfAppropriate = function() {
+		if (this.Y < 0) { 
+			this.updateVelocity(this.VelX, -1*this.VelY);
+			canvas.dispatchEvent(this.wallHitEvent);
+			this.bounceEffect.trigger(this.X,this.Y-BALL_RADIUS);
+		}
+	 }
 
 	 this.breakAndBounceOffBrickAtPixelCoord = function(pixelX, pixelY) {
 		if (pixelY > BRICK_H*BRICK_ROWS + TOP_MARGIN || pixelY < TOP_MARGIN) {
@@ -221,7 +259,10 @@ function ballClass(x,y,vx,vy){
 	}
 
 	this.drawBall = function() {
-		this.ballTrail.draw();
+		if(!ballHeld) {
+			this.ballTrail.draw();
+		}
+
 		this.bounceEffect.draw();
 		drawBitMap(ballPic, this.X - BALL_RADIUS, this.Y - BALL_RADIUS);
 	}

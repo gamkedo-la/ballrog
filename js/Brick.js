@@ -13,7 +13,8 @@ const BRICK_TYPES = {
 	threehit: 3,
 	unbreakable: 4,
 	speedright:5,
-	speedleft:6
+	speedleft:6,
+	speedvertical:7
 };
 const BRICK_IMAGES = {
 	[BRICK_TYPES.onehit]: brick1Pic,
@@ -21,7 +22,8 @@ const BRICK_IMAGES = {
 	[BRICK_TYPES.threehit]: brick3Pic,
 	[BRICK_TYPES.unbreakable]: brick4Pic,
 	[BRICK_TYPES.speedright]:brickRightPic,
-	[BRICK_TYPES.speedleft]:brickLeftPic
+	[BRICK_TYPES.speedleft]:brickLeftPic,
+	[BRICK_TYPES.speedvertical]:brickVertPic
 };
 
 var activePills = 0;
@@ -57,47 +59,59 @@ function drawSingleBrick(brick, leftEdgeX, topEdgeY) {
 function drawBricks() {
 	canvasContext.fillStyle = 'white';
 	canvasContext.textAlign = 'left';
+
+	if (levelEditor.enabled) {
+		drawEditorGrid();
+		drawLevelBricks();
+	} else {
+		if(!bricksInPlace) {
+			easeBricksbricksInPlace();
+		} else {
+			drawLevelBricks();
+	
+			brickShineEffect.draw();	
+		}
+	}	
+}
+
+function drawLevelBricks() {
 	for (var eachCol=0; eachCol<BRICK_COLS; eachCol++) {
 		for (var eachRow=0; eachRow<BRICK_ROWS; eachRow++) {
 			var brickLeftEdgeX = getColXCoord(eachCol);
 			var brickTopEdgeY = getRowYCoord(eachRow);
-			if (!(bricksInPlace || levelEditor.enabled) ) {
-				//colorRect(0, 0, canvas.width, canvas.height, 'rgb(75,105,47 )');
-				easeBricksbricksInPlace();
-				return;
-			} else {
-				var brick = getBrickAtTileCoord(eachCol, eachRow);
-				if(typeof(brick) != "undefined" && brick != BRICK_TYPES.empty) {
-					// TODO: get brick index here to find brick type
-					if (typeof(BRICK_IMAGES[brick]) == "undefined") {
-						console.log("BAD IMAGE FOR", brick);
-					}
-					drawSingleBrick(brick, brickLeftEdgeX, brickTopEdgeY);
+			var brick = getBrickAtTileCoord(eachCol, eachRow);
+
+			if(typeof(brick) != "undefined" && brick != BRICK_TYPES.empty) {
+				if (typeof(BRICK_IMAGES[brick]) == "undefined") {
+					console.log("BAD IMAGE FOR", brick);
 				}
-		  	}
-			if (debugMode || levelEditor.enabled) {
-				canvasContext.fillText(eachRow, 2, brickTopEdgeY + ROW_H/2 + 4);
-				canvasContext.beginPath();
-				canvasContext.moveTo(0, brickTopEdgeY);
-				canvasContext.lineTo(canvas.width, brickTopEdgeY);
-				canvasContext.stroke();
+				drawSingleBrick(brick, brickLeftEdgeX, brickTopEdgeY);
 			}
 		}
-		if (debugMode || levelEditor.enabled) {
-			canvasContext.fillText(eachCol, brickLeftEdgeX + COL_W/2 - 2, TOP_MARGIN);			
-			canvasContext.beginPath();
-			canvasContext.moveTo(brickLeftEdgeX, TOP_MARGIN);
-			canvasContext.lineTo(brickLeftEdgeX, TOP_MARGIN + BRICK_H*BRICK_ROWS);
-			canvasContext.stroke();
+	}
+}
+
+function drawEditorGrid() {
+	for (var eachCol=0; eachCol<BRICK_COLS; eachCol++) {
+		for (var eachRow=0; eachRow<BRICK_ROWS; eachRow++) {
+			var brickLeftEdgeX = getColXCoord(eachCol);
+			var brickTopEdgeY = getRowYCoord(eachRow);
+
+				canvasContext.fillText(eachRow, 2, brickTopEdgeY + ROW_H/2 + 4);
+				drawEditorGridLine(0, brickTopEdgeY, canvas.width, brickTopEdgeY);
 		}
+			canvasContext.fillText(eachCol, brickLeftEdgeX + COL_W/2 - 2, TOP_MARGIN);			
+			drawEditorGridLine(brickLeftEdgeX, TOP_MARGIN, brickLeftEdgeX, TOP_MARGIN + BRICK_H*BRICK_ROWS);
 	}
-	if (debugMode || levelEditor.enabled) {
-		canvasContext.beginPath();
-		canvasContext.moveTo(0, TOP_MARGIN + BRICK_H*BRICK_ROWS);
-		canvasContext.lineTo(canvas.width, TOP_MARGIN + BRICK_H*BRICK_ROWS);
-		canvasContext.stroke();
-	}
-	brickShineEffect.draw();
+
+	drawEditorGridLine(0, TOP_MARGIN + BRICK_H*BRICK_ROWS, canvas.width, TOP_MARGIN + BRICK_H*BRICK_ROWS);
+}
+
+function drawEditorGridLine(startX, startY, endX, endY) {
+	canvasContext.beginPath();
+	canvasContext.moveTo(startX, startY);
+	canvasContext.lineTo(endX, endY);
+	canvasContext.stroke();
 }
 
 function easeBricksbricksInPlace() {
@@ -193,44 +207,57 @@ function handleBrickHit(evt) {
 }
 
 function processBallEffects(brick, ball) {
-	if(brick === BRICK_TYPES.speedright) {
-		if(ball.VelX < 0) {
-			ball.VelX = -ball.VelX;
-		} else {
-			ball.VelX = 1.5 * ball.VelX;
-		}
-	} else if(brick === BRICK_TYPES.speedleft) {
-		if(ball.VelX > 0) {
-			ball.VelX = -ball.VelX;
-		} else {
-			ball.VelX = 1.5 * ball.VelX;
-		}
+	switch(brick) {
+		case BRICK_TYPES.speedright:
+			if(ball.VelX < 0) {
+				ball.VelX = -ball.VelX;
+			} else {
+				ball.VelX = 1.5 * ball.VelX;
+			}
+			break;
+		case BRICK_TYPES.speedleft:
+			if(ball.VelX > 0) {
+				ball.VelX = -ball.VelX;
+			} else {
+				ball.VelX = 1.5 * ball.VelX;
+			}
+			break;
+		case BRICK_TYPES.speedvertical:
+			ball.VelX = 0;
+		default:
+			break;
 	}
 }
 
 function processBrickEffects(brick, evt) {
-	// add an Arkanoid-inspired "shine" animation on hit bricks
-	if ((brick > 1) && (brick < 5)) { // not about to get destroyed
-		var effectX = evt.detail.col * BRICK_W;
-		var effectY = evt.detail.row * BRICK_H + BRICK_H + BRICK_H;
-		brickShineEffect.trigger(effectX,effectY);
-	}
-
 	switch(brick) {
 		case BRICK_TYPES.empty:
 			break;//do nothing for empty spaces
 		case BRICK_TYPES.onehit:
+			brickGrid[evt.detail.index] -= 1;
+			break;
 		case BRICK_TYPES.twohit:
 		case BRICK_TYPES.threehit:
+			shineBrick(evt);
 			brickGrid[evt.detail.index] -= 1;
 			break;
 		case BRICK_TYPES.unbreakable:
-			break;//do nothing for unbreakable
+			shineBrick(evt);
+			break;
 		case BRICK_TYPES.speedright:
 		case BRICK_TYPES.speedleft:
-			brickGrid[evt.detail.index] = BRICK_TYPES.empty;//these bricks are destroyed in one hit
-			break;
+		case BRICK_TYPES.speedvertical:
+			//these bricks are destroyed in one hit
+			brickGrid[evt.detail.index] = BRICK_TYPES.empty;
+			break;			
 	}
+}
+
+function shineBrick(evt) {
+	// add an Arkanoid-inspired "shine" animation on hit bricks
+	var effectX = evt.detail.col * BRICK_W;
+	var effectY = evt.detail.row * BRICK_H + BRICK_H + BRICK_H;
+	brickShineEffect.trigger(effectX,effectY);
 }
 
 function isValidBrick(brickValue) {
