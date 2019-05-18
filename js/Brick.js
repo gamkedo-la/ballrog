@@ -57,47 +57,59 @@ function drawSingleBrick(brick, leftEdgeX, topEdgeY) {
 function drawBricks() {
 	canvasContext.fillStyle = 'white';
 	canvasContext.textAlign = 'left';
+
+	if (levelEditor.enabled) {
+		drawEditorGrid();
+		drawLevelBricks();
+	} else {
+		if(!bricksInPlace) {
+			easeBricksbricksInPlace();
+		} else {
+			drawLevelBricks();
+	
+			brickShineEffect.draw();	
+		}
+	}	
+}
+
+function drawLevelBricks() {
 	for (var eachCol=0; eachCol<BRICK_COLS; eachCol++) {
 		for (var eachRow=0; eachRow<BRICK_ROWS; eachRow++) {
 			var brickLeftEdgeX = getColXCoord(eachCol);
 			var brickTopEdgeY = getRowYCoord(eachRow);
-			if (!(bricksInPlace || levelEditor.enabled) ) {
-				//colorRect(0, 0, canvas.width, canvas.height, 'rgb(75,105,47 )');
-				easeBricksbricksInPlace();
-				return;
-			} else {
-				var brick = getBrickAtTileCoord(eachCol, eachRow);
-				if(typeof(brick) != "undefined" && brick != BRICK_TYPES.empty) {
-					// TODO: get brick index here to find brick type
-					if (typeof(BRICK_IMAGES[brick]) == "undefined") {
-						console.log("BAD IMAGE FOR", brick);
-					}
-					drawSingleBrick(brick, brickLeftEdgeX, brickTopEdgeY);
+			var brick = getBrickAtTileCoord(eachCol, eachRow);
+
+			if(typeof(brick) != "undefined" && brick != BRICK_TYPES.empty) {
+				if (typeof(BRICK_IMAGES[brick]) == "undefined") {
+					console.log("BAD IMAGE FOR", brick);
 				}
-		  	}
-			if (debugMode || levelEditor.enabled) {
-				canvasContext.fillText(eachRow, 2, brickTopEdgeY + ROW_H/2 + 4);
-				canvasContext.beginPath();
-				canvasContext.moveTo(0, brickTopEdgeY);
-				canvasContext.lineTo(canvas.width, brickTopEdgeY);
-				canvasContext.stroke();
+				drawSingleBrick(brick, brickLeftEdgeX, brickTopEdgeY);
 			}
 		}
-		if (debugMode || levelEditor.enabled) {
-			canvasContext.fillText(eachCol, brickLeftEdgeX + COL_W/2 - 2, TOP_MARGIN);			
-			canvasContext.beginPath();
-			canvasContext.moveTo(brickLeftEdgeX, TOP_MARGIN);
-			canvasContext.lineTo(brickLeftEdgeX, TOP_MARGIN + BRICK_H*BRICK_ROWS);
-			canvasContext.stroke();
+	}
+}
+
+function drawEditorGrid() {
+	for (var eachCol=0; eachCol<BRICK_COLS; eachCol++) {
+		for (var eachRow=0; eachRow<BRICK_ROWS; eachRow++) {
+			var brickLeftEdgeX = getColXCoord(eachCol);
+			var brickTopEdgeY = getRowYCoord(eachRow);
+
+				canvasContext.fillText(eachRow, 2, brickTopEdgeY + ROW_H/2 + 4);
+				drawEditorGridLine(0, brickTopEdgeY, canvas.width, brickTopEdgeY);
 		}
+			canvasContext.fillText(eachCol, brickLeftEdgeX + COL_W/2 - 2, TOP_MARGIN);			
+			drawEditorGridLine(brickLeftEdgeX, TOP_MARGIN, brickLeftEdgeX, TOP_MARGIN + BRICK_H*BRICK_ROWS);
 	}
-	if (debugMode || levelEditor.enabled) {
-		canvasContext.beginPath();
-		canvasContext.moveTo(0, TOP_MARGIN + BRICK_H*BRICK_ROWS);
-		canvasContext.lineTo(canvas.width, TOP_MARGIN + BRICK_H*BRICK_ROWS);
-		canvasContext.stroke();
-	}
-	brickShineEffect.draw();
+
+	drawEditorGridLine(0, TOP_MARGIN + BRICK_H*BRICK_ROWS, canvas.width, TOP_MARGIN + BRICK_H*BRICK_ROWS);
+}
+
+function drawEditorGridLine(startX, startY, endX, endY) {
+	canvasContext.beginPath();
+	canvasContext.moveTo(startX, startY);
+	canvasContext.lineTo(endX, endY);
+	canvasContext.stroke();
 }
 
 function easeBricksbricksInPlace() {
