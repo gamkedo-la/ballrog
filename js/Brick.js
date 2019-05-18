@@ -13,7 +13,8 @@ const BRICK_TYPES = {
 	threehit: 3,
 	unbreakable: 4,
 	speedright:5,
-	speedleft:6
+	speedleft:6,
+	speedvertical:7
 };
 const BRICK_IMAGES = {
 	[BRICK_TYPES.onehit]: brick1Pic,
@@ -21,7 +22,8 @@ const BRICK_IMAGES = {
 	[BRICK_TYPES.threehit]: brick3Pic,
 	[BRICK_TYPES.unbreakable]: brick4Pic,
 	[BRICK_TYPES.speedright]:brickRightPic,
-	[BRICK_TYPES.speedleft]:brickLeftPic
+	[BRICK_TYPES.speedleft]:brickLeftPic,
+	[BRICK_TYPES.speedvertical]:brickVertPic
 };
 
 var activePills = 0;
@@ -205,44 +207,57 @@ function handleBrickHit(evt) {
 }
 
 function processBallEffects(brick, ball) {
-	if(brick === BRICK_TYPES.speedright) {
-		if(ball.VelX < 0) {
-			ball.VelX = -ball.VelX;
-		} else {
-			ball.VelX = 1.5 * ball.VelX;
-		}
-	} else if(brick === BRICK_TYPES.speedleft) {
-		if(ball.VelX > 0) {
-			ball.VelX = -ball.VelX;
-		} else {
-			ball.VelX = 1.5 * ball.VelX;
-		}
+	switch(brick) {
+		case BRICK_TYPES.speedright:
+			if(ball.VelX < 0) {
+				ball.VelX = -ball.VelX;
+			} else {
+				ball.VelX = 1.5 * ball.VelX;
+			}
+			break;
+		case BRICK_TYPES.speedleft:
+			if(ball.VelX > 0) {
+				ball.VelX = -ball.VelX;
+			} else {
+				ball.VelX = 1.5 * ball.VelX;
+			}
+			break;
+		case BRICK_TYPES.speedvertical:
+			ball.VelX = 0;
+		default:
+			break;
 	}
 }
 
 function processBrickEffects(brick, evt) {
-	// add an Arkanoid-inspired "shine" animation on hit bricks
-	if ((brick > 1) && (brick < 5)) { // not about to get destroyed
-		var effectX = evt.detail.col * BRICK_W;
-		var effectY = evt.detail.row * BRICK_H + BRICK_H + BRICK_H;
-		brickShineEffect.trigger(effectX,effectY);
-	}
-
 	switch(brick) {
 		case BRICK_TYPES.empty:
 			break;//do nothing for empty spaces
 		case BRICK_TYPES.onehit:
+			brickGrid[evt.detail.index] -= 1;
+			break;
 		case BRICK_TYPES.twohit:
 		case BRICK_TYPES.threehit:
+			shineBrick(evt);
 			brickGrid[evt.detail.index] -= 1;
 			break;
 		case BRICK_TYPES.unbreakable:
-			break;//do nothing for unbreakable
+			shineBrick(evt);
+			break;
 		case BRICK_TYPES.speedright:
 		case BRICK_TYPES.speedleft:
-			brickGrid[evt.detail.index] = BRICK_TYPES.empty;//these bricks are destroyed in one hit
-			break;
+		case BRICK_TYPES.speedvertical:
+			//these bricks are destroyed in one hit
+			brickGrid[evt.detail.index] = BRICK_TYPES.empty;
+			break;			
 	}
+}
+
+function shineBrick(evt) {
+	// add an Arkanoid-inspired "shine" animation on hit bricks
+	var effectX = evt.detail.col * BRICK_W;
+	var effectY = evt.detail.row * BRICK_H + BRICK_H + BRICK_H;
+	brickShineEffect.trigger(effectX,effectY);
 }
 
 function isValidBrick(brickValue) {
