@@ -86,7 +86,7 @@ function ballClass(x,y,vx,vy){
 					}
 					let deltaX = this.X - (paddleX + paddleWidth/(2*paddleScale.x));
 					var randomAngle = (Math.random() * 0.1);
-					this.updateVelocity(deltaX*0.22, -1*this.VelY);
+					this.updateVelocity(deltaX*0.16, -1*this.VelY);
 					let currentSpeed = this.getSpeedFromVelocity(this.VelX, this.VelY);
 					if (currentSpeed < this.minSpeed) {
 						this.updateSpeed(this.minSpeed) * randomAngle;
@@ -225,7 +225,6 @@ function ballClass(x,y,vx,vy){
 		this.bounceEffect.draw();
 		drawBitMap(ballPic, this.X - BALL_RADIUS, this.Y - BALL_RADIUS);
 	}
-
 }
 
 var allBalls = [];
