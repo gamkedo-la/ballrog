@@ -221,7 +221,10 @@ function ballClass(x,y,vx,vy){
 	}
 
 	this.drawBall = function() {
-		this.ballTrail.draw();
+		if(!ballHeld) {
+			this.ballTrail.draw();
+		}
+		
 		this.bounceEffect.draw();
 		drawBitMap(ballPic, this.X - BALL_RADIUS, this.Y - BALL_RADIUS);
 	}

@@ -196,7 +196,8 @@ function loadNextLevel() {
 
 function dropLife() {	
 	if(ballCount ==1){
-	lives--;
+		ballHeld = true;
+		lives--;
 	}
 	if (lives < 0) {
 		canvas.dispatchEvent(outaLivesEvent);
