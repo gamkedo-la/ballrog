@@ -2,12 +2,14 @@ const PILL_W = 50;
 const PILL_H = 20;
 const PILL_DROP_SPEED = 4;
 const MAX_PILLS = 40;
+const STRETCHED_PADDLE_MULTIPLIER = 2;
+const SHRINK_PADDLE_MULTIPLIER = 0.5;
 const PILL_DROP_CHANCE = 0.4;
 const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, extraLifePill, letterGPill, letterAPill, letterMPill, letterKPill, letterEPill, letterDPill, letterOPill];
 
 // used for testing specific powerups - comment out other initializations
-// const PILL_DROP_CHANCE = 1.1; //Math.random is 0-1 so random will always be < 1.1;
-// const ENABLED_PILLS = [jumpPill]; 
+//const PILL_DROP_CHANCE = 1.1; //Math.random is 0-1 so random will always be < 1.1;
+//const ENABLED_PILLS = [stretchPill, shrinkPill]; 
 
 var pills = [];
 
@@ -26,7 +28,7 @@ function pointsPill() {
 
 stretchPill.prototype = new pillClass();
 function stretchPill() {
-	var stretchedPaddle = paddleWidth * 2;
+	var stretchedPaddle = paddleWidth * STRETCHED_PADDLE_MULTIPLIER;
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = 0;
 	this.powerTime = 10000;
@@ -37,6 +39,7 @@ function stretchPill() {
 		paddleScale.x = 2;
 		paddleWidth = stretchedPaddle;
 	}
+
 
 	this.endPower = function () {
 		if (paddleWidth == PADDLE_ORIGINAL_W) {
@@ -91,12 +94,18 @@ function stickyBallPill() {
 
 shrinkPill.prototype = new pillClass();
 function shrinkPill() {
-	var shrunkPaddle = paddleWidth * 0.5
+	var shrunkPaddle = paddleWidth * SHRINK_PADDLE_MULTIPLIER;
 	this.imageOffsetX = 0;
 	this.imageOffsetY = PILL_H * 4;
 	this.powerTime = 10000;
 	this.startPower = function () {
 		if (paddleWidth == shrunkPaddle) {
+			return;
+		}
+		if (paddleWidth == PADDLE_ORIGINAL_W * STRETCHED_PADDLE_MULTIPLIER)
+		{
+			paddleScale.x = 1;
+			paddleWidth = PADDLE_ORIGINAL_W;
 			return;
 		} 
 		paddleScale.x = 0.5;
