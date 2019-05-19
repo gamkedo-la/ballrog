@@ -4,8 +4,9 @@ const PILL_DROP_SPEED = 4;
 const MAX_PILLS = 40;
 const STRETCHED_PADDLE_MULTIPLIER = 2;
 const SHRINK_PADDLE_MULTIPLIER = 0.5;
+const MULTI_BALL_QUANTITY = 4;
 const PILL_DROP_CHANCE = 0.4;
-const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, extraLifePill, letterGPill, letterAPill, letterMPill, letterKPill, letterEPill, letterDPill, letterOPill];
+const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, extraLifePill, letterGPill, letterAPill, letterMPill, letterKPill, letterEPill, letterDPill, letterOPill];
 
 // used for testing specific powerups - comment out other initializations
 //const PILL_DROP_CHANCE = 1.1; //Math.random is 0-1 so random will always be < 1.1;
@@ -76,6 +77,16 @@ function ghostPill() {
 	this.endPower = function () {
 		paddleAlpha = 1;
 	}
+}
+
+multiBallPill.prototype = new pillClass();
+function multiBallPill(){
+	this.imageOffsetX = PILL_W;
+	this.imageOffsetY = PILL_H * 2;
+	this.startPower = function(){
+		startMultiBall(MULTI_BALL_QUANTITY);
+	}
+	
 }
 
 stickyBallPill.prototype = new pillClass();
@@ -272,7 +283,6 @@ function checkForGAMKEDO(){
 		gamkedo = true; //unlocks GAMKEDO level
 	}
 }
-
 
 function initPills() {
 	pills = [];
