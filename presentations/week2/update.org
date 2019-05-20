@@ -1,0 +1,83 @@
+#+OPTIONS: reveal_title_slide:nil reveal_center:t reveal_progress:t reveal_history:nil reveal_control:t
+#+OPTIONS: reveal_rolling_links:t reveal_keyboard:t reveal_overview:t num:nil
+#+OPTIONS: toc:0
+#+REVEAL_ROOT: https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/
+#+REVEAL_MARGIN: 0.2
+#+REVEAL_MIN_SCALE: 0.9
+#+REVEAL_TRANS: fast
+#+REVEAL_THEME: solarized
+
+* Ballrog Week 2 Update
+
+#+ATTR_HTML: :style float:left;width:49%;display:block;
+  [[./images/week1.gif]]
+
+#+ATTR_HTML: :style float:right;width:49%;display:block;
+  [[./images/now.gif]]
+
+
+* Accomplishments
+
+** Art
+   - *Vince McKeown*
+	 - Letter Pills [[./images/letterPills.png]]
+   - *H Trayford*
+	 - New bricks [[./demo/images/brick_left.png]] [[./demo/images/brick_right.png]] [[./demo/images/brick_vertical.png]]
+
+** Code
+   - *Brian Nielsen*
+	 - Multiball implementation
+   - *Christer "McFunkypants" Kaitila*
+	 - Multiball implementation
+	 - Ball bounce FX
+   - *Gonzalo Delgado*
+	 - Level editor
+	 - Ball bounce angle adjustment
+#+REVEAL: split
+   - *H Trayford*
+	 - ~isValidBrick~ function refactor
+	 - Fixed letters glitch
+	 - Bugfixed CanvasContext GIANT font size during demo
+	 - Fixed demo mode not running more than one time
+	 - Velocity-altering bricks implementation
+	 - ~drawBricks~ and ~ballMove~ refactoring
+	 - Ball sticks to paddle after life lost
+#+REVEAL: split
+   - *Stebs*
+	 - Brick hit multisound
+	 - Music play rate and volume increase as bricks are removed
+	 - Music volume adjustments
+   - *Terrence McDonnell*
+	 - Jump pill implementation
+	 - Infinite stretch/shrink bugfix
+	 - Pill powers reset on new level and game over
+	 - Death key
+	 - New level (WIP)
+#+REVEAL: split
+   - *Vince McKeown*
+	 - Letter (GAMKEDO) Pills
+	 - Demo/Attract mode
+	 - Color text helper function
+
+** Audio
+   - *Alan Zaring*
+	 - Gameplay music @@html:<audio controls><source src="./demo/audio/gameplayMusic.mp3" type="audio/mpeg"><source src="./demo/audio/gameplayMusic.ogg" type="audio/ogg"></audio>@@
+	 - Title screen music @@html:<audio controls><source src="./demo/audio/titleScreenMusic.mp3" type="audio/mpeg"><source src="./demo/audio/titleScreenMusic.ogg" type="audio/ogg"></audio>@@
+
+   - *Stebs*
+	 - Pitch-shifted brick hit sounds
+ 	 - Test background music @@html:<audio controls><source src="./demo/audio/pong6-19.ogg" type="audio/ogg"><source src="./demo/audio/pong6-9.mp3" type="audio/mpeg"></audio>@@
+
+* Demo
+#+BEGIN_export html
+<iframe src="demo/index.html" width="820" height="720"></iframe>
+#+END_export
+
+* Schedule
+
+#+BEGIN_export html
+<blockquote class="trello-board-compact">
+  <a href="https://trello.com/b/IhdcMwsh/ballrog">Ballrog Schedule</a>
+</blockquote>
+<script src="https://p.trellocdn.com/embed.min.js"></script>
+#+END_export
