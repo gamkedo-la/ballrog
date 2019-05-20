@@ -3,7 +3,14 @@ const MUTE_KEY = 'm';
 const DEBUG_KEY = 'd';
 const EDIT_KEY = 'e';
 const DEATH_KEY = 'q';
+const UNDO_REDO_KEY = 'z';
+const BACKSPACE_KEY = 'Backspace';
+const SHIFT_KEY = 'Shift';
+const CNTRL_KEY = 'Control';
+const CMD_KEY = 'Meta';
 let didInteract = false;
+let cmd_cntrl_down = false;
+let shift_down = false;
 
 function calculateMousePos(evt) {
 	var rect = canvas.getBoundingClientRect();
@@ -18,6 +25,15 @@ function calculateMousePos(evt) {
 
 function setupInput() {
   document.addEventListener('keydown', keyPressed);
+  document.addEventListener('keyup', keyReleased);
+}
+
+function keyReleased(evt) {
+	if((evt.key == CMD_KEY) || (evt.key == CNTRL_KEY)) {
+		cmd_cntrl_down = false;
+	} else if(evt.key == SHIFT_KEY) {
+		shift_down = false;
+	}
 }
 
 function keyPressed(evt) {
@@ -54,6 +70,31 @@ function keyPressed(evt) {
 	}
 	if (evt.key == DEATH_KEY) {
 		canvas.dispatchEvent(outaLivesEvent);
+	}
+	if (evt.key == BACKSPACE_KEY) {
+		if (levelEditor.enabled) {
+			removeBrick();
+		}
+	}
+	if (evt.key == CMD_KEY) {
+		cmd_cntrl_down = true;
+	}
+	if (evt.key == CNTRL_KEY) {
+		cmd_cntrl_down = true;
+	}
+	if (evt.key == SHIFT_KEY) {
+		shift_down = true;
+	}
+	if (evt.key == UNDO_REDO_KEY) {
+		if (levelEditor.enabled) {
+			if(cmd_cntrl_down) {
+				if(shift_down) {//redo action
+					redo();
+				} else {//undo action
+					undo();
+				}
+			}
+		}
 	}
 	if (evt.key == EDIT_KEY) {
 		levelEditor.enabled = !levelEditor.enabled;

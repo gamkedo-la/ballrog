@@ -4,6 +4,7 @@ const LEVEL_SELECT_H = 38;
 const BUTTON_W = 100;
 const BUTTON_H = 50;
 var levelEditor = {
+	undoManager: new UndoManager(),
 	enabled: false,
 	selectedBrickType: BRICK_TYPES.onehit,
 	pencilDown: false,
@@ -106,6 +107,53 @@ function setBrick() {
 	var brickIndex = brickToTileIndex(levelEditor.mousePos.col, levelEditor.mousePos.row);
 	brickGrid[brickIndex] = levelEditor.selectedBrickType;
 	LEVELS[levelEditor.currentLevelKey][brickIndex] = levelEditor.selectedBrickType;
+
+	//For the undo manager
+	const action = new ActionObject(levelEditor.currentLevelKey, levelEditor.selectedBrickType, Action.Set, null, brickIndex);
+	levelEditor.undoManager.tookAction(action);
+}
+
+function removeBrick() {
+	const brickIndex = brickToTileIndex(levelEditor.mousePos.col, levelEditor.mousePos.row);
+	if((brickIndex < 0) || (brickIndex >= LEVELS[levelEditor.currentLevelKey].length)) {return;}
+
+	const brickType = LEVELS[levelEditor.currentLevelKey][brickIndex];
+	if(brickType != BRICK_TYPES.empty) {
+
+		brickGrid[brickIndex] = BRICK_TYPES.empty;
+		LEVELS[levelEditor.currentLevelKey][brickIndex] = BRICK_TYPES.empty;
+
+		const action = new ActionObject(levelEditor.currentLevelKey, brickType, Action.Remove, brickIndex, null);
+		levelEditor.undoManager.tookAction(action);
+	}
+}
+
+function undo() {
+	const undoAction = levelEditor.undoManager.undoAction();
+	if(undoAction == undefined) {return;}//no more actions can be undone, may want to provide notification to user
+	if(undoAction.action == Action.Set) {//undo an "Set" => remove the brick
+		brickGrid[undoAction.newIndex] = BRICK_TYPES.empty;
+		LEVELS[undoAction.level][undoAction.newIndex] = BRICK_TYPES.empty;
+	} else if(undoAction.action == Action.Remove) {//undo a "Remove" => add the brick back
+		brickGrid[undoAction.oldIndex] = undoAction.brickType;
+		LEVELS[undoAction.level][undoAction.oldIndex] = undoAction.brickType;
+	} else if(undoAction.action == Action.Move) {
+		//not implemented yet
+	}
+}
+
+function redo() {
+	const redoAction = levelEditor.undoManager.redoAction();
+	if(redoAction == undefined) {return;}//no more actions can be redone, may want to provide a notification to user
+	if(redoAction.action == Action.Set) {//undo an "Set" => remove the brick
+		brickGrid[redoAction.newIndex] = redoAction.brickType;
+		LEVELS[redoAction.level][redoAction.newIndex] = redoAction.brickType;
+	} else if(redoAction.action == Action.Remove) {//undo a "Remove" => add the brick back
+		brickGrid[redoAction.oldIndex] = BRICK_TYPES.empty;
+		LEVELS[redoAction.level][redoAction.oldIndex] = BRICK_TYPES.empty;
+	} else if(redoAction.action == Action.Move) {
+		//no implemented yet
+	}
 }
 
 function handleEditorMouseMove(evt) {
@@ -120,7 +168,7 @@ function handleEditorMouseMove(evt) {
 	levelEditor.mousePos.row = tile.row;
 	if (levelEditor.pencilDown) {
 		if (levelEditor.mousePos.col >= BRICK_COLS || levelEditor.mousePos.row >= BRICK_ROWS) {
-		return
+			return
 		}
 		setBrick();
 	}
