@@ -117,6 +117,8 @@ window.onload = function() {
 		allBalls[0] = new ballClass();
 		allBalls[0].ballReset(ballCount);		
 		setupInput();
+		invaderMovementTimerFull = framesPerSecond;
+		invaderMovementTimer = invaderMovementTimerFull;
 	});
 	testBackgroundMusic = new Audio("audio/gameplayMusic" + audioFormat);
 	testBackgroundMusic.loop = true;

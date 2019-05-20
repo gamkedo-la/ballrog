@@ -26,9 +26,6 @@ const BRICK_IMAGES = {
 	[BRICK_TYPES.speedvertical]:brickVertPic
 };
 
-var activePills = 0;
-var waitForLastPills = false;
-
 var brickInfo = [];
 var bricksInPlace = false;
 var brickGrid = new Array(BRICK_COLS * BRICK_ROWS);
@@ -75,10 +72,26 @@ function drawBricks() {
 }
 
 function drawLevelBricks() {
+	if (spaceInvading) {
+		if (invaderMovementTimer <= 0) {
+			if (Math.abs(spaceInvadeX) == BRICK_W * 2) {
+				//spaceInvadeY += BRICK_H;
+				invadingDirection *= -1;
+			}
+			spaceInvadeX += BRICK_W/8 * invadingDirection;
+			invaderMovementTimer = invaderMovementTimerFull;
+		} else {
+			invaderMovementTimer--;
+		}
+	} else {
+		spaceInvadeX = 0;
+		spaceInvadeY = 0;
+	}
+
 	for (var eachCol=0; eachCol<BRICK_COLS; eachCol++) {
 		for (var eachRow=0; eachRow<BRICK_ROWS; eachRow++) {
-			var brickLeftEdgeX = getColXCoord(eachCol);
-			var brickTopEdgeY = getRowYCoord(eachRow);
+			var brickLeftEdgeX = getColXCoord(eachCol) + spaceInvadeX;
+			var brickTopEdgeY = getRowYCoord(eachRow) + spaceInvadeY;
 			var brick = getBrickAtTileCoord(eachCol, eachRow);
 
 			if(typeof(brick) != "undefined" && brick != BRICK_TYPES.empty) {
@@ -117,9 +130,6 @@ function drawEditorGridLine(startX, startY, endX, endY) {
 function easeBricksbricksInPlace() {
 	for (var b = 0; b < brickInfo.length; b++) {
 		var brick = brickInfo[b];
-		if (b % BRICK_COLS == 0) {
-			setTimeout(function(){},200);
-		}
 		brick.y = lerp(brick.y, brick.homeY, 0.2);
 		if (b == brickInfo.length - 1) {
 			if (Math.ceil(brick.y) == brick.homeY) {
@@ -167,11 +177,11 @@ function brickToTileIndex(tileCol, tileRow) {
 }
 
 function getColXCoord(col) {
-	return col*COL_W;
+	return (col*COL_W);
 }
 
 function getRowYCoord(row) {
-	return row*ROW_H + TOP_MARGIN;
+	return (row*ROW_H) + TOP_MARGIN;
 }
 
 function handleBrickHit(evt) {
@@ -255,9 +265,9 @@ function processBrickEffects(brick, evt) {
 
 function shineBrick(evt) {
 	// add an Arkanoid-inspired "shine" animation on hit bricks
-	var effectX = evt.detail.col * BRICK_W;
+	var effectX = (evt.detail.col * BRICK_W);
 	var effectY = evt.detail.row * BRICK_H + BRICK_H + BRICK_H;
-	brickShineEffect.trigger(effectX,effectY);
+	brickShineEffect.trigger(effectX + spaceInvadeX,effectY);
 }
 
 function isValidBrick(brickValue) {

@@ -10,9 +10,19 @@ const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, sticky
 
 // used for testing specific powerups - comment out other initializations
 //const PILL_DROP_CHANCE = 1.1; //Math.random is 0-1 so random will always be < 1.1;
-//const ENABLED_PILLS = [multiBallPill]; 
+//const ENABLED_PILLS = [invaderPill]; 
 
 var pills = [];
+
+var activePills = 0;
+var waitForLastPills = false;
+
+var spaceInvadeX = 0;
+var spaceInvadeY = 0;
+var invadingDirection = 1;
+var spaceInvading = false;
+var invaderMovementTimerFull;
+var invaderMovementTimer;
 
 pointsPill.prototype = new pillClass();
 function pointsPill() {
@@ -147,13 +157,13 @@ invaderPill.prototype = new pillClass();
 function invaderPill() {
 	this.imageOffsetX = PILL_W; //needs to be added to pills Sprite
 	this.imageOffsetY = PILL_H * 4;  //needs to be added to pills Sprite
-	this.powerTime = 10000;
+	this.powerTime = 200000;
 	this.startPower = function () {
-		//needs to be added
+		spaceInvading = true;
 	}
 
 	this.endPower = function () {
-		//needs to be added
+		spaceInvading = false;
 	}
 }
 
@@ -396,6 +406,9 @@ function clearPillAbilites() {
 	paddleScale.x = 1;
 	paddleWidth = PADDLE_ORIGINAL_W;
 	paddleY = PADDLE_ORIGINAL_Y;
+	spaceInvadeX = 0;
+	spaceInvadeY = 0;
+	spaceInvading = false;
 	stickyBall = false;
 	paddleJumping = false;
 	paddleAlpha = 1;
