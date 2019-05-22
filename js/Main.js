@@ -79,6 +79,7 @@ function runGameStep(browserTimeStamp) {
 	drawEverything(dt);
 	last = browserTimeStamp;
 	window.requestAnimationFrame(runGameStep);
+	console.log(testBackgroundMusic.volume);
 }
 
 window.onload = function() {
@@ -146,7 +147,7 @@ window.onload = function() {
 	});
 	testBackgroundMusic = new Audio("audio/gameplayMusic" + audioFormat);
 	testBackgroundMusic.loop = true;
-	testBackgroundMusic.volume = 0.05;
+	testBackgroundMusic.volume = 0.15;
 }
 
 function resetGame() {
@@ -202,10 +203,12 @@ function resetLevel() {
 }
 
 function loadNextLevel() {
+
 	setTimeout(function () {
 		levelTransition = true;
 		bricksInPlace = false;
 		currentLevelIndex++;
+
 		if (currentLevelIndex >= LEVEL_SEQ.length) {
 			currentLevelIndex = 0;
 		}
@@ -214,6 +217,7 @@ function loadNextLevel() {
 			allBalls[0].baseSpeed += 0.5;
 			allBalls[0].maxSpeed += 0.5;
 			levelTransition = false;
+
 			let newLevelEvent = new CustomEvent('newLevel');
 			canvas.dispatchEvent(newLevelEvent);
 		}, 1500);

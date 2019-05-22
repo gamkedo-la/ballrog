@@ -91,6 +91,6 @@ function calculateMusicSpeedUpPace(bricksAtStartOfLevel) {
 
 function calculateMusicVolumeIncreasPace(bricksAtStartOfLevel) {
   bricksAtStartOfLevel = bricksLeft;
-  musicVolumeIncrementForLevel = (2/bricksAtStartOfLevel)*0.1;
+  musicVolumeIncrementForLevel = (2/bricksAtStartOfLevel)*0.05;
   console.log(musicVolumeIncrementForLevel);
 }

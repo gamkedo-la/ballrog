@@ -65,10 +65,10 @@ function drawBricks() {
 			easeBricksbricksInPlace();
 		} else {
 			drawLevelBricks();
-	
-			brickShineEffect.draw();	
+
+			brickShineEffect.draw();
 		}
-	}	
+	}
 }
 
 function drawLevelBricks() {
@@ -113,7 +113,7 @@ function drawEditorGrid() {
 				canvasContext.fillText(eachRow, 2, brickTopEdgeY + ROW_H/2 + 4);
 				drawEditorGridLine(0, brickTopEdgeY, canvas.width, brickTopEdgeY);
 		}
-			canvasContext.fillText(eachCol, brickLeftEdgeX + COL_W/2 - 2, TOP_MARGIN);			
+			canvasContext.fillText(eachCol, brickLeftEdgeX + COL_W/2 - 2, TOP_MARGIN);
 			drawEditorGridLine(brickLeftEdgeX, TOP_MARGIN, brickLeftEdgeX, TOP_MARGIN + BRICK_H*BRICK_ROWS);
 	}
 
@@ -157,7 +157,7 @@ function resetBricks(grid) {
 	calculateMusicSpeedUpPace();
 	calculateMusicVolumeIncreasPace();
 	testBackgroundMusic.playbackRate = 1;
-	testBackgroundMusic.volume = 0.05;
+	testBackgroundMusic.volume = 0.15;
 }
 
 function getTileForPixelCoord(pixelX, pixelY) {
@@ -206,6 +206,8 @@ function handleBrickHit(evt) {
 				setTimeout(function() {
 					let noMoreBricksEvent = new CustomEvent('noMoreBricks');
 					canvas.dispatchEvent(noMoreBricksEvent);
+					testBackgroundMusic.volume = 0.15;
+					testBackgroundMusic.playbackRate = 1;
 				}, 500)
 			} else {
 				waitForLastPills = true;
@@ -259,7 +261,7 @@ function processBrickEffects(brick, evt) {
 		case BRICK_TYPES.speedvertical:
 			//these bricks are destroyed in one hit
 			brickGrid[evt.detail.index] = BRICK_TYPES.empty;
-			break;			
+			break;
 	}
 }
 
@@ -274,7 +276,7 @@ function isValidBrick(brickValue) {
 	const typeKeys = Object.keys(BRICK_TYPES);
 	for(let i = 0; i < typeKeys.length; i++) {
 		if(typeKeys[i] === "empty") continue; //want to ignore the "empty" brick type
-		
+
 		if(brickValue === BRICK_TYPES[typeKeys[i]]) return true;
 	}
 
