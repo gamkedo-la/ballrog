@@ -174,7 +174,7 @@ function resetGame() {
 	lives = INITIAL_LIVES;
 	showTitle = true;
 	titleScreenTimer = 0;
-	clearPillTimers();
+	clearAllPillTimers();
 	clearPillAbilites();
 	initPills();
 }
@@ -192,8 +192,8 @@ function resetGAMKEDO(){
 function resetLevel() {
 	resetBricks();
 	resetPills();
-	clearPillTimers()
-	clearPillAbilites()
+	clearAllPillTimers();
+	clearPillAbilites();
 	allBalls = []; // completely wipe the array
 	ballCount = 1;
 	allBalls[0] = new ballClass();

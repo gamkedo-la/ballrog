@@ -5,12 +5,12 @@ const MAX_PILLS = 40;
 const STRETCHED_PADDLE_MULTIPLIER = 2;
 const SHRINK_PADDLE_MULTIPLIER = 0.5;
 const MULTI_BALL_QUANTITY = 2;
-const PILL_DROP_CHANCE = 0.4;
-const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, extraLifePill, letterGPill, letterAPill, letterMPill, letterKPill, letterEPill, letterDPill, letterOPill];
+//const PILL_DROP_CHANCE = 0.4;
+//const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, extraLifePill, letterGPill, letterAPill, letterMPill, letterKPill, letterEPill, letterDPill, letterOPill];
 
 // used for testing specific powerups - comment out other initializations
-//const PILL_DROP_CHANCE = 1.1; //Math.random is 0-1 so random will always be < 1.1;
-//const ENABLED_PILLS = [invaderPill]; 
+const PILL_DROP_CHANCE = 1.1; //Math.random is 0-1 so random will always be < 1.1;
+const ENABLED_PILLS = [invaderPill]; 
 
 var pills = [];
 
@@ -21,6 +21,7 @@ var spaceInvadeX = 0;
 var spaceInvadeY = 0;
 var invadingDirection = 1;
 var spaceInvading = false;
+var invaderSteppedDown = false;
 var invaderMovementTimerFull;
 var invaderMovementTimer;
 
@@ -157,13 +158,14 @@ invaderPill.prototype = new pillClass();
 function invaderPill() {
 	this.imageOffsetX = PILL_W; //needs to be added to pills Sprite
 	this.imageOffsetY = PILL_H * 4;  //needs to be added to pills Sprite
-	this.powerTime = 200000;
+	this.powerTime = 24000;
 	this.startPower = function () {
 		spaceInvading = true;
 	}
-
 	this.endPower = function () {
 		spaceInvading = false;
+		//this.timer = undefined;
+		// not working as intended;
 	}
 }
 
@@ -177,7 +179,6 @@ function moveUpPill() {
 			paddleY -= PADDLE_THICKNESS * 2;
 		}
 	}
-
 	this.endPower = function () {
 		paddleY = 540;
 	}
@@ -356,6 +357,7 @@ function pillClass() {
 	this.y = 0;
 	this.live = false;
 	this.powerTime = 0;
+	this.timer = undefined;
 	
 	this.draw = function () {
 		if (this.live) {
@@ -365,17 +367,19 @@ function pillClass() {
 
 	this.dropFrom = function(dropX, dropY) {
 		this.live = true;
-		this.x = dropX;
-		this.y = dropY;
-		this.timer;
+		this.x = dropX + spaceInvadeX;
+		this.y = dropY + spaceInvadeY;
 	};
 	
 	this.move = function(dt) {
 		if (this.live) {
 			this.y += PILL_DROP_SPEED*dt;
 			if (this.x > paddleX - PILL_W - 1 && this.x < paddleX + paddleWidth && this.y > paddleY - PILL_H/2) {
-				this.startPower();
-				this.timer = setTimeout(this.endPower, this.powerTime);
+				// check if powerup already active
+				//if (clearPillTimersBasedOnImage(this.imageOffsetX,this.imageOffsetY)){
+					this.startPower();
+					this.timer = setTimeout(this.endPower, this.powerTime);
+				//}
 				this.reset();
 			}
 			if (this.y > canvas.height) {
@@ -395,11 +399,28 @@ function pillClass() {
 	};
 }
 
-function clearPillTimers() {
+function clearAllPillTimers() {
 	var timersArrayLength = pills.length;
 	for (var i=0; i<timersArrayLength; i++) {
   		clearTimeout(pills[i].timer);
 	}
+}
+
+function clearPillTimersBasedOnImage(offsetX, offsetY) {
+	var timersArrayLength = pills.length;
+
+	for (var i=0; i<timersArrayLength; i++) {
+		pill = pills[i];
+		if (pill.timer != undefined && 
+			pill.imageOffsetX == offsetX && pill.imageOffsetY == offsetY) {
+			console.log("Pill of same type active - no new timer");
+			// power up of this type active, don't start a new timer
+			return false;
+		}
+	}
+	// no power up of this type, start a new timer
+	console.log("No pill of the same type - starting new timer");
+	return true;
 }
 
 function clearPillAbilites() {
@@ -408,6 +429,7 @@ function clearPillAbilites() {
 	paddleY = PADDLE_ORIGINAL_Y;
 	spaceInvadeX = 0;
 	spaceInvadeY = 0;
+	invadingDirection = (Math.random() > .5) ? 1 : -1;
 	spaceInvading = false;
 	stickyBall = false;
 	paddleJumping = false;

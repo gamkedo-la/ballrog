@@ -73,15 +73,22 @@ function drawBricks() {
 
 function drawLevelBricks() {
 	if (spaceInvading) {
-		if (invaderMovementTimer <= 0) {
-			if (Math.abs(spaceInvadeX) == BRICK_W * 2) {
-				//spaceInvadeY += BRICK_H;
-				invadingDirection *= -1;
-			}
-			spaceInvadeX += BRICK_W/8 * invadingDirection;
-			invaderMovementTimer = invaderMovementTimerFull;
+		if (spaceInvadeY == BRICK_H && spaceInvadeX == 0) {
+			// ride out the rest of the pill time in this new position
 		} else {
-			invaderMovementTimer--;
+			if (invaderMovementTimer <= 0) {
+				if (Math.abs(spaceInvadeX) == BRICK_W && !invaderSteppedDown) {
+					spaceInvadeY += BRICK_H/2;
+					invadingDirection *= -1;
+					invaderSteppedDown = true;
+				} else {
+					spaceInvadeX += BRICK_W/8 * invadingDirection;
+					invaderSteppedDown = false;
+				}
+				invaderMovementTimer = invaderMovementTimerFull;
+			} else {
+				invaderMovementTimer--;
+			}
 		}
 	} else {
 		spaceInvadeX = 0;
@@ -269,7 +276,7 @@ function shineBrick(evt) {
 	// add an Arkanoid-inspired "shine" animation on hit bricks
 	var effectX = (evt.detail.col * BRICK_W);
 	var effectY = evt.detail.row * BRICK_H + BRICK_H + BRICK_H;
-	brickShineEffect.trigger(effectX + spaceInvadeX,effectY);
+	brickShineEffect.trigger(effectX + spaceInvadeX,effectY + spaceInvadeY);
 }
 
 function isValidBrick(brickValue) {

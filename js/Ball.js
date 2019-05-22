@@ -88,7 +88,7 @@ function ballClass(x,y,vx,vy){
 			// break a brick
 			this.breakAndBounceOffBrickAtPixelCoord(
 				this.X - spaceInvadeX + Math.sign(this.VelX)*BALL_RADIUS,
-				this.Y + Math.sign(this.VelY)*BALL_RADIUS,
+				this.Y - spaceInvadeY + Math.sign(this.VelY)*BALL_RADIUS,
 				dt
 			);
 		}
