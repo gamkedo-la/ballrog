@@ -1,7 +1,20 @@
 const BALL_RADIUS = 10;
-const COLLISION_STEP = 2; // higher = faster, lower = precise
-const INITIAL_SPEED = 4;
-const INITIAL_MAX_SPEED = 12;
+const COLLISION_STEP = 3; // higher = faster, lower = precise
+const INITIAL_SPEED = 180; // pixels/second
+const INITIAL_MAX_SPEED = 400; // pixels/second
+var highestHitRow = BRICK_ROWS;
+
+function increaseBallSpeed(evt) {
+	var ball = allBalls[0];
+	if (evt.detail.row < highestHitRow) {
+		highestHitRow = evt.detail.row;
+		ball.minSpeed += (BRICK_ROWS - highestHitRow);
+		console.log('SET MIN SPEED TO', ball.minSpeed);
+		if (ball.minSpeed > ball.getSpeedFromVelocity(ball.VelX, ball.VelY)) {
+			ball.updateSpeed(ball.minSpeed);
+		}
+	}
+}
 
 function ballClass(x,y,vx,vy){
 	this.X = x || 0;
@@ -13,12 +26,9 @@ function ballClass(x,y,vx,vy){
 	this.minSpeed = this.baseSpeed;
 	this.ballMissEvent = new CustomEvent('ballMiss');
 	this.ballResetEvent = new CustomEvent('ballReset');
-	this.highestHitRow = BRICK_ROWS;
-	this.passingThrough = false;
 	this.wallHitEvent = new CustomEvent('wallHit');
 	this.ballTrail = new TrailFX(ballTrailPic);
 	this.bounceEffect = new BounceFX(bouncePic);
-
 
 	this.ballReset = function(ballCount) {
 		if(ballCount == 1){			
@@ -27,19 +37,18 @@ function ballClass(x,y,vx,vy){
 			this.Y = paddleY - BALL_RADIUS/2;
 			this.updateVelocity(this.VelX, this.VelY > 0 ? -this.VelY : this.VelY);
 			this.updateSpeed(this.minSpeed);
-			this.highestHitRow = BRICK_ROWS;
-			passingThrough = false;
+			highestHitRow = BRICK_ROWS;
 			this.ballResetEvent = new CustomEvent('ballReset');
 			canvas.dispatchEvent(this.ballResetEvent);
 		}//end if
 	}// end ballReset
 
-	 this.updateVelocity = function(velX, velY) {
+	this.updateVelocity = function(velX, velY) {
 		this.VelX = velX;
 		this.VelY = velY;
 	}
 
-	 this.updateSpeed = function(speed) {
+	this.updateSpeed = function(speed) {
 		if (speed > this.maxSpeed) {
 			speed = this.maxSpeed;
 		}
@@ -47,32 +56,22 @@ function ballClass(x,y,vx,vy){
 		this.updateVelocity(speed*dir.x, speed*dir.y);
 	}
 
-	 this.increaseSpeed = function(evt) {
-		if (evt.detail.row < this.highestHitRow) {
-			this.highestHitRow = evt.detail.row;
-			this.minSpeed += (BRICK_ROWS - this.highestHitRow)*0.44;
-			if (this.minSpeed > this.getSpeedFromVelocity(this.VelX, this.VelY)) {
-				this.updateSpeed(this.minSpeed);
-			}
-		}
-	}
-
-	 this.getSpeedFromVelocity = function(velX, velY) {
+	this.getSpeedFromVelocity = function(velX, velY) {
 		let currentVisualVelocity = Math.sqrt(Math.pow(velX, 2) + Math.pow(velY, 2));
 		let conversionRate = 1/7.5;
 		return Math.sqrt(Math.pow(velX, 2) + Math.pow(velY, 2));
 	}
 
-	 this.getVelocityDir = function(velX, velY) {
+	this.getVelocityDir = function(velX, velY) {
 		var speed = this.getSpeedFromVelocity(velX, velY);
 		return {x: velX/speed, y: velY/speed};
 	}
 
-	 this.ballMove = function() {
+	this.ballMove = function(dt) {
 		if (!ballHeld) {
 			//update ball position using current velocity
-			this.X += this.VelX;
-			this.Y += this.VelY;
+			this.X += this.VelX*dt;
+			this.Y += this.VelY*dt;
 
 			// bounce off side walls
 			this.bounceOffSidesIfAppropriate();
@@ -89,7 +88,8 @@ function ballClass(x,y,vx,vy){
 			// break a brick
 			this.breakAndBounceOffBrickAtPixelCoord(
 				this.X - spaceInvadeX + Math.sign(this.VelX)*BALL_RADIUS,
-				this.Y + Math.sign(this.VelY)*BALL_RADIUS
+				this.Y + Math.sign(this.VelY)*BALL_RADIUS,
+				dt
 			);
 		}
 
@@ -113,7 +113,7 @@ function ballClass(x,y,vx,vy){
 
 			let deltaX = this.X - (paddleX + paddleWidth/(2*paddleScale.x));
 			var randomAngle = (Math.random() * 0.1);
-			this.updateVelocity(deltaX*0.16, -1*this.VelY);
+			this.updateVelocity(deltaX*6.3, -1*this.VelY);
 			let currentSpeed = this.getSpeedFromVelocity(this.VelX, this.VelY);
 			
 			if (currentSpeed < this.minSpeed) {
@@ -164,13 +164,13 @@ function ballClass(x,y,vx,vy){
 		}
 	 }
 
-	 this.breakAndBounceOffBrickAtPixelCoord = function(pixelX, pixelY) {
+	this.breakAndBounceOffBrickAtPixelCoord = function(pixelX, pixelY, dt) {
 		if (pixelY > BRICK_H*BRICK_ROWS + TOP_MARGIN || pixelY < TOP_MARGIN) {
 			return;
 		}
 		var brickIndex, srcX, srcY;
-		var srcX = pixelX - this.VelX;
-		var srcY = pixelY - this.VelY;
+		var srcX = pixelX - this.VelX*dt;
+		var srcY = pixelY - this.VelY*dt;
 		var prevBallX = srcX;
 		var prevBallY = srcY;
 		var nextX, nextY;

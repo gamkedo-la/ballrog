@@ -1,6 +1,6 @@
 const PILL_W = 50;
 const PILL_H = 20;
-const PILL_DROP_SPEED = 4;
+const PILL_DROP_SPEED = 200; // pixels/second
 const MAX_PILLS = 40;
 const STRETCHED_PADDLE_MULTIPLIER = 2;
 const SHRINK_PADDLE_MULTIPLIER = 0.5;
@@ -314,9 +314,9 @@ function resetPills() {
 	}
 }
 
-function pillsMove() {
+function pillsMove(dt) {
 	for (var i=0; i<pills.length; i++) {
-		pills[i].move();
+		pills[i].move(dt);
 	}
 }
 
@@ -370,9 +370,9 @@ function pillClass() {
 		this.timer;
 	};
 	
-	this.move = function () {
+	this.move = function(dt) {
 		if (this.live) {
-			this.y += PILL_DROP_SPEED;
+			this.y += PILL_DROP_SPEED*dt;
 			if (this.x > paddleX - PILL_W - 1 && this.x < paddleX + paddleWidth && this.y > paddleY - PILL_H/2) {
 				this.startPower();
 				this.timer = setTimeout(this.endPower, this.powerTime);

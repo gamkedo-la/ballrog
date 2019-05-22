@@ -4,7 +4,6 @@ const NEW_LIFE_SCORE_MILESTONE = 3000;
 var debugMode = false;
 var canvas;
 var canvasContext;
-var framesPerSecond = 60;
 var score = 0;
 var highScore = 0;
 var lives = INITIAL_LIVES;
@@ -44,13 +43,30 @@ var sounds = {
 	// FIXME: newLevel: new SoundOverlapsClass("audio/newLevel"),
 	// FIXME: lifeGet: new SoundOverlapsClass("audio/lifeGet"),//this file is missing, causing a 404 error
 	lifeLost: new SoundOverlapsClass("audio/lifeLost"),
-	gameOver: new SoundOverlapsClass("audio/gameOver"),
-
+	gameOver: new SoundOverlapsClass("audio/gameOver")
 };
 
 var arrayOfBrickHitSounds = [sounds.brickHit, sounds.brickHitHalfStepDown, sounds.brickHitHalfStepUp,
-														 sounds.brickHitWholeStepDown, sounds.brickHitWholeStepUp];
+							 sounds.brickHitWholeStepDown, sounds.brickHitWholeStepUp];
 var messageArea;
+var dt = 0, last = timestamp();
+const gameUpdateStep = 1/30;
+
+function timestamp() {
+	return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
+}
+
+function runGameStep(browserTimeStamp) {
+	dt += Math.min(1, (browserTimeStamp - last)/1000);
+	while(dt > gameUpdateStep) {
+		dt -= gameUpdateStep;
+		moveEverything(gameUpdateStep);
+		gameLogic(gameUpdateStep);
+	}
+	drawEverything(dt);
+	last = browserTimeStamp;
+	window.requestAnimationFrame(runGameStep);
+}
 
 window.onload = function() {
 	canvas = document.getElementById('gameCanvas');
@@ -62,18 +78,13 @@ window.onload = function() {
 		canvas.removeEventListener('allImagesLoaded', this);
 		resetBricks();
 		initPills();
-		setInterval(function() {
-			moveEverything();
-			drawEverything();
-			gameLogic();				
-		}, 1000/framesPerSecond);
 		canvas.addEventListener('mousemove', movePaddleOnMouseMove);
 		canvas.addEventListener('mousemove', handleEditorMouseMove);
 		canvas.addEventListener('ballMiss', dropLife);
 		canvas.addEventListener('brickHit', handleBrickHit);
 		canvas.addEventListener('brickHit', function() {playMultiSound(arrayOfBrickHitSounds)});
 		canvas.addEventListener('brickRemoved', increaseScore);
-		canvas.addEventListener('brickRemoved', allBalls[0].increaseSpeed);
+		canvas.addEventListener('brickRemoved', increaseBallSpeed);
 		canvas.addEventListener('brickRemoved', maybeDropPowerPill);
 		canvas.addEventListener('paddleHit', sounds.paddleHit.play);
 		canvas.addEventListener('paddleHit', paddleBlink);
@@ -111,14 +122,14 @@ window.onload = function() {
 		window.addEventListener('blur', function () {
 			gamePaused = true;
 		});
-		
 		//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball
 		allBalls = []; // completely wipe the array
 		allBalls[0] = new ballClass();
 		allBalls[0].ballReset(ballCount);		
 		setupInput();
-		invaderMovementTimerFull = framesPerSecond;
+		invaderMovementTimerFull = 1/gameUpdateStep;
 		invaderMovementTimer = invaderMovementTimerFull;
+		window.requestAnimationFrame(runGameStep);
 	});
 	testBackgroundMusic = new Audio("audio/gameplayMusic" + audioFormat);
 	testBackgroundMusic.loop = true;
@@ -187,8 +198,8 @@ function loadNextLevel() {
 		}
 		setTimeout(function () {
 			resetLevel();
-			allBalls[0].baseSpeed += 3;
-			allBalls[0].maxSpeed += 3;
+			allBalls[0].baseSpeed += 0.5;
+			allBalls[0].maxSpeed += 0.5;
 			levelTransition = false;
 			let newLevelEvent = new CustomEvent('newLevel');
 			canvas.dispatchEvent(newLevelEvent);
@@ -303,7 +314,7 @@ function drawEverything() {
 	}
 }
 
-function gameLogic() {
+function gameLogic(dt) {
 	if (waitForLastPills) {
 		checkPillsLive();
 		if (activePills > 0) {
@@ -315,17 +326,16 @@ function gameLogic() {
 			canvas.dispatchEvent(noMoreBricksEvent);
 		}, 500)
 	}
-
-	if (paddleJumping) {
-		paddleJump();
-	}
 }
 
-function moveEverything() {
+function moveEverything(dt) {
 	if (!showTitle && !gamePaused && !levelTransition && !levelEditor.enabled) {
-		allBalls[0].ballMove();
-		allBalls.forEach(function (ball) { ball.ballMove(); }); // multiball
-		pillsMove();
+		allBalls[0].ballMove(dt);
+		allBalls.forEach(function (ball) { ball.ballMove(dt); }); // multiball
+		pillsMove(dt);
+		if (paddleJumping) {
+			paddleJump(dt);
+		}
 		if(demoScreen){
 			moveComputerPaddle(allBalls[0]);
 		}

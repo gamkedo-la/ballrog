@@ -7,9 +7,9 @@ var paddleY = PADDLE_ORIGINAL_Y;
 
 var jumpSpeedY = 0;
 var currentJumpFactorIndex = 0;
-const JUMP_POWER_FACTORS = [1.2, 1.5, 1.8];
-const GRAVITY = .99;
-const AIR_RESISTANCE = .9;
+const JUMP_POWER_FACTORS = [1.2*340, 1.5*340, 1.8*340];
+const GRAVITY = 1000;
+const AIR_RESISTANCE = 9;
 
 var paddleAlpha = 1;
 var paddleScale = {x: 1, y: 1};
@@ -24,19 +24,18 @@ function movePaddleOnMouseMove(evt) {
 	}
 }
 
-function paddleJump() {
+function paddleJump(dt) {
 	if (paddleY >= PADDLE_ORIGINAL_Y) {
-		let power = PADDLE_THICKNESS/JUMP_POWER_FACTORS[currentJumpFactorIndex];
+		let power = JUMP_POWER_FACTORS[currentJumpFactorIndex];
 		jumpSpeedY = -power;
 		currentJumpFactorIndex++;
 		if (currentJumpFactorIndex >= JUMP_POWER_FACTORS.length) {
 			currentJumpFactorIndex = 0;
 		}
 	}
-
-	jumpSpeedY *= AIR_RESISTANCE;
-	jumpSpeedY += GRAVITY;
-	paddleY += jumpSpeedY;
+	// jumpSpeedY *= AIR_RESISTANCE;
+	jumpSpeedY += GRAVITY*dt;
+	paddleY += jumpSpeedY*dt;
 }
 
 function moveComputerPaddle(whichBall) {
