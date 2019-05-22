@@ -23,7 +23,7 @@ function ballClass(x,y,vx,vy){
 	this.VelY = vy || -2;
 	this.maxSpeed = INITIAL_MAX_SPEED;
 	this.baseSpeed = INITIAL_SPEED;
-	this.minSpeed = this.baseSpeed;
+	this.minSpeed = this.baseSpeed;	
 	this.ballMissEvent = new CustomEvent('ballMiss');
 	this.ballResetEvent = new CustomEvent('ballReset');
 	this.wallHitEvent = new CustomEvent('wallHit');
@@ -276,8 +276,8 @@ function startMultiBall(quantity) {
 		var newBall = new ballClass(
 			allBalls[0].X+Math.random()*32-16,
 			allBalls[0].Y+Math.random()*8-4,
-			allBalls[0].velX+Math.random()*8-4,
-			allBalls[0].velY+Math.random()*8-4);
+			allBalls[0].VelX+Math.random()*8-4,
+			allBalls[0].VelY+Math.random()*8-4);
 
 		allBalls.push(newBall);		
 	}
