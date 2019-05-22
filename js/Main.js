@@ -32,12 +32,16 @@ var lastScore = score;
 var currentLevelIndex = 0;
 var gameMuted = false;
 var sounds = {
-	paddleHit: new SoundOverlapsClass("audio/paddleHit"),
-	brickHit: new SoundOverlapsClass("audio/brickHit"),
-	brickHitHalfStepDown: new SoundOverlapsClass("audio/brickHitHalfStepDown"),
-	brickHitHalfStepUp: new SoundOverlapsClass("audio/brickHitHalfStepUp"),
-	brickHitWholeStepDown: new SoundOverlapsClass("audio/brickHitWholeStepDown"),
-	brickHitWholeStepUp: new SoundOverlapsClass("audio/brickHitWholeStepUp"),
+	paddleHit: new SoundOverlapsClass("audio/paddleHit", "paddleHit"),
+	paddleHitHalfStepDown: new SoundOverlapsClass("audio/paddleHitHalfStepDown", "paddleHitHalfStepDown"),
+	paddleHitHalfStepUp: new SoundOverlapsClass("audio/paddleHitHalfStepUp", "paddleHitHalfStepUp"),
+	paddleHitWholeStepDown: new SoundOverlapsClass("audio/paddleHitWholeStepDown", "paddleHitWholeStepDown"),
+	paddleHitWholeStepUp: new SoundOverlapsClass("audio/paddleHitWholeStepUp", "paddleHitWholeStepUp"),
+	brickHit: new SoundOverlapsClass("audio/brickHit", "brickHit"),
+	brickHitHalfStepDown: new SoundOverlapsClass("audio/brickHitHalfStepDown", "brickHitHalfStepDown"),
+	brickHitHalfStepUp: new SoundOverlapsClass("audio/brickHitHalfStepUp", "brickHitHalfStepUp"),
+	brickHitWholeStepDown: new SoundOverlapsClass("audio/brickHitWholeStepDown", "brickHitWholeStepDown"),
+	brickHitWholeStepUp: new SoundOverlapsClass("audio/brickHitWholeStepUp", "brickHitWholeStepUp"),
 	wallHit: new SoundOverlapsClass("audio/wallHit"),
 	// FIXME: gameStart: new SoundOverlapsClass("audio/gameStart"),
 	// FIXME: newLevel: new SoundOverlapsClass("audio/newLevel"),
@@ -48,6 +52,9 @@ var sounds = {
 
 var arrayOfBrickHitSounds = [sounds.brickHit, sounds.brickHitHalfStepDown, sounds.brickHitHalfStepUp,
 							 sounds.brickHitWholeStepDown, sounds.brickHitWholeStepUp];
+var arrayOfPaddleHitSounds = [sounds.paddleHit, sounds.paddleHitHalfStepDown, sounds.paddleHitHalfStepUp,
+								sounds.paddleHitWholeStepDown, sounds.paddleHitWholeStepUp];
+
 var messageArea;
 var dt = 0, last = timestamp();
 const gameUpdateStep = 1/30;
@@ -86,7 +93,7 @@ window.onload = function() {
 		canvas.addEventListener('brickRemoved', increaseScore);
 		canvas.addEventListener('brickRemoved', increaseBallSpeed);
 		canvas.addEventListener('brickRemoved', maybeDropPowerPill);
-		canvas.addEventListener('paddleHit', sounds.paddleHit.play);
+		canvas.addEventListener('paddleHit', function() {playMultiSound(arrayOfPaddleHitSounds)});
 		canvas.addEventListener('paddleHit', paddleBlink);
 		canvas.addEventListener('wallHit', sounds.wallHit.play);
 		canvas.addEventListener('outaLives', resetGame);
@@ -125,7 +132,7 @@ window.onload = function() {
 		//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball
 		allBalls = []; // completely wipe the array
 		allBalls[0] = new ballClass();
-		allBalls[0].ballReset(ballCount);		
+		allBalls[0].ballReset(ballCount);
 		setupInput();
 		invaderMovementTimerFull = 1/gameUpdateStep;
 		invaderMovementTimer = invaderMovementTimerFull;
@@ -139,24 +146,24 @@ window.onload = function() {
 function resetGame() {
 	currentLevelIndex = 0;
 	lastScore = score;
-	
+
 	// FIXME perhaps this should be in ballReset() function below
 	allBalls = []; // completely wipe the array
 	allBalls[0] = new ballClass();
 	ballCount = 1;
 	allBalls[0].ballReset(ballCount);
-	allBalls.forEach(function (ball) { 
-		ball.baseSpeed = INITIAL_SPEED; 
-		ball.maxSpeed = INITIAL_MAX_SPEED; 
+	allBalls.forEach(function (ball) {
+		ball.baseSpeed = INITIAL_SPEED;
+		ball.maxSpeed = INITIAL_MAX_SPEED;
 	}); // multiball
-	
+
 	resetBricks();
 	resetScore();
 	resetGAMKEDO();
 	ballHeld = true;
-	
+
 	//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball
-	
+
 	lives = INITIAL_LIVES;
 	showTitle = true;
 	titleScreenTimer = 0;
@@ -181,10 +188,10 @@ function resetLevel() {
 	clearPillTimers()
 	clearPillAbilites()
 	allBalls = []; // completely wipe the array
-	ballCount = 1; 
+	ballCount = 1;
 	allBalls[0] = new ballClass();
 	allBalls[0].ballReset(ballCount)
-	//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball	
+	//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball
 	activePills = 0;
 }
 
@@ -207,7 +214,7 @@ function loadNextLevel() {
 	}, 600 - allBalls[0].getSpeedFromVelocity(allBalls[0].VelX, allBalls[0].VelY));
 }
 
-function dropLife() {	
+function dropLife() {
 	if(ballCount ==1){
 		ballHeld = true;
 		lives--;
