@@ -71,7 +71,7 @@ function playMultiSound(arrayOfSoundsToVarietize) {
   let arrayLength = arrayOfSoundsToVarietize.length;
   let randomArrayIndex = getRandomInt(0, arrayLength - 1);
   let randomSoundFromArray = arrayOfSoundsToVarietize[randomArrayIndex];
-  console.log(randomSoundFromArray.name);
+  //console.log(randomSoundFromArray.name);
   let randomVolume = getRandomInt(8,10);
   randomVolume = randomVolume/10;
   randomSoundFromArray.volume = randomVolume;
