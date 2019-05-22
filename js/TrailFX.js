@@ -102,9 +102,11 @@ function TrailFX(wooshImage) {
         }
         else {// draw one solid line
             // draws a line from oldest to newest with no regard to curvature
-            drawBitmapLine(wooshImage,
-                trailXY[0].x, trailXY[0].y,
-                trailXY[trailXY.length - 1].x, trailXY[trailXY.length - 1].y);
+			if (trailXY.length > 0) {
+				drawBitmapLine(wooshImage,
+							   trailXY[0].x, trailXY[0].y,
+							   trailXY[trailXY.length - 1].x, trailXY[trailXY.length - 1].y);
+			}
 
         } // curvy
     } // draw 
