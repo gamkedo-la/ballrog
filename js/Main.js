@@ -42,7 +42,11 @@ var sounds = {
 	brickHitHalfStepUp: new SoundOverlapsClass("audio/brickHitHalfStepUp", "brickHitHalfStepUp"),
 	brickHitWholeStepDown: new SoundOverlapsClass("audio/brickHitWholeStepDown", "brickHitWholeStepDown"),
 	brickHitWholeStepUp: new SoundOverlapsClass("audio/brickHitWholeStepUp", "brickHitWholeStepUp"),
-	wallHit: new SoundOverlapsClass("audio/wallHit"),
+	wallHit: new SoundOverlapsClass("audio/wallHit", "wallHit"),
+	wallHitHalfStepDown: new SoundOverlapsClass("audio/wallHitHalfStepDown", "wallHitHalfStepDown"),
+	wallHitHalfStepUp: new SoundOverlapsClass("audio/wallHitHalfStepUp", "wallHitHalfStepUp"),
+	wallHitWholeStepDown: new SoundOverlapsClass("audio/wallHitWholeStepDown", "wallHitWholeStepDown"),
+	wallHitWholeStepUp: new SoundOverlapsClass("audio/wallHitWholeStepUp", "wallHitWholeStepUp"),
 	// FIXME: gameStart: new SoundOverlapsClass("audio/gameStart"),
 	// FIXME: newLevel: new SoundOverlapsClass("audio/newLevel"),
 	// FIXME: lifeGet: new SoundOverlapsClass("audio/lifeGet"),//this file is missing, causing a 404 error
@@ -54,6 +58,8 @@ var arrayOfBrickHitSounds = [sounds.brickHit, sounds.brickHitHalfStepDown, sound
 							 sounds.brickHitWholeStepDown, sounds.brickHitWholeStepUp];
 var arrayOfPaddleHitSounds = [sounds.paddleHit, sounds.paddleHitHalfStepDown, sounds.paddleHitHalfStepUp,
 								sounds.paddleHitWholeStepDown, sounds.paddleHitWholeStepUp];
+var arrayOfWallHitSounds = [sounds.wallHit, sounds.wallHitHalfStepDown, sounds.wallHitHalfStepUp,
+								sounds.wallHitWholeStepDown, sounds.wallHitWholeStepUp];
 
 var messageArea;
 var dt = 0, last = timestamp();
@@ -95,7 +101,7 @@ window.onload = function() {
 		canvas.addEventListener('brickRemoved', maybeDropPowerPill);
 		canvas.addEventListener('paddleHit', function() {playMultiSound(arrayOfPaddleHitSounds)});
 		canvas.addEventListener('paddleHit', paddleBlink);
-		canvas.addEventListener('wallHit', sounds.wallHit.play);
+		canvas.addEventListener('wallHit', function() {playMultiSound(arrayOfWallHitSounds)});
 		canvas.addEventListener('outaLives', resetGame);
 		canvas.addEventListener('noMoreBricks', loadNextLevel);
 		canvas.addEventListener('outaLives', sounds.gameOver.play);
