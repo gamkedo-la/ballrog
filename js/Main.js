@@ -80,7 +80,7 @@ function runGameStep(browserTimeStamp) {
 	drawEverything(dt);
 	last = browserTimeStamp;
 	window.requestAnimationFrame(runGameStep);
-	console.log(testBackgroundMusic.volume);
+	//console.log(testBackgroundMusic.volume);
 }
 
 window.onload = function() {
