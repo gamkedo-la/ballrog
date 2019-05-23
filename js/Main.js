@@ -316,19 +316,12 @@ function drawEverything() {
 	} else if (levelTransition) {
 		drawLevelTransition();
 	} else {
-		colorRect(0, 0, canvas.width, canvas.height, 'rgb(75,105,47 )');
-		canvasContext.fillStyle = 'white';
-		canvasContext.textAlign = 'center';
-		canvasContext.fillText(score.toString(), canvas.width/2, 10);
-		canvasContext.fillText('High Score: ' + highScore.toString(), 50, 10);
-		drawLives();
-		drawGAMKEDO();
-		//allBalls[0].drawBall();
+		drawBackground();
+		drawGUI();
 		allBalls.forEach(function (ball) { ball.drawBall(); }); // multiball
 		drawBricks();
 		drawPills();
 		drawPaddle();
-		//console.log(testBackgroundMusic.volume);
 	}
 }
 
