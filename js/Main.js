@@ -239,16 +239,6 @@ function resetScore() {
 	score = 0;
 }
 
-function drawGAMKEDO(){
-	var letterPills = [letterG, letterA, letterM, letterK, letterE, letterD, letterD];
-	var letters = ['G','A','M','K','E','D','O']
-	for(i = 0; i < 7; i++){
-		if(letterPills[i]){
-			canvasContext.fillText(letters[i], 130 + ([i]*10), 10);
-		}
-	}
-}
-
 function increaseScore(points) {
 	if (typeof(points) != 'number') {
 		points = BRICK_HIT_POINTS;
@@ -353,14 +343,6 @@ function moveEverything(dt) {
 	}
 	if (gamePaused){
 		lettersMove();
-	}
-}
-
-function drawLives() {
-	var posX = canvas.width - 30;
-	var posY = 10;
-	for (var i=0; i<lives; i++) {
-		drawBitMap(livesPic, posX - i*20, posY);
 	}
 }
 
