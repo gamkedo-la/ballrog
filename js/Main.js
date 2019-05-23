@@ -23,6 +23,7 @@ var letterE = false;
 var letterD = false;
 var letterO = false;
 var gamkedo = false;
+var magneticBall = false;
 //game states
 var showTitle = true;
 var demoScreen = false;

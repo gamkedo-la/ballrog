@@ -6,11 +6,12 @@ const STRETCHED_PADDLE_MULTIPLIER = 2;
 const SHRINK_PADDLE_MULTIPLIER = 0.5;
 const MULTI_BALL_QUANTITY = 2;
 const PILL_DROP_CHANCE = 0.4;
-const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, extraLifePill, letterGPill, letterAPill, letterMPill, letterKPill, letterEPill, letterDPill, letterOPill];
+//const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, extraLifePill, letterGPill, letterAPill, letterMPill, letterKPill, letterEPill, letterDPill, letterOPill];
 
 // used for testing specific powerups - comment out other initializations
 //const PILL_DROP_CHANCE = 1.1; //Math.random is 0-1 so random will always be < 1.1;
 //const ENABLED_PILLS = [multiBallPill]; 
+const ENABLED_PILLS = [magnetPill]; 
 
 var pills = [];
 
@@ -35,6 +36,20 @@ function pointsPill() {
 	}
 
 	this.endPower = function () {
+	}
+}
+
+magnetPill.prototype = new pillClass();
+function magnetPill() {
+	this.imageOffsetX = PILL_W;
+	this.imageOffsetY = PILL_H * 5;
+	this.powerTime = 10000; 
+	this.startPower = function () {
+		magneticBall = true;
+	}
+
+	this.endPower = function () {
+		magneticBall = false;
 	}
 }
 

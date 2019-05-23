@@ -91,6 +91,16 @@ function ballClass(x,y,vx,vy){
 				this.Y - spaceInvadeY + Math.sign(this.VelY)*BALL_RADIUS,
 				dt
 			);
+
+			if(magneticBall && this.VelY > 0) {
+				if(paddleX+paddleWidth/2 < this.X-BALL_RADIUS) {
+					console.log("Ball on the right of paddle");
+					this.X -= 7;
+				} else if(paddleX+paddleWidth/2 > this.X+BALL_RADIUS) {
+					console.log("Ball on the left of paddle");
+					this.X += 7;
+				}
+			}
 		}
 
 		this.ballTrail.update(this.X,this.Y);
