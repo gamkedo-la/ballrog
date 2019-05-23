@@ -52,6 +52,7 @@ var sounds = {
 	// FIXME: newLevel: new SoundOverlapsClass("audio/newLevel"),
 	// FIXME: lifeGet: new SoundOverlapsClass("audio/lifeGet"),//this file is missing, causing a 404 error
 	lifeLost: new SoundOverlapsClass("audio/lifeLost"),
+	levelComplete: new SoundOverlapsClass("audio/levelComplete"),
 	gameOver: new SoundOverlapsClass("audio/gameOver")
 };
 
@@ -201,6 +202,7 @@ function resetLevel() {
 	allBalls[0].ballReset(ballCount)
 	//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball
 	activePills = 0;
+	testBackgroundMusic.play();
 }
 
 function loadNextLevel() {

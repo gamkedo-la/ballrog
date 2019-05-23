@@ -208,13 +208,17 @@ function handleBrickHit(evt) {
 		if (bricksLeft <= 0) {
 			canvas.dispatchEvent(brickRemovedEvent);
 			checkPillsLive();
+			testBackgroundMusic.pause();
+			testBackgroundMusic.currentTime = 0;
+			sounds.levelComplete.play();
+			testBackgroundMusic.volume = 0.15;
+			testBackgroundMusic.playbackRate = 1;
+			
 			//console.log(activePills);
 			if (activePills <= 0) {
 				setTimeout(function() {
 					let noMoreBricksEvent = new CustomEvent('noMoreBricks');
 					canvas.dispatchEvent(noMoreBricksEvent);
-					testBackgroundMusic.volume = 0.15;
-					testBackgroundMusic.playbackRate = 1;
 				}, 500)
 			} else {
 				waitForLastPills = true;
