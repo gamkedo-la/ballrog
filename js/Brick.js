@@ -160,7 +160,7 @@ function resetBricks(grid) {
 	bricksLeft = brickGrid.filter(
 		brick => brick != BRICK_TYPES.empty && brick != BRICK_TYPES.unbreakable
 	).length;
-	console.log(bricksLeft);
+	//console.log(bricksLeft);
 	calculateMusicSpeedUpPace();
 	calculateMusicVolumeIncreasPace();
 	testBackgroundMusic.playbackRate = 1;
@@ -213,7 +213,7 @@ function handleBrickHit(evt) {
 			sounds.levelComplete.play();
 			testBackgroundMusic.volume = 0.15;
 			testBackgroundMusic.playbackRate = 1;
-			
+
 			//console.log(activePills);
 			if (activePills <= 0) {
 				setTimeout(function() {
