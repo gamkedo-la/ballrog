@@ -19,6 +19,7 @@ var ballTrailPic = document.createElement("img");
 var shinePic = document.createElement("img");
 var bouncePic = document.createElement("img");
 var editorBackgroundTile = document.createElement("img");
+var plasmaPic = document.createElement("img");
 var imageList = [
 	{varName: ballPic, theFile: "../images/ball.png"},
 	{varName: paddlePic, theFile: "../images/paddle.png"},
@@ -40,7 +41,8 @@ var imageList = [
 	{varName: ballTrailPic, theFile: "../images/ballTrail.png"},
 	{varName: shinePic, theFile: "../images/shine.png"},
 	{varName: bouncePic, theFile: "../images/bounceEffect.png"},
-	{varName: editorBackgroundTile, theFile: "../images/editorBG.png"}
+	{varName: editorBackgroundTile, theFile: "../images/editorBG.png"},
+	{varName: plasmaPic, theFile: "../images/plasma.png"}
 ];
 var picsToLoad = imageList.length;
 var allImagesLoadedEvent = new CustomEvent('allImagesLoaded');
