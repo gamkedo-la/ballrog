@@ -92,3 +92,11 @@ function calculateMusicVolumeIncreasPace(bricksAtStartOfLevel) {
   bricksAtStartOfLevel = bricksLeft;
   musicVolumeIncrementForLevel = (2/bricksAtStartOfLevel)*0.05;
 }
+
+function levelCompleteSoundEvents() {
+  testBackgroundMusic.pause();
+  testBackgroundMusic.currentTime = 0;
+  sounds.levelComplete.play();
+  testBackgroundMusic.volume = 0.15;
+  testBackgroundMusic.playbackRate = 1;
+}

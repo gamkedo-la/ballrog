@@ -8,6 +8,7 @@ const BACKSPACE_KEY = 'Backspace';
 const SHIFT_KEY = 'Shift';
 const CNTRL_KEY = 'Control';
 const CMD_KEY = 'Meta';
+const DESTROY_BRICK = 'Minus';
 let didInteract = false;
 let cmd_cntrl_down = false;
 let shift_down = false;
@@ -98,6 +99,9 @@ function keyPressed(evt) {
 	}
 	if (evt.key == EDIT_KEY) {
 		levelEditor.enabled = !levelEditor.enabled;
+	}
+	if (evt.key === DESTROY_BRICK) {
+		brickGrid.pop();
 	}
 	if (levelEditor.enabled) {
 		initLevelEditor();

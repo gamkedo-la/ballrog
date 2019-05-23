@@ -208,11 +208,7 @@ function handleBrickHit(evt) {
 		if (bricksLeft <= 0) {
 			canvas.dispatchEvent(brickRemovedEvent);
 			checkPillsLive();
-			testBackgroundMusic.pause();
-			testBackgroundMusic.currentTime = 0;
-			sounds.levelComplete.play();
-			testBackgroundMusic.volume = 0.15;
-			testBackgroundMusic.playbackRate = 1;
+			levelCompleteSoundEvents();
 
 			//console.log(activePills);
 			if (activePills <= 0) {
