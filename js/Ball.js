@@ -92,15 +92,8 @@ function ballClass(x,y,vx,vy){
 				dt
 			);
 
-			if(magneticBall && this.VelY > 0) {
-				if(paddleX+paddleWidth/2 < this.X-BALL_RADIUS) {
-					console.log("Ball on the right of paddle");
-					this.X -= 7;
-				} else if(paddleX+paddleWidth/2 > this.X+BALL_RADIUS) {
-					console.log("Ball on the left of paddle");
-					this.X += 7;
-				}
-			}
+			// magnetic ball
+			this.magneticBall();
 		}
 
 		this.ballTrail.update(this.X,this.Y);
@@ -265,6 +258,18 @@ function ballClass(x,y,vx,vy){
 			
 			this.bounceEffect.trigger(this.X,this.Y+(this.VelY<0?BALL_RADIUS:-BALL_RADIUS));
 
+		}
+	}
+
+	this.magneticBall = function() {
+		if(magneticBall && this.VelY > 0) {
+			if(paddleX+paddleWidth/2 < this.X-BALL_RADIUS) {
+				//Ball on the right of paddle
+				this.X -= 7;
+			} else if(paddleX+paddleWidth/2 > this.X+BALL_RADIUS) {
+				//Ball on the left of paddle
+				this.X += 7;
+			}
 		}
 	}
 
