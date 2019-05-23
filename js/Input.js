@@ -57,12 +57,12 @@ function keyPressed(evt) {
 		letter = new letterEE(657, 300);
 		letters.push(letter);
     }// end pause else
-  }//end pause if 
+  }//end pause if
 	if(evt.key == MUTE_KEY){
 		if(gameMuted){
 			gameMuted = false;
 		} else{
-			gameMuted = true;			
+			gameMuted = true;
 		}//end muted else
 	}//end muted if
 	if (evt.key == DEBUG_KEY) {
@@ -103,7 +103,7 @@ function keyPressed(evt) {
 		initLevelEditor();
 		messageArea.innerHTML = '<strong>LEVEL EDITOR ENABLED</strong>';
 	} else if (debugMode) {
-		messageArea.innerHTML = '<strong>DEBUG MODE ENABLED</strong><br>left and right arrow keys move through levels<br>"r" key reloads current level';
+		messageArea.innerHTML = '<strong>DEBUG MODE ENABLED</strong><br>left and right arrow keys move through levels<br>"r" key reloads current level<br>"m" key starts multiball';
 		switch (evt.key) {
 		case 'm': // debug test multiball
 			startMultiBall(4);
