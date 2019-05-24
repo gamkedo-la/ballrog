@@ -156,6 +156,16 @@ function undo() {
 			}
 			break;
 		case Action.RemoveLevel:
+			//undo "RemoveLevel" => restore level
+			var restoredLevelKey = undoAction.level;
+			var restoredLevel = undoAction.levelData;
+
+			LEVELS[restoredLevelKey] = restoredLevel;
+			LEVEL_SEQ.push(restoredLevelKey);
+			currentLevelIndex = LEVEL_SEQ.length - 1;
+			levelEditor.editableLevels = Object.keys(LEVELS);
+			initLevelEditor();
+			resetBricks(LEVELS[restoredLevelKey]);
 			break;
 	}
 }
@@ -185,6 +195,12 @@ function redo() {
 			}
 			break;
 		case Action.RemoveLevel:
+			//redo "RemoveLevel" => remove the level again
+			delete LEVELS[redoAction.level];
+			LEVEL_SEQ = LEVEL_SEQ.filter(key => key != redoAction.level);
+			levelEditor.editableLevels = Object.keys(LEVELS);
+			currentLevelIndex = LEVEL_SEQ.length - 1;
+			initLevelEditor();
 			break;
 	}
 }
@@ -290,7 +306,10 @@ function removeLevel() {
 		LEVEL_SEQ = LEVEL_SEQ.filter(key => key != levelEditor.currentLevelKey);
 		levelEditor.editableLevels = Object.keys(LEVELS);
 		currentLevelIndex = LEVEL_SEQ.length - 1;
-		initLevelEditor();		
+		initLevelEditor();
+		
+		//clicked on alert, which triggers pencilDown, now we need pencil up
+		setEditorPencilUp();
 	}
 }
 
