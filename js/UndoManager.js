@@ -2,16 +2,19 @@
 Action = {
     Set:"set",
     Remove:"remove",
-    Move:"move"
+    Move:"move",
+    ClearLevel:"clearLevel",
+    RemoveLevel:"removeLevel"
 }
 
 //Action Object
-function ActionObject(level, brickType, action, oldIndex = null, newIndex = null) {
+function ActionObject(level, brickType, action, oldIndex = null, newIndex = null, levelData = null) {
     this.level = level;
     this.brickType = brickType;
     this.action = action;
     this.oldIndex = oldIndex;
     this.newIndex = newIndex;
+    this.levelData = levelData;
 }
 
 //Undo Manager
@@ -20,6 +23,7 @@ function UndoManager() {
     const undoneActionList = [];
 
     this.tookAction = function(actionObject) {
+//        console.log("Took an action: " + actionObject.action);
         actionList.push(actionObject);
     }
 

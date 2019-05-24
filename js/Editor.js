@@ -105,6 +105,8 @@ function setBrick() {
 		return
 	}
 	var brickIndex = brickToTileIndex(levelEditor.mousePos.col, levelEditor.mousePos.row);
+	if((brickIndex < 0) || (brickIndex >= LEVELS[levelEditor.currentLevelKey].length)) {return;}
+
 	brickGrid[brickIndex] = levelEditor.selectedBrickType;
 	LEVELS[levelEditor.currentLevelKey][brickIndex] = levelEditor.selectedBrickType;
 
@@ -131,28 +133,59 @@ function removeBrick() {
 function undo() {
 	const undoAction = levelEditor.undoManager.undoAction();
 	if(undoAction == undefined) {return;}//no more actions can be undone, may want to provide notification to user
-	if(undoAction.action == Action.Set) {//undo an "Set" => remove the brick
-		brickGrid[undoAction.newIndex] = BRICK_TYPES.empty;
-		LEVELS[undoAction.level][undoAction.newIndex] = BRICK_TYPES.empty;
-	} else if(undoAction.action == Action.Remove) {//undo a "Remove" => add the brick back
-		brickGrid[undoAction.oldIndex] = undoAction.brickType;
-		LEVELS[undoAction.level][undoAction.oldIndex] = undoAction.brickType;
-	} else if(undoAction.action == Action.Move) {
-		//not implemented yet
+
+	switch(undoAction.action) {
+		case Action.Set:
+			//undo a "Set" => remove the brick
+			brickGrid[undoAction.newIndex] = BRICK_TYPES.empty;
+			LEVELS[undoAction.level][undoAction.newIndex] = BRICK_TYPES.empty;
+			break;
+		case Action.Remove:
+			//undo a "Remove" => add the brick back
+			brickGrid[undoAction.oldIndex] = undoAction.brickType;
+			LEVELS[undoAction.level][undoAction.oldIndex] = undoAction.brickType;
+			break;
+		case Action.Move:
+			//not implemented yet
+			break;
+		case Action.ClearLevel:
+			//undo "ClearLevel" => add the level back
+			for (var i=0; i<BRICK_COLS*BRICK_ROWS; i++) {
+				LEVELS[undoAction.level][i] = undoAction.levelData[i];
+				brickGrid[i] = undoAction.levelData[i];
+			}
+			break;
+		case Action.RemoveLevel:
+			break;
 	}
 }
 
 function redo() {
 	const redoAction = levelEditor.undoManager.redoAction();
 	if(redoAction == undefined) {return;}//no more actions can be redone, may want to provide a notification to user
-	if(redoAction.action == Action.Set) {//undo an "Set" => remove the brick
-		brickGrid[redoAction.newIndex] = redoAction.brickType;
-		LEVELS[redoAction.level][redoAction.newIndex] = redoAction.brickType;
-	} else if(redoAction.action == Action.Remove) {//undo a "Remove" => add the brick back
-		brickGrid[redoAction.oldIndex] = BRICK_TYPES.empty;
-		LEVELS[redoAction.level][redoAction.oldIndex] = BRICK_TYPES.empty;
-	} else if(redoAction.action == Action.Move) {
-		//no implemented yet
+
+	switch(redoAction.action) {
+		case Action.Set:
+			//redo a "Set" => add the brick
+			brickGrid[redoAction.newIndex] = redoAction.brickType;
+			LEVELS[redoAction.level][redoAction.newIndex] = redoAction.brickType;
+			break;
+		case Action.Remove:
+			//redo a "Remove" => remove the brick again
+			brickGrid[redoAction.oldIndex] = BRICK_TYPES.empty;
+			LEVELS[redoAction.level][redoAction.oldIndex] = BRICK_TYPES.empty;
+			break;
+		case Action.Move:
+			//not implemented yet
+			break;
+		case Action.ClearLevel:
+			//redo a "ClearLevel" => clear the level again
+			for (var i=0; i<BRICK_COLS*BRICK_ROWS; i++) {
+				LEVELS[levelEditor.currentLevelKey][i] = brickGrid[i] = BRICK_TYPES.empty;
+			}
+			break;
+		case Action.RemoveLevel:
+			break;
 	}
 }
 
@@ -198,9 +231,19 @@ function writeLevelData() {
 }
 
 function clearLevel() {
+	const levelData = [];
+
 	for (var i=0; i<BRICK_COLS*BRICK_ROWS; i++) {
+		levelData.push(brickGrid[i]);
 		LEVELS[levelEditor.currentLevelKey][i] = brickGrid[i] = BRICK_TYPES.empty;
 	}
+
+	//For the undo manager
+	const action = new ActionObject(levelEditor.currentLevelKey, 
+		levelEditor.selectedBrickType, 
+		Action.ClearLevel, null, null, 
+		levelData);
+	levelEditor.undoManager.tookAction(action);
 }
 
 function newLevel() {
@@ -236,6 +279,13 @@ function removeLevel() {
 		return;
 	}
 	if (confirm('For real?')) {
+		//For the undo manager
+		const action = new ActionObject(levelEditor.currentLevelKey, 
+			levelEditor.selectedBrickType, 
+			Action.RemoveLevel, null, null, 
+			LEVELS[levelEditor.currentLevelKey]);
+		levelEditor.undoManager.tookAction(action);
+
 		delete LEVELS[levelEditor.currentLevelKey];
 		LEVEL_SEQ = LEVEL_SEQ.filter(key => key != levelEditor.currentLevelKey);
 		levelEditor.editableLevels = Object.keys(LEVELS);
