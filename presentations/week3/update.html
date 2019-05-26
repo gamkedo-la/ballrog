@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title></title>
+<meta name="author" content="Gonzalo"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/css/theme/solarized.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+<section id="slide-org477f185">
+<h2 id="org477f185">Ballrog Week 3 Update</h2>
+<div style="float:left;width:49%;display:block">
+<h4>Week 2</h4>
+<img src="./images/week2.gif" alt="week2.gif" />
+</div>
+<div style="float:right;width:49%;display:block;">
+<h4>Now</h4>
+<img src="./images/now.png" alt="now.png" />
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgedd4060">
+<h2 id="orgedd4060">Accomplishments</h2>
+<div class="outline-text-2" id="text-orgedd4060">
+</div>
+</section>
+<section id="slide-org180ae74">
+<h3 id="org180ae74">Audio</h3>
+<ul>
+<li><b>Alan Zaring</b>
+<ul>
+<li><a href="https://soundcloud.com/alan-zaring/ballrog-boss-battle-v1/s-9e1qE">Boss battle V1</a></li>
+
+</ul></li>
+
+<li><b>Stebs</b>
+<ul>
+<li>Pitch-shifted paddle hit sound</li>
+<li>Pitch-shifted wall hit sound</li>
+<li>Level complete sound <audio controls><source src="./demo/audio/levelComplete.ogg" type="audio/ogg"><source src="./demo/audio/levelComplete.mp3" type="audio/mpeg"></audio></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgd7c7c0b">
+<h3 id="orgd7c7c0b">Art</h3>
+<ul>
+<li><b>Christer "McFunkypants" Kaitila</b>
+<ul>
+<li>Plasma background <img src="./demo/images/plasma.png" alt="plasma.png" /></li>
+
+</ul></li>
+<li><b>Gonzalo Delgado</b>
+<ul>
+<li>Ice enemy sprite <img src="./images/iceEnemy.png" alt="iceEnemy.png" /></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgb532159">
+<h3 id="orgb532159">Code</h3>
+<ul>
+<li><b>Brian Nielsen</b>
+<ul>
+<li>Enable multiball pill</li>
+<li>Multiball initial velocity bugfix</li>
+
+</ul></li>
+
+<li><b>Christer "McFunkypants" Kaitila</b>
+<ul>
+<li>Animated plasma background</li>
+<li>Improved GUI text fonts and alignment</li>
+<li>GAMKEDO letter coloring</li>
+
+</ul></li>
+
+<li><b>Cyriel De Neve</b>
+<ul>
+<li>Shrink pill bugfix</li>
+
+</ul></li>
+
+</ul>
+</section>
+<section>
+<ul>
+<li><b>Gonzalo Delgado</b>
+
+<ul>
+<li>Ball trail effect bugfix</li>
+<li>Replaced <code>setInterval</code> with <code>requestAnimationFrame</code></li>
+<li>Ice enemy WIP</li>
+
+</ul></li>
+
+<li><b>H Trayford</b>
+<ul>
+<li>Level editor delete brick key</li>
+<li>Level editor undo/redo feature</li>
+
+</ul></li>
+
+<li><b>Michelly Oliveira</b>
+
+<ul>
+<li>Magnet pill</li>
+
+</ul></li>
+
+</ul>
+</section>
+<section>
+<ul>
+<li><b>Stebs</b>
+
+<ul>
+<li>Smoothed out background music transitions</li>
+<li>Add in level completed sound</li>
+
+</ul></li>
+
+<li><b>Terrence McDonnell</b>
+
+<ul>
+<li>Invader pill</li>
+<li>Detection of active power up WIP</li>
+
+</ul></li>
+
+<li><b>Vince McKeown</b>
+<ul>
+<li>Game over screen WIP</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org19165cc">
+<h3 id="org19165cc">Levels</h3>
+<ul>
+<li><b>Cyriel De Neve</b>
+<ul>
+<li>Level 5</li>
+
+</ul></li>
+
+</ul>
+
+<div class="figure">
+<p><img src="./images/level-5.png" alt="level-5.png" style="max-height:500px" />
+</p>
+</div>
+</section>
+<section>
+<ul>
+<li><b>Gonzalo Delgado</b>
+<ul>
+<li>Tunneling</li>
+
+</ul></li>
+
+</ul>
+
+<div class="figure">
+<p><img src="./images/tunneling-level.png" alt="tunneling-level.png" style="max-height:500px" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org1eace8e">
+<h2 id="org1eace8e">Demo</h2>
+<iframe src="demo/index.html" width="820" height="720"></iframe>
+
+</section>
+</section>
+<section>
+<section id="slide-org55cd0aa">
+<h2 id="org55cd0aa">Schedule</h2>
+<blockquote class="trello-board-compact">
+  <a href="https://trello.com/b/IhdcMwsh/ballrog">Ballrog Schedule</a>
+</blockquote>
+<script src="https://p.trellocdn.com/embed.min.js"></script>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/lib/js/head.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/js/reveal.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: true,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+pdfSeparateFragments: true,
+
+overview: true,
+margin: 0.20,
+minScale: 0.90,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'fast', // see README of reveal.js for options
+transitionSpeed: 'default',
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+</script>
+</body>
+</html>
