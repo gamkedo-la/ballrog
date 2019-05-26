@@ -94,6 +94,7 @@ window.onload = function() {
 		canvas.removeEventListener('allImagesLoaded', this);
 		resetBricks();
 		initPills();
+		initEnemies();
 		canvas.addEventListener('mousemove', movePaddleOnMouseMove);
 		canvas.addEventListener('mousemove', handleEditorMouseMove);
 		canvas.addEventListener('ballMiss', dropLife);
@@ -179,6 +180,7 @@ function resetGame() {
 	clearAllPillTimers();
 	clearPillAbilites();
 	initPills();
+	initEnemies();
 }
 
 function resetGAMKEDO(){
@@ -315,6 +317,7 @@ function drawEverything() {
 		drawBackground();
 		drawGUI();
 		allBalls.forEach(function (ball) { ball.drawBall(); }); // multiball
+		drawEnemies();
 		drawBricks();
 		drawPills();
 		drawPaddle();
@@ -349,6 +352,7 @@ function moveEverything(dt) {
 		allBalls[0].ballMove(dt);
 		allBalls.forEach(function (ball) { ball.ballMove(dt); }); // multiball
 		pillsMove(dt);
+		enemiesMove(dt);
 		if (paddleJumping) {
 			paddleJump(dt);
 		}
