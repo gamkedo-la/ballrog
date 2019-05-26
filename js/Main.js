@@ -28,6 +28,7 @@ var magneticBall = false;
 var showTitle = true;
 var demoScreen = false;
 var gamePaused = false;
+var gameOverScreen = false;
 var levelTransition = false;
 var lastScore = score;
 var currentLevelIndex = 0;
@@ -233,6 +234,7 @@ function dropLife() {
 	}
 	if (lives < 0) {
 		canvas.dispatchEvent(outaLivesEvent);
+		gameOverScreen = true;
 	}
 }
 
@@ -306,6 +308,9 @@ function drawEverything() {
 		drawPauseScreen();
 	} else if (levelTransition) {
 		drawLevelTransition();
+	} else if(gameOverScreen){
+		drawGameOverScreen();
+		
 	} else {
 		drawBackground();
 		drawGUI();
@@ -314,6 +319,15 @@ function drawEverything() {
 		drawPills();
 		drawPaddle();
 	}
+}
+
+function drawGameOverScreen(){
+	drawBackground();
+	var line = 120;
+	colorRect(0, 0, canvas.width, canvas.height, 'black');
+	canvasContext.fillStyle = 'white';
+	canvasContext.textAlign = 'center';
+	canvasContext.fillText("TEMP GAME OVER SCREEN", canvas.width/2, line);
 }
 
 function gameLogic(dt) {
