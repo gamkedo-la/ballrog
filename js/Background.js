@@ -2,26 +2,31 @@
 
 var bgFrameCount = 0;
 
-function drawBackground() {
+function drawBackground(pic) {
+    
+    const size1 = 256; // 64
+    const range1 = 64; //50;
+    const size2 = 128; // 80
+    const range2 = 64; //40;
     
     colorRect(0, 0, canvas.width, canvas.height, 'rgb(0,0,0)');
     bgFrameCount++;
     
-    canvasContext.globalCompositeOperation = 'lighten';//'difference';
+    canvasContext.globalCompositeOperation = 'lighten';//'difference';//screen
     //canvasContext.globalAlpha = 0.5;
     
-    canvasContext.drawImage(plasmaPic,
-        plasmaPic.width/2 + Math.cos(bgFrameCount/200)*50, // sx
-        plasmaPic.height/2 + Math.cos(bgFrameCount/233)*50, // sy
-        64, // sw
-        64, // sh
+    canvasContext.drawImage(pic,
+        pic.width/2 + Math.sin(bgFrameCount/200)*range1-(size1/2), // sx
+        pic.height/2 + Math.sin(bgFrameCount/233)*range1-(size1/2), // sy
+        size1, // sw
+        size1, // sh
         0,0,canvas.width,canvas.height);
 
-    canvasContext.drawImage(plasmaPic,
-        plasmaPic.width/2 + Math.cos(bgFrameCount/111)*-40, // sx
-        plasmaPic.height/2 + Math.cos(bgFrameCount/99)*40, // sy
-        80, // sw
-        80, // sh
+    canvasContext.drawImage(pic,
+        pic.width/2 + Math.sin(bgFrameCount/111)*-range2-(size2/2), // sx
+        pic.height/2 + Math.sin(bgFrameCount/99)*range2-(size2/2), // sy
+        size2, // sw
+        size2, // sh
         0,0,canvas.width,canvas.height);
     
     canvasContext.globalCompositeOperation = 'source-over';

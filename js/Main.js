@@ -267,7 +267,7 @@ function checkAndRewardPlayer() {
 function drawTitleScreen() {
 	var line = 120;
 	//colorRect(0, 0, canvas.width, canvas.height, 'black');
-	drawBackground();	
+	drawBackground(plasmaPic);	
 	drawBitMap(titlePic, 0, 0);
 	canvasContext.fillStyle = 'white';
 	canvasContext.textAlign = 'center';
@@ -315,7 +315,7 @@ function drawEverything() {
 		drawGameOverScreen();
 		
 	} else {
-		drawBackground();
+		drawBackground(plasmaPic);
 		drawGUI();
 		allBalls.forEach(function (ball) { ball.drawBall(); }); // multiball
 		drawEnemies();
@@ -326,7 +326,7 @@ function drawEverything() {
 }
 
 function drawGameOverScreen(){
-	drawBackground();
+	drawBackground(plasmaPic);
 	var line = 120;
 	colorRect(0, 0, canvas.width, canvas.height, 'black');
 	canvasContext.fillStyle = 'white';

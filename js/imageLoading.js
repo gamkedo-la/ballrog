@@ -20,6 +20,7 @@ var shinePic = document.createElement("img");
 var bouncePic = document.createElement("img");
 var editorBackgroundTile = document.createElement("img");
 var plasmaPic = document.createElement("img");
+var plasma2Pic = document.createElement("img");
 var iceEnemyPic = document.createElement("img");
 var imageList = [
 	{varName: ballPic, theFile: "../images/ball.png"},
@@ -44,6 +45,7 @@ var imageList = [
 	{varName: bouncePic, theFile: "../images/bounceEffect.png"},
 	{varName: editorBackgroundTile, theFile: "../images/editorBG.png"},
 	{varName: plasmaPic, theFile: "../images/plasma.png"},
+	{varName: plasma2Pic, theFile: "../images/plasma2.png"},
 	{varName: iceEnemyPic, theFile: "../images/iceEnemy.png"}
 ];
 var picsToLoad = imageList.length;
