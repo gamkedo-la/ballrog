@@ -23,7 +23,7 @@ function ballClass(x,y,vx,vy){
 	this.VelY = vy || -2;
 	this.maxSpeed = INITIAL_MAX_SPEED;
 	this.baseSpeed = INITIAL_SPEED;
-	this.minSpeed = this.baseSpeed;	
+	this.minSpeed = this.baseSpeed;
 	this.ballMissEvent = new CustomEvent('ballMiss');
 	this.ballResetEvent = new CustomEvent('ballReset');
 	this.wallHitEvent = new CustomEvent('wallHit');
@@ -31,7 +31,7 @@ function ballClass(x,y,vx,vy){
 	this.bounceEffect = new BounceFX(bouncePic);
 
 	this.ballReset = function(ballCount) {
-		if(ballCount == 1){			
+		if(ballCount == 1){
 			this.minSpeed = this.baseSpeed;
 			this.X = paddleX + paddleWidth/2;
 			this.Y = paddleY - BALL_RADIUS/2;
@@ -102,7 +102,7 @@ function ballClass(x,y,vx,vy){
 	 }
 
 	 this.bounceOffSidesIfAppropriate = function() {
-		if ((this.X + BALL_RADIUS > canvas.width && this.VelX > 0) || 
+		if ((this.X + BALL_RADIUS > canvas.width && this.VelX > 0) ||
 		    (this.X - BALL_RADIUS < 0 && this.VelX < 0)) {  //keeps ball within screen
 			this.bounceEffect.trigger(this.X+(this.VelX>0?BALL_RADIUS:-BALL_RADIUS),this.Y);
 			this.updateVelocity(-1*this.VelX, this.VelY);
@@ -120,7 +120,7 @@ function ballClass(x,y,vx,vy){
 			var randomAngle = (Math.random() * 0.1);
 			this.updateVelocity(deltaX*6.3, -1*this.VelY);
 			let currentSpeed = this.getSpeedFromVelocity(this.VelX, this.VelY);
-			
+
 			if (currentSpeed < this.minSpeed) {
 				this.updateSpeed(this.minSpeed) * randomAngle;
 			}
@@ -133,10 +133,10 @@ function ballClass(x,y,vx,vy){
 
 	 this.didHitPaddle = function() {
 		let result = false;
-		if ((this.Y + BALL_RADIUS > paddleY) && 
-			(this.Y - BALL_RADIUS < paddleY + PADDLE_THICKNESS) && 
+		if ((this.Y + BALL_RADIUS > paddleY) &&
+			(this.Y - BALL_RADIUS < paddleY + PADDLE_THICKNESS) &&
 			(this.VelY > 0)) { //same vertical position as paddle
-				if ((this.X + BALL_RADIUS > paddleX) && 
+				if ((this.X + BALL_RADIUS > paddleX) &&
 				    (this.X - BALL_RADIUS < paddleX + paddleWidth)) { //same horizontal position as paddle
 					//ball hits the paddle
 					result = true;
@@ -156,13 +156,13 @@ function ballClass(x,y,vx,vy){
 						if(allBalls[i] === this) {
 						allBalls.splice(i, 1); //destroy extra ball that falls through floor
 						}//end if
-					}//end for							
-				}//end if				
+					}//end for
+				}//end if
 		}//end if
 	 }
 
 	 this.bounceOffCeilingIfAppropriate = function() {
-		if (this.Y < 0) { 
+		if (this.Y < 0) {
 			this.updateVelocity(this.VelX, -1*this.VelY);
 			canvas.dispatchEvent(this.wallHitEvent);
 			this.bounceEffect.trigger(this.X,this.Y-BALL_RADIUS);
@@ -257,7 +257,7 @@ function ballClass(x,y,vx,vy){
 				ball:this
 			}});
 			canvas.dispatchEvent(brickHitEvent);
-			
+
 			this.bounceEffect.trigger(this.X,this.Y+(this.VelY<0?BALL_RADIUS:-BALL_RADIUS));
 
 		}
@@ -289,15 +289,15 @@ var allBalls = [];
 function startMultiBall(quantity) {
 	console.log("MULTI BALL x"+quantity);
 	for (let num=0; num < quantity; num++) {
-		
+
 		var newBall = new ballClass(
 			allBalls[0].X+Math.random()*32-16,
 			allBalls[0].Y+Math.random()*8-4,
 			allBalls[0].VelX+Math.random()*8-4,
 			allBalls[0].VelY+Math.random()*8-4);
 
-		allBalls.push(newBall);		
+		allBalls.push(newBall);
 	}
 	ballCount = ballCount + quantity;
+	sounds.spawnMultiBall.play();
 }
-

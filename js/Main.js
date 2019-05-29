@@ -56,7 +56,8 @@ var sounds = {
 	// FIXME: lifeGet: new SoundOverlapsClass("audio/lifeGet"),//this file is missing, causing a 404 error
 	lifeLost: new SoundOverlapsClass("audio/lifeLost"),
 	levelComplete: new SoundOverlapsClass("audio/levelComplete"),
-	gameOver: new SoundOverlapsClass("audio/gameOver")
+	gameOver: new SoundOverlapsClass("audio/gameOver"),
+	spawnMultiBall: new SoundOverlapsClass("audio/multiBallSpawn")
 };
 
 var arrayOfBrickHitSounds = [sounds.brickHit, sounds.brickHitHalfStepDown, sounds.brickHitHalfStepUp,
@@ -271,7 +272,7 @@ function checkAndRewardPlayer() {
 function drawTitleScreen() {
 	var line = 120;
 	//colorRect(0, 0, canvas.width, canvas.height, 'black');
-	drawBackground(plasmaPic);	
+	drawBackground(plasmaPic);
 	drawBitMap(titlePic, 0, 0);
 	canvasContext.fillStyle = 'white';
 	canvasContext.textAlign = 'center';
@@ -317,7 +318,7 @@ function drawEverything() {
 		drawLevelTransition();
 	} else if(gameOverScreen){
 		drawGameOverScreen();
-		
+
 	} else {
 		drawBackground(plasmaPic);
 		drawGUI();
