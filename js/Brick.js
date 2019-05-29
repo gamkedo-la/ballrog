@@ -85,6 +85,7 @@ function drawLevelBricks() {
 					spaceInvadeX += BRICK_W/8 * invadingDirection;
 					invaderSteppedDown = false;
 				}
+				playMultiSound(arrayOfInvaderSounds);
 				invaderMovementTimer = invaderMovementTimerFull;
 			} else {
 				invaderMovementTimer--;

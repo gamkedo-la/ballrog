@@ -49,6 +49,8 @@ var sounds = {
 	wallHitHalfStepUp: new SoundOverlapsClass("audio/wallHitHalfStepUp", "wallHitHalfStepUp"),
 	wallHitWholeStepDown: new SoundOverlapsClass("audio/wallHitWholeStepDown", "wallHitWholeStepDown"),
 	wallHitWholeStepUp: new SoundOverlapsClass("audio/wallHitWholeStepUp", "wallHitWholeStepUp"),
+	invaderPillMove1: new SoundOverlapsClass("audio/InvaderMove1", "invaderPillMove1"),
+	invaderPillMove2: new SoundOverlapsClass("audio/InvaderMove2", "invaderPillMove2"),
 	// FIXME: gameStart: new SoundOverlapsClass("audio/gameStart"),
 	// FIXME: newLevel: new SoundOverlapsClass("audio/newLevel"),
 	// FIXME: lifeGet: new SoundOverlapsClass("audio/lifeGet"),//this file is missing, causing a 404 error
@@ -63,6 +65,7 @@ var arrayOfPaddleHitSounds = [sounds.paddleHit, sounds.paddleHitHalfStepDown, so
 								sounds.paddleHitWholeStepDown, sounds.paddleHitWholeStepUp];
 var arrayOfWallHitSounds = [sounds.wallHit, sounds.wallHitHalfStepDown, sounds.wallHitHalfStepUp,
 								sounds.wallHitWholeStepDown, sounds.wallHitWholeStepUp];
+var arrayOfInvaderSounds = [sounds.invaderPillMove1, sounds.invaderPillMove2];
 
 var messageArea;
 var dt = 0, last = timestamp();
@@ -121,7 +124,7 @@ window.onload = function() {
 			if (showTitle) {
 				showTitle = false;
 				// FIXME: sounds.gameStart.play();
-				testBackgroundMusic.play();
+				//testBackgroundMusic.play();
 				resetBricks();
 			} else if (demoScreen) {
 				demoScreen = false;
