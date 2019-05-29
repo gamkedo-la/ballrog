@@ -44,6 +44,7 @@ var sounds = {
 	brickHitHalfStepUp: new SoundOverlapsClass("audio/brickHitHalfStepUp", "brickHitHalfStepUp"),
 	brickHitWholeStepDown: new SoundOverlapsClass("audio/brickHitWholeStepDown", "brickHitWholeStepDown"),
 	brickHitWholeStepUp: new SoundOverlapsClass("audio/brickHitWholeStepUp", "brickHitWholeStepUp"),
+	brickHitSteel: new SoundOverlapsClass("audio/brickHitSteel", "brickHitSteel"),
 	wallHit: new SoundOverlapsClass("audio/wallHit", "wallHit"),
 	wallHitHalfStepDown: new SoundOverlapsClass("audio/wallHitHalfStepDown", "wallHitHalfStepDown"),
 	wallHitHalfStepUp: new SoundOverlapsClass("audio/wallHitHalfStepUp", "wallHitHalfStepUp"),
