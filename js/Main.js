@@ -61,7 +61,7 @@ var sounds = {
 };
 
 var arrayOfBrickHitSounds = [sounds.brickHit, sounds.brickHitHalfStepDown, sounds.brickHitHalfStepUp,
-							 sounds.brickHitWholeStepDown, sounds.brickHitWholeStepUp, sounds.brickHitSteel];
+							 sounds.brickHitWholeStepDown, sounds.brickHitWholeStepUp];
 var arrayOfPaddleHitSounds = [sounds.paddleHit, sounds.paddleHitHalfStepDown, sounds.paddleHitHalfStepUp,
 								sounds.paddleHitWholeStepDown, sounds.paddleHitWholeStepUp];
 var arrayOfWallHitSounds = [sounds.wallHit, sounds.wallHitHalfStepDown, sounds.wallHitHalfStepUp,
