@@ -125,7 +125,7 @@ window.onload = function() {
 			if (showTitle) {
 				showTitle = false;
 				// FIXME: sounds.gameStart.play();
-				//testBackgroundMusic.play();
+				testBackgroundMusic.play();
 				resetBricks();
 			} else if (demoScreen) {
 				demoScreen = false;

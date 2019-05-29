@@ -169,21 +169,6 @@ function accellPill() {
 	}
 }
 
-invaderPill.prototype = new pillClass();
-function invaderPill() {
-	this.imageOffsetX = PILL_W; //needs to be added to pills Sprite
-	this.imageOffsetY = PILL_H * 4;  //needs to be added to pills Sprite
-	this.powerTime = framesPerSecond * 24; // seconds in frames
-	this.startPower = function () {
-		spaceInvading = true;
-	}
-	this.endPower = function () {
-		spaceInvading = false;
-		//this.timer = undefined;
-		// not working as intended;
-	}
-}
-
 moveUpPill.prototype = new pillClass();
 function moveUpPill() {
 	this.imageOffsetX = 0;
@@ -199,6 +184,21 @@ function moveUpPill() {
 	}
 }
 
+invaderPill.prototype = new pillClass();
+function invaderPill() {
+	// FIX ME: previous unused art, not sure for what 
+	// Invader pill needs to be added to pills Sprite
+	this.imageOffsetX = PILL_W;
+	this.imageOffsetY = PILL_H * 6;
+	this.powerTime = framesPerSecond * 24; // seconds in frames
+	this.startPower = function () {
+		spaceInvading = true;
+	}
+	this.endPower = function () {
+		spaceInvading = false;
+	}
+}
+
 jumpPill.prototype = new pillClass();
 function jumpPill() {
 	this.imageOffsetX = PILL_W;
@@ -209,9 +209,6 @@ function jumpPill() {
 	}
 
 	this.endPower = function () {
-		if (!paddleJumping) {
-			return;
-		}
 		paddleJumping = false;
 		paddleY = PADDLE_ORIGINAL_Y;
 	}
@@ -391,21 +388,24 @@ function pillClass() {
 			this.y += PILL_DROP_SPEED*dt;
 			if (this.x > paddleX - PILL_W - 1 && this.x < paddleX + paddleWidth && this.y > paddleY - PILL_H/2) {
 				// check if powerup already active
-				//if (clearPillTimersBasedOnImage(this.imageOffsetX,this.imageOffsetY)){
-					this.startPower();
-					this.timer = this.powerTime;
-				//}
+				clearPillTimersBasedOnImage(this.imageOffsetX,this.imageOffsetY);
+				this.startPower();
+				this.timer = this.powerTime;
 				this.reset();
 			}
 			if (this.y > canvas.height) {
 				this.reset();
-			}
-		} else if (this.timer >= 0) {
-				this.timer--;
-				if (this.timer % framesPerSecond == 0) {
-					console.log(this.timer/framesPerSecond);
-				}
+			}	
+		} else if (this.timer > 0) {
+
+			// if (this.timer % framesPerSecond == 0) {
+			// 	console.log(this.timer/framesPerSecond);
+			// }
+
+			this.timer--;
+			
 			if (this.timer <= 0) {
+				//console.log(this.timer/framesPerSecond);
 				this.endPower();
 			}
 		} 
@@ -434,16 +434,11 @@ function clearPillTimersBasedOnImage(offsetX, offsetY) {
 
 	for (var i=0; i<timersArrayLength; i++) {
 		pill = pills[i];
-		if (pill.timer != undefined && 
+		if (pill.timer > 0 && 
 			pill.imageOffsetX == offsetX && pill.imageOffsetY == offsetY) {
-			console.log("Pill of same type active - no new timer");
-			// power up of this type active, don't start a new timer
-			return false;
+			pill.timer = 0;
 		}
 	}
-	// no power up of this type, start a new timer
-	console.log("No pill of the same type - starting new timer");
-	return true;
 }
 
 function clearPillAbilites() {

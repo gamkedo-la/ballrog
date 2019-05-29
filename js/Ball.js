@@ -68,7 +68,9 @@ function ballClass(x,y,vx,vy){
 	}
 
 	this.ballMove = function(dt) {
-		if (!ballHeld) {
+		if (ballHeld) {
+			allBalls[0].Y = paddleY - BALL_RADIUS/2;
+		} else {
 			//update ball position using current velocity
 			this.X += this.VelX*dt;
 			this.Y += this.VelY*dt;
