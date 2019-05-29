@@ -58,7 +58,7 @@ function stretchPill() {
 	var stretchedPaddle = paddleWidth * STRETCHED_PADDLE_MULTIPLIER;
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = 0;
-	this.powerTime = 10000;
+	this.powerTime = framesPerSecond * 10;
 	this.startPower = function () {
 		if (paddleWidth == stretchedPaddle) {
 			return;
@@ -95,7 +95,7 @@ ghostPill.prototype = new pillClass();
 function ghostPill() {
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H;
-	this.powerTime = 7000;
+	this.powerTime = framesPerSecond * 7;
 	this.startPower = function () {
 		paddleAlpha = 0.08;
 	}
@@ -134,7 +134,7 @@ function shrinkPill() {
 	var shrunkPaddle = paddleWidth * SHRINK_PADDLE_MULTIPLIER;
 	this.imageOffsetX = 0;
 	this.imageOffsetY = PILL_H * 4;
-	this.powerTime = 10000;
+	this.powerTime = framesPerSecond * 10;
 	this.startPower = function () {
 		if (paddleWidth == shrunkPaddle) {
 			return;
@@ -159,7 +159,7 @@ accellPill.prototype = new pillClass();
 function accellPill() {
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H * 4;
-	this.powerTime = 10000;
+	this.powerTime = framesPerSecond * 10;
 	this.startPower = function () {
 		//needs to be added
 	}
@@ -173,7 +173,7 @@ invaderPill.prototype = new pillClass();
 function invaderPill() {
 	this.imageOffsetX = PILL_W; //needs to be added to pills Sprite
 	this.imageOffsetY = PILL_H * 4;  //needs to be added to pills Sprite
-	this.powerTime = 24000;
+	this.powerTime = framesPerSecond * 24; // seconds in frames
 	this.startPower = function () {
 		spaceInvading = true;
 	}
@@ -188,7 +188,7 @@ moveUpPill.prototype = new pillClass();
 function moveUpPill() {
 	this.imageOffsetX = 0;
 	this.imageOffsetY = PILL_H * 5;
-	this.powerTime = 10000;
+	this.powerTime = framesPerSecond * 10;
 	this.startPower = function () {
 		if (paddleY == PADDLE_ORIGINAL_Y) {
 			paddleY -= PADDLE_THICKNESS * 2;
@@ -203,7 +203,7 @@ jumpPill.prototype = new pillClass();
 function jumpPill() {
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H * 5;
-	this.powerTime = 10000; 
+	this.powerTime = framesPerSecond * 10; 
 	this.startPower = function () {
 		paddleJumping = true;
 	}
@@ -393,14 +393,22 @@ function pillClass() {
 				// check if powerup already active
 				//if (clearPillTimersBasedOnImage(this.imageOffsetX,this.imageOffsetY)){
 					this.startPower();
-					this.timer = setTimeout(this.endPower, this.powerTime);
+					this.timer = this.powerTime;
 				//}
 				this.reset();
 			}
 			if (this.y > canvas.height) {
 				this.reset();
 			}
-		}
+		} else if (this.timer >= 0) {
+				this.timer--;
+				if (this.timer % framesPerSecond == 0) {
+					console.log(this.timer/framesPerSecond);
+				}
+			if (this.timer <= 0) {
+				this.endPower();
+			}
+		} 
 	};
 	
 	this.startPower = function () {

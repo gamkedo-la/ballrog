@@ -70,6 +70,7 @@ var arrayOfInvaderSounds = [sounds.invaderPillMove1, sounds.invaderPillMove2];
 var messageArea;
 var dt = 0, last = timestamp();
 const gameUpdateStep = 1/30;
+const framesPerSecond = 30;
 
 function timestamp() {
 	return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
@@ -263,7 +264,7 @@ function checkAndRewardPlayer() {
 	var prevScore = score - BRICK_HIT_POINTS; // FIXME: score is now increased by variable amounts
 	if (score > 0 && score % NEW_LIFE_SCORE_MILESTONE == 0) {
 		lives++;
-		sounds.lifeGet.play();
+		//sounds.lifeGet.play(); //FIXME
 	}
 }
 
