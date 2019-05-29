@@ -44,6 +44,7 @@ var sounds = {
 	brickHitHalfStepUp: new SoundOverlapsClass("audio/brickHitHalfStepUp", "brickHitHalfStepUp"),
 	brickHitWholeStepDown: new SoundOverlapsClass("audio/brickHitWholeStepDown", "brickHitWholeStepDown"),
 	brickHitWholeStepUp: new SoundOverlapsClass("audio/brickHitWholeStepUp", "brickHitWholeStepUp"),
+	brickHitSteel: new SoundOverlapsClass("audio/brickHitSteel", "brickHitSteel"),
 	wallHit: new SoundOverlapsClass("audio/wallHit", "wallHit"),
 	wallHitHalfStepDown: new SoundOverlapsClass("audio/wallHitHalfStepDown", "wallHitHalfStepDown"),
 	wallHitHalfStepUp: new SoundOverlapsClass("audio/wallHitHalfStepUp", "wallHitHalfStepUp"),
@@ -60,7 +61,7 @@ var sounds = {
 };
 
 var arrayOfBrickHitSounds = [sounds.brickHit, sounds.brickHitHalfStepDown, sounds.brickHitHalfStepUp,
-							 sounds.brickHitWholeStepDown, sounds.brickHitWholeStepUp];
+							 sounds.brickHitWholeStepDown, sounds.brickHitWholeStepUp, sounds.brickHitSteel];
 var arrayOfPaddleHitSounds = [sounds.paddleHit, sounds.paddleHitHalfStepDown, sounds.paddleHitHalfStepUp,
 								sounds.paddleHitWholeStepDown, sounds.paddleHitWholeStepUp];
 var arrayOfWallHitSounds = [sounds.wallHit, sounds.wallHitHalfStepDown, sounds.wallHitHalfStepUp,
