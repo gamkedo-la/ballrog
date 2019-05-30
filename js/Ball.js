@@ -44,8 +44,15 @@ function ballClass(x,y,vx,vy){
 	}// end ballReset
 
 	this.updateVelocity = function(velX, velY) {
-		this.VelX = velX;
-		this.VelY = velY;
+		var onePercentOfSpeed = (Math.random() > 0.5) ? 0.01 : -0.01;
+		this.VelX = velX + (velX * onePercentOfSpeed);
+		this.VelY = velY + (velY * onePercentOfSpeed)
+		if (this.VelX == 0) {
+			this.VelX += onePercentOfSpeed;
+		}
+		if (this.VelY == 0) {
+			this.VelY += onePercentOfSpeed;
+		}
 	}
 
 	this.updateSpeed = function(speed) {
