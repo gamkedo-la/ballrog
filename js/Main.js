@@ -130,6 +130,7 @@ window.onload = function() {
 				testBackgroundMusic.play();
 				resetBricks();
 			} else if (demoScreen) {
+				resetGame();
 				demoScreen = false;
 				showTitle = true;
 			} else {
