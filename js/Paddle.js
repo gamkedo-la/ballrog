@@ -24,7 +24,15 @@ function movePaddleOnMouseMove(evt) {
 	}
 }
 
+let jumpSoundPlaying = false;
+let firstJumpSoundPlayed = false;
+
 function paddleJump(dt) {
+	if (!firstJumpSoundPlayed) {
+		playMultiSound(arrayOfPaddleJumpSounds);
+		firstJumpSoundPlayed = true;
+	}
+
 	if (paddleY >= PADDLE_ORIGINAL_Y) {
 		let power = JUMP_POWER_FACTORS[currentJumpFactorIndex];
 		jumpSpeedY = -power;
@@ -36,6 +44,19 @@ function paddleJump(dt) {
 	// jumpSpeedY *= AIR_RESISTANCE;
 	jumpSpeedY += GRAVITY*dt;
 	paddleY += jumpSpeedY*dt;
+
+	console.log(jumpSoundPlaying);
+	if (paddleY >= 535) {
+		console.log("paddleY", paddleY);
+		if (!jumpSoundPlaying) {
+			playMultiSound(arrayOfPaddleJumpSounds);
+			jumpSoundPlaying = true;
+			setTimeout(function() {
+				jumpSoundPlaying = false;
+			}, 750)
+		}
+	}
+
 }
 
 function moveComputerPaddle(whichBall) {
@@ -70,7 +91,7 @@ function drawGooglyEyes(whichBall) {
 	var eyeSpacing = 62;
 	var pupilDistance = 4; // how much movement
 	var angle = Math.atan2(whichBall.Y-paddleY, whichBall.X-paddleX);
-	
+
 	// blink occasionally
 	if (blinkCounter) {
 		drawBitMap(eyelidsPic,eyeX,eyeY);
@@ -86,7 +107,7 @@ function drawGooglyEyes(whichBall) {
 		drawBitMap(pupilPic,eyeX,eyeY);
 		drawBitMap(pupilPic,eyeX+eyeSpacing,eyeY);
 	}
-	
+
 	if (Math.random() < 0.01) { // maybe start a new blink or stay closed longer
 		blinkCounter = 5; // frames of closed eyes
 	}

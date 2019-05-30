@@ -1,6 +1,7 @@
 const PAUSE_KEY = 'p';
 const MUTE_KEY = 'm';
 const MULTIBALL_KEY = 'b';
+const PADDLEJUMP_KEY = 'j';
 const DEBUG_KEY = 'd';
 const EDIT_KEY = 'e';
 const DEATH_KEY = 'q';
@@ -108,10 +109,19 @@ function keyPressed(evt) {
 		initLevelEditor();
 		messageArea.innerHTML = '<strong>LEVEL EDITOR ENABLED</strong>';
 	} else if (debugMode) {
-		messageArea.innerHTML = '<strong>DEBUG MODE ENABLED</strong><br>left and right arrow keys move through levels<br>"r" key reloads current level<br>"m" key starts multiball';
+		messageArea.innerHTML = '<strong>DEBUG MODE ENABLED</strong><br>left and right arrow keys move through levels<br>"r" key reloads current level<br>"b" key starts multiball<br>"j"starts paddleJump()';
 		switch (evt.key) {
 		case 'b': // debug test multiball
 			startMultiBall(4);
+			break;
+		case 'j':// debug test paddleJump();
+			console.log("j pressed");
+			if (paddleJumping) {
+				paddleJumping = false;
+			} else {
+				paddleJumping = true;
+			}
+			console.log(paddleJumping);
 			break;
 		case 'ArrowRight':
 			currentLevelIndex++;

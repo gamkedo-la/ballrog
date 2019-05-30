@@ -39,6 +39,11 @@ var sounds = {
 	paddleHitHalfStepUp: new SoundOverlapsClass("audio/paddleHitHalfStepUp", "paddleHitHalfStepUp"),
 	paddleHitWholeStepDown: new SoundOverlapsClass("audio/paddleHitWholeStepDown", "paddleHitWholeStepDown"),
 	paddleHitWholeStepUp: new SoundOverlapsClass("audio/paddleHitWholeStepUp", "paddleHitWholeStepUp"),
+	paddleJump: new SoundOverlapsClass("audio/paddleJump", "paddleJump"),
+	paddleJumpHalfStepUp: new SoundOverlapsClass("audio/paddleJumpHalfStepUp", "paddleJumpHalfStepUp"),
+	paddleJumpWholeStepUp: new SoundOverlapsClass("audio/paddleJumpWholeStepUp", "paddleJumpWholeStepUp"),
+	paddleJumpHalfStepDown: new SoundOverlapsClass("audio/paddleJumpHalfStepDown", "paddleJumpHalfStepDown"),
+	paddleJumpWholeStepDown: new SoundOverlapsClass("audio/paddleJumpWholeStepDown", "paddleJumpWholeStepDown"),
 	brickHit: new SoundOverlapsClass("audio/brickHit", "brickHit"),
 	brickHitHalfStepDown: new SoundOverlapsClass("audio/brickHitHalfStepDown", "brickHitHalfStepDown"),
 	brickHitHalfStepUp: new SoundOverlapsClass("audio/brickHitHalfStepUp", "brickHitHalfStepUp"),
@@ -68,6 +73,8 @@ var arrayOfPaddleHitSounds = [sounds.paddleHit, sounds.paddleHitHalfStepDown, so
 var arrayOfWallHitSounds = [sounds.wallHit, sounds.wallHitHalfStepDown, sounds.wallHitHalfStepUp,
 								sounds.wallHitWholeStepDown, sounds.wallHitWholeStepUp];
 var arrayOfInvaderSounds = [sounds.invaderPillMove1, sounds.invaderPillMove2];
+var arrayOfPaddleJumpSounds = [sounds.paddleJump, sounds.paddleJumpHalfStepUp, sounds.paddleJumpWholeStepUp,
+															sounds.paddleJumpHalfStepDown, sounds.paddleJumpWholeStepDown];
 
 var messageArea;
 var dt = 0, last = timestamp();
@@ -158,6 +165,7 @@ window.onload = function() {
 	testBackgroundMusic = new Audio("audio/gameplayMusic" + audioFormat);
 	testBackgroundMusic.loop = true;
 	testBackgroundMusic.volume = 0.15;
+
 }
 
 function resetGame() {
@@ -295,7 +303,10 @@ function drawLevelTransition() {
 	canvasContext.fillText("GET PSYCHED!", canvas.width/2, line + 20);
 }
 
+let arrayOfJumpsSoundsInitialized = false;
+
 function drawEverything() {
+	console.log(paddleY);
 	if (showTitle) {
 		drawTitleScreen();
 		if(titleScreenTimer < 1000){
