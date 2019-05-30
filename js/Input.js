@@ -1,5 +1,6 @@
 const PAUSE_KEY = 'p';
 const MUTE_KEY = 'm';
+const MULTIBALL_KEY = 'b';
 const DEBUG_KEY = 'd';
 const EDIT_KEY = 'e';
 const DEATH_KEY = 'q';
@@ -109,7 +110,7 @@ function keyPressed(evt) {
 	} else if (debugMode) {
 		messageArea.innerHTML = '<strong>DEBUG MODE ENABLED</strong><br>left and right arrow keys move through levels<br>"r" key reloads current level<br>"m" key starts multiball';
 		switch (evt.key) {
-		case 'm': // debug test multiball
+		case 'b': // debug test multiball
 			startMultiBall(4);
 			break;
 		case 'ArrowRight':
