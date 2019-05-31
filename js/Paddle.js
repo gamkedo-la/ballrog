@@ -116,10 +116,11 @@ function drawGooglyEyes(whichBall) {
 }
 
 function drawPaddle() {
+	var image = paddleFrozen ? paddleFrozenPic : paddlePic;
 	canvasContext.save();
 	canvasContext.globalAlpha = paddleAlpha;
 	canvasContext.scale(paddleScale.x, paddleScale.y);
-	drawBitMap(paddlePic, Math.floor(paddleX/paddleScale.x), paddleY + 5);
+	drawBitMap(image, Math.floor(paddleX/paddleScale.x), paddleY + 5);
 	drawGooglyEyes(allBalls[0]);
 	canvasContext.restore();
 }
