@@ -12,8 +12,8 @@ function setFormat() {
 function SoundOverlapsClass(filenameWithPath, name) {
     setFormat();
     var altSoundTurn = false;
-    var mainSound = new Audio(filenameWithPath + audioFormat);
-    var altSound = new Audio(filenameWithPath + audioFormat);
+    this.mainSound = new Audio(filenameWithPath + audioFormat);
+    this.altSound = new Audio(filenameWithPath + audioFormat);
 
     this.name = name;
 
@@ -22,11 +22,11 @@ function SoundOverlapsClass(filenameWithPath, name) {
 
 		if(gameMuted == false){
 			if (altSoundTurn) {
-				altSound.currentTime = 0;
-				altSound.play();
+				this.altSound.currentTime = 0;
+				this.altSound.play();
 			} else {
-				mainSound.currentTime = 0;
-				mainSound.play();
+				this.mainSound.currentTime = 0;
+				this.mainSound.play();
 			}
 		}//end check for gameMuted
 		altSoundTurn = !altSoundTurn;

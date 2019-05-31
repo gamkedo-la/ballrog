@@ -308,7 +308,6 @@ function drawLevelTransition() {
 let arrayOfJumpsSoundsInitialized = false;
 
 function drawEverything() {
-	console.log(paddleY);
 	if (showTitle) {
 		drawTitleScreen();
 		if(titleScreenTimer < 1000){
@@ -342,6 +341,7 @@ function drawEverything() {
 		drawBricks();
 		drawPills();
 		drawPaddle();
+		console.log(sounds.paddleHit.mainSound.volume);
 	}
 }
 
