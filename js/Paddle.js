@@ -13,10 +13,12 @@ const AIR_RESISTANCE = 9;
 
 var paddleAlpha = 1;
 var paddleScale = {x: 1, y: 1};
+var paddleFrozen = false;
+
 
 function movePaddleOnMouseMove(evt) {
 	var mousePos = calculateMousePos(evt);
-	if(!demoScreen){
+	if(!(demoScreen || paddleFrozen)){
 		paddleX = mousePos.x - (paddleWidth/2);
 	}
 	if (ballHeld) {

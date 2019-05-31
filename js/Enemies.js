@@ -1,7 +1,7 @@
 var enemiesManager = new (function() {
 	const ENABLED_ENEMIES = [iceEnemyClass];
-	const RESPAWN_TIMEOUT = 16;
-	const MAX_ENEMIES_PER_LEVEL = 30;
+	const RESPAWN_TIMEOUT = 12;
+	const MAX_ENEMIES_PER_LEVEL = 20;
 	var enemies = [];
 	var reSpawnTimer = 0;
 
@@ -67,7 +67,6 @@ function FSMEnemyClass() {
 			let stateTo = this.transitions[i][1];
 			let condition = this.transitions[i][2];
 			if (stateFrom == this.currentStateKey && condition(this)) {
-				console.log('Changing to ' + stateTo + ' from ' + stateFrom);
 				this.state.exit(this, dt);
 				this.setState(stateTo);
 				this.state.enter(this, dt);
@@ -84,8 +83,11 @@ function FSMEnemyClass() {
 
 iceEnemyClass.prototype = new FSMEnemyClass();
 function iceEnemyClass() {
+	const ATTACK_TIMEOUT = 1.25;
 	const SLIDE_TIMEOUT = 10;
 	const MELT_TIMEOUT = 1;
+	const DROP_SPEED = 200;
+	const SLIDE_SPEED = 150;
 	this.X = 0;
 	this.Y = 0;
 	this.velY = 0;
@@ -94,6 +96,7 @@ function iceEnemyClass() {
 	this.height = 21;
 	this.image = iceEnemyPic;
 	this.live = false;
+	this.visible = true;
 	this.transitions = [
 		['drop', 'slide', isCollidingWithBrickTop],
 		['slide', 'drop', reachedBrickEdge],
@@ -107,6 +110,7 @@ function iceEnemyClass() {
 	this.state = null;
 	this.init = function() {
 		this.live = false;
+		this.visible = true;
 		this.X = Math.random()*(canvas.width - this.width);
 		this.Y = this.height;
 	}
@@ -121,12 +125,14 @@ function iceEnemyClass() {
 		this.live = true;
 	}
 	this.draw = function() {
-		drawBitMap(this.image, this.X, this.Y);
+		if (this.visible) {
+			drawBitMap(this.image, this.X, this.Y);
+		}
 	}
 	this.states = {
 		drop: {
 			enter: function (enemy, dt) {
-				enemy.velY = 100;
+				enemy.velY = DROP_SPEED;
 			},
 			update: function(enemy, dt) {
 				enemy.Y += enemy.velY*dt;
@@ -137,7 +143,7 @@ function iceEnemyClass() {
 		},
 		slide: {
 			enter: function (enemy, dt) {
-				enemy.velX = 150;
+				enemy.velX = SLIDE_SPEED;
 				enemy.slideTimer = 0;
 			},
 			update: function(enemy, dt) {
@@ -166,15 +172,19 @@ function iceEnemyClass() {
 		},
 		attack: {
 			enter: function (enemy, dt) {
+				paddleFrozen = true;
+				enemy.visible = false;
+				enemy.attackTimer = 0;
 			},
 			update: function(enemy, dt) {
+				enemy.attackTimer += dt;
 			},
 			exit: function(enemy, dt) {
+				paddleFrozen = false;
 			}
 		},
 		melt: {
 			enter: function(enemy, dt) {
-				console.log('I\'m melting!');
 				enemy.meltTimer = 0;
 			},
 			update: function(enemy, dt) {
@@ -182,7 +192,6 @@ function iceEnemyClass() {
 				enemy.meltTimer += dt;
 			},
 			exit: function(enemy, dt) {
-				enemy.meltTimer = 0;
 				// FREEZE BRICK BELOW
 				let tile = getTileForPixelCoord(
 					enemy.X + enemy.width/2,
@@ -227,11 +236,14 @@ function iceEnemyClass() {
 	}
 
 	function isCollidingWithPaddle(enemy) {
-		return false;
+		// rectangle intersection
+		return (enemy.X + enemy.width >= paddleX
+				&& enemy.X <= paddleX + paddleWidth
+				&& enemy.Y + enemy.height >= paddleY);
 	}
 
 	function attackTimerEnded(enemy) {
-		return false;
+		return enemy.attackTimer >= ATTACK_TIMEOUT;
 	}
 
 	function movedBelowCanvasHeight(enemy) {
