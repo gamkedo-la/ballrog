@@ -9,6 +9,7 @@ var brickRightPic = document.createElement("img");
 var brickLeftPic = document.createElement("img");
 var brickVertPic = document.createElement("img");
 var brickEraserPic = document.createElement("img");
+var brickFrozenPic = document.createElement("img");
 var livesPic = document.createElement("img");
 var titlePic = document.createElement("img");
 var pillsPic = document.createElement("img");
@@ -33,6 +34,7 @@ var imageList = [
 	{varName: brickLeftPic, theFile: "../images/brick_left.png"},
 	{varName: brickVertPic, theFile: "../images/brick_vertical.png"},
 	{varName: brickEraserPic, theFile: "../images/brickEraser.png"},
+	{varName: brickFrozenPic, theFile: "../images/brickFrozen.png"},
 	{varName: livesPic, theFile: "../images/lifeicon.png"},
 	{varName: titlePic, theFile: "../images/title.png"},
 	{varName: pillsPic, theFile: "../images/pills.png"},

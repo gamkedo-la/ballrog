@@ -16,14 +16,18 @@ const BRICK_TYPES = {
 	speedleft:6,
 	speedvertical:7
 };
+const BRICK_SPECIAL_STATES = {
+	frozen: 100
+};
 const BRICK_IMAGES = {
 	[BRICK_TYPES.onehit]: brick1Pic,
 	[BRICK_TYPES.twohit]: brick2Pic,
 	[BRICK_TYPES.threehit]: brick3Pic,
 	[BRICK_TYPES.unbreakable]: brick4Pic,
-	[BRICK_TYPES.speedright]:brickRightPic,
-	[BRICK_TYPES.speedleft]:brickLeftPic,
-	[BRICK_TYPES.speedvertical]:brickVertPic
+	[BRICK_TYPES.speedright]: brickRightPic,
+	[BRICK_TYPES.speedleft]: brickLeftPic,
+	[BRICK_TYPES.speedvertical]: brickVertPic,
+	[BRICK_SPECIAL_STATES.frozen]: brickFrozenPic
 };
 
 var brickInfo = [];
@@ -36,7 +40,7 @@ var brickShineEffect = new ShineFX(shinePic); // a glint animation on hit
 function getBrickInfo() {
 	for (var eachCol=0; eachCol<BRICK_COLS; eachCol++) {
 		for (var eachRow=0; eachRow<BRICK_ROWS; eachRow++) {
-			var brick = getBrickAtTileCoord(eachCol, eachRow);
+			var brick = getBrickAtTileCoord(eachCol, eachRow) % 100;
 		    if(typeof(brick) != "undefined" && brick != BRICK_TYPES.empty) {
 				// TODO: get brick index here to find brick type
 				var brickLeftEdgeX = getColXCoord(eachCol);
@@ -49,8 +53,13 @@ function getBrickInfo() {
 	} // end of for eachCol
 } // end of getbrickInfo
 
-function drawSingleBrick(brick, leftEdgeX, topEdgeY) {
-	drawBitMap(BRICK_IMAGES[brick], leftEdgeX, topEdgeY);
+function drawSingleBrick(brick,leftEdgeX, topEdgeY) {
+	var brickType = brick % 100;
+	var brickState = brick - brickType;
+	drawBitMap(BRICK_IMAGES[brickType], leftEdgeX, topEdgeY);
+	if (brickState > 0) {
+		drawBitMap(BRICK_IMAGES[brickState], leftEdgeX, topEdgeY);
+	}
 }
 
 function drawBricks() {
@@ -101,9 +110,10 @@ function drawLevelBricks() {
 			var brickLeftEdgeX = getColXCoord(eachCol) + spaceInvadeX;
 			var brickTopEdgeY = getRowYCoord(eachRow) + spaceInvadeY;
 			var brick = getBrickAtTileCoord(eachCol, eachRow);
+			let brickType = brick % 100;
 
 			if(typeof(brick) != "undefined" && brick != BRICK_TYPES.empty) {
-				if (typeof(BRICK_IMAGES[brick]) == "undefined") {
+				if (typeof(BRICK_IMAGES[brick % 100]) == "undefined") {
 					console.log("BAD IMAGE FOR", brick);
 				}
 				drawSingleBrick(brick, brickLeftEdgeX, brickTopEdgeY);
@@ -250,7 +260,14 @@ function processBallEffects(brick, ball) {
 }
 
 function processBrickEffects(brick, evt) {
-	switch(brick) {
+	var brickType = brick % 100;
+	var brickState = brick - brickType;
+	switch(brickState) {
+	case BRICK_SPECIAL_STATES.frozen:
+		brickGrid[evt.detail.index] -= BRICK_SPECIAL_STATES.frozen;
+		return;
+	}
+	switch(brickType) {
 		case BRICK_TYPES.empty:
 			break;//do nothing for empty spaces
 		case BRICK_TYPES.onehit:
@@ -281,12 +298,21 @@ function shineBrick(evt) {
 }
 
 function isValidBrick(brickValue) {
-	const typeKeys = Object.keys(BRICK_TYPES);
-	for(let i = 0; i < typeKeys.length; i++) {
-		if(typeKeys[i] === "empty") continue; //want to ignore the "empty" brick type
+	const validTypes = Object.entries(BRICK_TYPES).filter(function(entry) {
+		let key = entry[0];
+		return key != "empty";
+	}).map(function(entry) {
+		let value = entry[1];
+		return value;
+	});
+	const brickType = brickValue % 100;
+	return validTypes.includes(brickType);
 
-		if(brickValue === BRICK_TYPES[typeKeys[i]]) return true;
-	}
+	// for(let i = 0; i < typeKeys.length; i++) {
+	// 	if(typeKeys[i] === "empty") continue; //want to ignore the "empty" brick type
 
-	return false;
+	// 	if(brickType === BRICK_TYPES[typeKeys[i]]) return true;
+	// }
+
+	// return false;
 }

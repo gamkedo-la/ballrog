@@ -1,26 +1,59 @@
-const SLIDE_TIMEOUT = 30;
-const MELT_TIMEOUT = 1;
-var enemies = [];
+var enemiesManager = new (function() {
+	const ENABLED_ENEMIES = [iceEnemyClass];
+	const RESPAWN_TIMEOUT = 16;
+	const MAX_ENEMIES_PER_LEVEL = 30;
+	var enemies = [];
+	var reSpawnTimer = 0;
 
-function initEnemies() {
-	enemies.push(new iceEnemyClass());
-	enemies[0].init();
-}
+	this.init = function() {
+		for (var i=0; i<MAX_ENEMIES_PER_LEVEL; i++) {
+			let enemyType = ENABLED_ENEMIES[Math.floor(Math.random() * ENABLED_ENEMIES.length)];
+			enemies.push(new enemyType());
+		}
+	};
 
-function enemiesMove(dt) {
-	for (let i=0; i<enemies.length; i++) {
-		enemies[i].update(dt);
-	}
-}
+	this.reset = function() {
+		reSpawnTimer = 0;
+		for (var i=0; i<MAX_ENEMIES_PER_LEVEL; i++) {
+			enemies[i].reset();
+		}
+	};
 
-function drawEnemies() {
-	for (let i=0; i<enemies.length; i++) {
-		let enemy = enemies[i];
-		if (enemy.live) {
-			enemies[i].draw();
+	reSpawn = function() {
+		for (var i=0; i<MAX_ENEMIES_PER_LEVEL; i++) {
+			let enemy = enemies[i];
+			if (!enemy.live) {
+				enemy.reSpawn();
+				break;
+			}
 		}
 	}
-}
+
+	this.update = function(dt) {
+		reSpawnTimer += dt;
+		let liveEnemies = enemies.filter(function (enemy) {
+			return enemy.live;
+		}).length
+		if (reSpawnTimer >= RESPAWN_TIMEOUT && liveEnemies < MAX_ENEMIES_PER_LEVEL) {
+			reSpawn();
+			reSpawnTimer = 0;
+		}
+		for (let i=0; i<enemies.length; i++) {
+			if (enemies[i].live) {
+				enemies[i].update(dt);
+			}
+		}
+	};
+
+	this.draw = function() {
+		for (let i=0; i<enemies.length; i++) {
+			let enemy = enemies[i];
+			if (enemy.live) {
+				enemies[i].draw();
+			}
+		}
+	};
+})();
 
 function FSMEnemyClass() {
 	this.update = function(dt) {
@@ -51,6 +84,8 @@ function FSMEnemyClass() {
 
 iceEnemyClass.prototype = new FSMEnemyClass();
 function iceEnemyClass() {
+	const SLIDE_TIMEOUT = 10;
+	const MELT_TIMEOUT = 1;
 	this.X = 0;
 	this.Y = 0;
 	this.velY = 0;
@@ -58,7 +93,36 @@ function iceEnemyClass() {
 	this.width = 25;
 	this.height = 21;
 	this.image = iceEnemyPic;
-	this.live = true;
+	this.live = false;
+	this.transitions = [
+		['drop', 'slide', isCollidingWithBrickTop],
+		['slide', 'drop', reachedBrickEdge],
+		['slide', 'melt', slideTimerEnded],
+		['melt', 'die', meltTimerEnded],
+		['drop', 'attack', isCollidingWithPaddle],
+		['attack', 'die', attackTimerEnded],
+		['drop', 'die', movedBelowCanvasHeight]
+	];
+	this.startState = 'drop';
+	this.state = null;
+	this.init = function() {
+		this.live = false;
+		this.X = Math.random()*(canvas.width - this.width);
+		this.Y = this.height;
+	}
+	this.reset = function() {
+		this.state = null;
+		this.velY = 0;
+		this.velX = 0;
+		this.init();
+	}
+	this.reSpawn = function() {
+		this.reset();
+		this.live = true;
+	}
+	this.draw = function() {
+		drawBitMap(this.image, this.X, this.Y);
+	}
 	this.states = {
 		drop: {
 			enter: function (enemy, dt) {
@@ -85,7 +149,7 @@ function iceEnemyClass() {
 					enemy.X = canvas.width - enemy.width;
 					enemy.velX *= -1;
 				} else {
-					tile = getTileForPixelCoord(
+					let tile = getTileForPixelCoord(
 						enemy.velX > 0 ? enemy.X + enemy.width : enemy.X,
 						enemy.Y + enemy.height/2
 					);
@@ -119,7 +183,17 @@ function iceEnemyClass() {
 			},
 			exit: function(enemy, dt) {
 				enemy.meltTimer = 0;
-				// 
+				// FREEZE BRICK BELOW
+				let tile = getTileForPixelCoord(
+					enemy.X + enemy.width/2,
+					enemy.Y + enemy.height*2,
+				);
+				let index = brickToTileIndex(tile.col, tile.row);
+				let brickType = brickGrid[index] % 100;
+				let brickState = brickGrid[index] - brickType;
+				if (isValidBrick(brickGrid[index]) && brickState != BRICK_SPECIAL_STATES.frozen) {
+					brickGrid[index] += BRICK_SPECIAL_STATES.frozen;
+				}
 			}
 		},
 		die: {
@@ -162,24 +236,5 @@ function iceEnemyClass() {
 
 	function movedBelowCanvasHeight(enemy) {
 		return (enemy.Y > canvas.height);
-	}
-	
-	this.transitions = [
-		['drop', 'slide', isCollidingWithBrickTop],
-		['slide', 'drop', reachedBrickEdge],
-		['slide', 'melt', slideTimerEnded],
-		['melt', 'die', meltTimerEnded],
-		['drop', 'attack', isCollidingWithPaddle],
-		['attack', 'die', attackTimerEnded],
-		['drop', 'die', movedBelowCanvasHeight]
-	];
-	this.startState = 'drop';
-	this.state = null;
-	this.init = function() {
-		this.X = Math.random()*(canvas.width - this.width);
-		this.Y = this.height;
-	}
-	this.draw = function() {
-		drawBitMap(this.image, this.X, this.Y);
 	}
 }
