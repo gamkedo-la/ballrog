@@ -10,8 +10,8 @@ const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, sticky
 
 // used for testing specific powerups - comment out other initializations
 //const PILL_DROP_CHANCE = 1.1; //Math.random is 0-1 so random will always be < 1.1;
-//const ENABLED_PILLS = [multiBallPill]; 
-//const ENABLED_PILLS = [magnetPill]; 
+//const ENABLED_PILLS = [multiBallPill];
+//const ENABLED_PILLS = [magnetPill];
 
 var pills = [];
 
@@ -43,7 +43,7 @@ magnetPill.prototype = new pillClass();
 function magnetPill() {
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H * 5;
-	this.powerTime = 10000; 
+	this.powerTime = 10000;
 	this.startPower = function () {
 		magneticBall = true;
 	}
@@ -62,18 +62,20 @@ function stretchPill() {
 	this.startPower = function () {
 		if (paddleWidth == stretchedPaddle) {
 			return;
-		} 
+		}
 		paddleScale.x = 2;
 		paddleWidth = stretchedPaddle;
+		sounds.stretchPaddleSound.play();
 	}
 
 
 	this.endPower = function () {
 		if (paddleWidth == PADDLE_ORIGINAL_W) {
 			return;
-		} 
+		}
 		paddleScale.x = 1;
 		paddleWidth = PADDLE_ORIGINAL_W;
+		sounds.shrinkPaddleSound.play();
 	}
 }
 
@@ -112,7 +114,7 @@ function multiBallPill(){
 	this.startPower = function(){
 		startMultiBall(MULTI_BALL_QUANTITY);
 	}
-	
+
 }
 
 stickyBallPill.prototype = new pillClass();
@@ -144,14 +146,16 @@ function shrinkPill() {
 			paddleScale.x = 1;
 			paddleWidth = PADDLE_ORIGINAL_W;
 			return;
-		} 
+		}
 		paddleScale.x = 0.5;
 		paddleWidth = shrunkPaddle;
+		sounds.shrinkPaddleSound.play();
 	}
 
 	this.endPower = function () {
 		paddleScale.x = 1;
 		paddleWidth = PADDLE_ORIGINAL_W;
+		sounds.stretchPaddleSound.play();
 	}
 }
 
@@ -186,7 +190,7 @@ function moveUpPill() {
 
 invaderPill.prototype = new pillClass();
 function invaderPill() {
-	// FIX ME: previous unused art, not sure for what 
+	// FIX ME: previous unused art, not sure for what
 	// Invader pill needs to be added to pills Sprite
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H * 6;
@@ -203,7 +207,7 @@ jumpPill.prototype = new pillClass();
 function jumpPill() {
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H * 5;
-	this.powerTime = framesPerSecond * 10; 
+	this.powerTime = framesPerSecond * 10;
 	this.startPower = function () {
 		paddleJumping = true;
 	}
@@ -228,7 +232,7 @@ letterGPill.prototype = new pillClass();
 function letterGPill() {
 	this.imageOffsetX = 0;
 	this.imageOffsetY = PILL_H * 7;
-	
+
 	this.startPower = function() {
 		letterG = true;
 	}
@@ -239,7 +243,7 @@ letterAPill.prototype = new pillClass();
 function letterAPill() {
 	this.imageOffsetX = 0;
 	this.imageOffsetY = PILL_H * 8;
-	
+
 	this.startPower = function() {
 		letterA = true;
 	}
@@ -250,7 +254,7 @@ letterMPill.prototype = new pillClass();
 function letterMPill() {
 	this.imageOffsetX = 0;
 	this.imageOffsetY = PILL_H * 9;
-	
+
 	this.startPower = function() {
 		letterM = true;
 	}
@@ -261,7 +265,7 @@ letterKPill.prototype = new pillClass();
 function letterKPill() {
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H * 7;
-	
+
 	this.startPower = function() {
 		letterK = true;
 	}
@@ -272,7 +276,7 @@ letterEPill.prototype = new pillClass();
 function letterEPill() {
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H * 8;
-	
+
 	this.startPower = function() {
 		letterE = true;
 	}
@@ -283,7 +287,7 @@ letterDPill.prototype = new pillClass();
 function letterDPill() {
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H * 9;
-	
+
 	this.startPower = function() {
 		letterD = true;
 	}
@@ -294,7 +298,7 @@ letterOPill.prototype = new pillClass();
 function letterOPill() {
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H * 10;
-	
+
 	this.startPower = function() {
 		letterO = true;
 	}
@@ -370,7 +374,7 @@ function pillClass() {
 	this.live = false;
 	this.powerTime = 0;
 	this.timer = undefined;
-	
+
 	this.draw = function () {
 		if (this.live) {
 			canvasContext.drawImage(pillsPic, this.imageOffsetX, this.imageOffsetY, PILL_W, PILL_H, this.x, this.y, PILL_W, PILL_H);
@@ -382,7 +386,7 @@ function pillClass() {
 		this.x = dropX + spaceInvadeX;
 		this.y = dropY + spaceInvadeY;
 	};
-	
+
 	this.move = function(dt) {
 		if (this.live) {
 			this.y += PILL_DROP_SPEED*dt;
@@ -395,7 +399,7 @@ function pillClass() {
 			}
 			if (this.y > canvas.height) {
 				this.reset();
-			}	
+			}
 		} else if (this.timer > 0) {
 
 			// if (this.timer % framesPerSecond == 0) {
@@ -403,20 +407,20 @@ function pillClass() {
 			// }
 
 			this.timer--;
-			
+
 			if (this.timer <= 0) {
 				//console.log(this.timer/framesPerSecond);
 				this.endPower();
 			}
-		} 
+		}
 	};
-	
+
 	this.startPower = function () {
 	};
 
 	this.endPower = function () {
 	};
-	
+
 	this.reset = function() {
 		this.live = false;
 	};
@@ -434,7 +438,7 @@ function clearPillTimersBasedOnImage(offsetX, offsetY) {
 
 	for (var i=0; i<timersArrayLength; i++) {
 		pill = pills[i];
-		if (pill.timer > 0 && 
+		if (pill.timer > 0 &&
 			pill.imageOffsetX == offsetX && pill.imageOffsetY == offsetY) {
 			pill.timer = 0;
 		}

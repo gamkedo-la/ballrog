@@ -63,7 +63,9 @@ var sounds = {
 	lifeLost: new SoundOverlapsClass("audio/lifeLost"),
 	levelComplete: new SoundOverlapsClass("audio/levelComplete"),
 	gameOver: new SoundOverlapsClass("audio/gameOver"),
-	spawnMultiBall: new SoundOverlapsClass("audio/multiBallSpawn")
+	spawnMultiBall: new SoundOverlapsClass("audio/multiBallSpawn"),
+	stretchPaddleSound: new SoundOverlapsClass("audio/stretchPaddle"),
+	shrinkPaddleSound: new SoundOverlapsClass("audio/shrinkPaddle")
 };
 
 var arrayOfBrickHitSounds = [sounds.brickHit, sounds.brickHitHalfStepDown, sounds.brickHitHalfStepUp,

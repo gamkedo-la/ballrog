@@ -2,6 +2,7 @@ const PAUSE_KEY = 'p';
 const MUTE_KEY = 'm';
 const MULTIBALL_KEY = 'b';
 const PADDLEJUMP_KEY = 'j';
+const STRETCH_PADDLE = 's';
 const DEBUG_KEY = 'd';
 const EDIT_KEY = 'e';
 const DEATH_KEY = 'q';
@@ -123,6 +124,10 @@ function keyPressed(evt) {
 			}
 			console.log(paddleJumping);
 			break;
+		case 's':// debug stretchedPaddle
+			stretchPill.startPower();
+			console.log("s key pressed");
+		break;
 		case 'ArrowRight':
 			currentLevelIndex++;
 			if (currentLevelIndex >= LEVEL_SEQ.length) {
