@@ -221,6 +221,7 @@ function resetLevel() {
 	allBalls[0].ballReset(ballCount)
 	//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball
 	activePills = 0;
+	enemiesManager.reset();
 	testBackgroundMusic.play();
 }
 
