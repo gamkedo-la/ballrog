@@ -1,0 +1,111 @@
+#+OPTIONS: reveal_title_slide:nil reveal_center:t reveal_progress:t reveal_history:nil reveal_control:t
+#+OPTIONS: reveal_rolling_links:t reveal_keyboard:t reveal_overview:t num:nil
+#+OPTIONS: toc:0
+#+REVEAL_ROOT: https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/
+#+REVEAL_MARGIN: 0.2
+#+REVEAL_MIN_SCALE: 0.9
+#+REVEAL_TRANS: fast
+#+REVEAL_THEME: solarized
+
+* Ballrog Week 4 Update
+
+#+BEGIN_export html
+<div style="float:left;width:49%;display:block">
+<h4>Week 3</h4>
+<img src="./images/week3.png" alt="Week 3 screenshot" />
+</div>
+<div style="float:right;width:49%;display:block;">
+<h4>Now</h4>
+<img src="./images/now.png" alt="Week 4 screenshot" />
+</div>
+#+END_export
+
+* Accomplishments
+
+** Audio
+
+   - *Jeff "Axphin" Hanlon*
+	 - Menu no @@html:<audio controls><source src="./demo/audio/MenuNo.ogg" type="audio/ogg"><source src="./demo/audio/MenuNo.wav" type="audio/wave"></audio>@@
+	 - Menu tick @@html:<audio controls><source src="./demo/audio/MenuTick.ogg" type="audio/ogg"><source src="./demo/audio/MenuTick.wav" type="audio/wave"></audio>@@
+	 - Menu yes @@html:<audio controls><source src="./demo/audio/MenuYes.ogg" type="audio/ogg"><source src="./demo/audio/MenuYes.wav" type="audio/wave"></audio>@@
+	 - Power Up @@html:<audio controls><source src="./demo/audio/PowerUp.ogg" type="audio/ogg"><source src="./demo/audio/PowerUp.wav" type="audio/wave"></audio>@@
+	 - Brick hit steel @@html:<audio controls><source src="./demo/audio/brickHitSteel.ogg" type="audio/ogg"><source src="./demo/audio/brickHitSteel.mp3" type="audio/mpeg"></audio>@@
+
+#+REVEAL: split
+   - *Stebs*
+	 - Multiball spawn WIP @@html:<audio controls><source src="./demo/audio/multiBallSpawn.ogg" type="audio/ogg"><source src="./demo/audio/multiBallSpanw.mp3" type="audio/mpeg"></audio>@@
+	 - Paddle jump (plus pitch half steps) @@html:<audio controls><source src="./demo/audio/paddleJump.ogg" type="audio/ogg"><source src="./demo/audio/paddleJump.mp3" type="audio/mpeg"></audio>@@
+	 - Paddle shrink @@html:<audio controls><source src="./demo/audio/shrinkPaddle.ogg" type="audio/ogg"><source src="./demo/audio/shrinkPaddle.mp3" type="audio/mpeg"></audio>@@
+	 - Paddle stretch @@html:<audio controls><source src="./demo/audio/stretchPaddle.ogg" type="audio/ogg"><source src="./demo/audio/stretchPaddle.mp3" type="audio/mpeg"></audio>@@
+#+REVEAL: split
+   - *Terrence McDonnell*
+	 - Invader power sound effects
+	   - @@html:<audio controls><source src="./demo/audio/InvaderMove1.ogg" type="audio/ogg"><source src="./demo/audio/InvaderMove1.mp3" type="audio/mpeg"></audio>@@
+	   - @@html:<audio controls><source src="./demo/audio/InvaderMove2.ogg" type="audio/ogg"><source src="./demo/audio/InvaderMove2.mp3" type="audio/mpeg"></audio>@@
+** Art
+   - *Christer "McFunkypants" Kaitila*
+	 - New plasma backgrounds
+	   - [[./demo/images/plasma2.png]]
+#+REVEAL: split
+	   - [[./demo/images/plasma3.png]]
+#+REVEAL: split
+	   - [[./demo/images/plasma4.png]]
+#+REVEAL: split
+   - *Gonzalo Delgado*
+	 - Frozen brick overlay [[./demo/images/brickFrozen.png]]
+
+	 - Frozen paddle [[./demo/images/paddleFrozen.png]]
+
+** Code
+   - *Christer "McFunkypants" Kaitila*
+	 - Plasma background added to title screen and demo
+	 - Extra layers background WIP
+
+   - *Gonzalo Delgado*
+	 - Ice enemy melt and freeze brick
+	 - Reset enemies on leve load
+	 - Ice enemy attack
+
+   - *Jeff "Axphin" Hanlon*
+	 - Brick hit steel
+   - *Michelly Oliveira*
+
+#+REVEAL: split
+   - *Stebs*
+	 - Multiball tweaks
+	 - Audio buses WIP
+
+   - *Terrence McDonnell*
+	 - Invader power sound effect integration
+	 - Convert pill timers to frame-based
+	 - Smoother demo AI movement
+	 - Ball held while jumping bugfix
+	 - Demo game progress reset
+	 - Ball bounce angle+speed adjustment
+
+
+** Levels
+   - *Cyriel De Neve*
+	 - Roses
+#+ATTR_HTML: :style max-height:500px
+[[./images/roses-level.png]]
+#+REVEAL: split
+   - *Gonzalo Delgado*
+	 - Ice delight
+
+#+ATTR_HTML: :style max-height:500px
+[[./images/icedelight-level.png]]
+
+* Demo
+#+BEGIN_export html
+<iframe src="demo/index.html" width="820" height="720"></iframe>
+#+END_export
+
+* Schedule
+
+#+BEGIN_export html
+<blockquote class="trello-board-compact">
+  <a href="https://trello.com/b/IhdcMwsh/ballrog">Ballrog Schedule</a>
+</blockquote>
+<script src="https://p.trellocdn.com/embed.min.js"></script>
+#+END_export

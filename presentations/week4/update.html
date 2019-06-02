@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title></title>
+<meta name="author" content="Gonzalo"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/css/theme/solarized.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+<section id="slide-org94f8319">
+<h2 id="org94f8319">Ballrog Week 4 Update</h2>
+<div style="float:left;width:49%;display:block">
+<h4>Week 3</h4>
+<img src="./images/week3.png" alt="Week 3 screenshot" />
+</div>
+<div style="float:right;width:49%;display:block;">
+<h4>Now</h4>
+<img src="./images/now.png" alt="Week 4 screenshot" />
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org235ae6e">
+<h2 id="org235ae6e">Accomplishments</h2>
+<div class="outline-text-2" id="text-org235ae6e">
+</div>
+</section>
+<section id="slide-orge1b9292">
+<h3 id="orge1b9292">Audio</h3>
+<ul>
+<li><b>Jeff "Axphin" Hanlon</b>
+<ul>
+<li>Menu no <audio controls><source src="./demo/audio/MenuNo.ogg" type="audio/ogg"><source src="./demo/audio/MenuNo.wav" type="audio/wave"></audio></li>
+<li>Menu tick <audio controls><source src="./demo/audio/MenuTick.ogg" type="audio/ogg"><source src="./demo/audio/MenuTick.wav" type="audio/wave"></audio></li>
+<li>Menu yes <audio controls><source src="./demo/audio/MenuYes.ogg" type="audio/ogg"><source src="./demo/audio/MenuYes.wav" type="audio/wave"></audio></li>
+<li>Power Up <audio controls><source src="./demo/audio/PowerUp.ogg" type="audio/ogg"><source src="./demo/audio/PowerUp.wav" type="audio/wave"></audio></li>
+<li>Brick hit steel <audio controls><source src="./demo/audio/brickHitSteel.ogg" type="audio/ogg"><source src="./demo/audio/brickHitSteel.mp3" type="audio/mpeg"></audio></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section>
+<ul>
+<li><b>Stebs</b>
+<ul>
+<li>Multiball spawn WIP <audio controls><source src="./demo/audio/multiBallSpawn.ogg" type="audio/ogg"><source src="./demo/audio/multiBallSpanw.mp3" type="audio/mpeg"></audio></li>
+<li>Paddle jump (plus pitch half steps) <audio controls><source src="./demo/audio/paddleJump.ogg" type="audio/ogg"><source src="./demo/audio/paddleJump.mp3" type="audio/mpeg"></audio></li>
+<li>Paddle shrink <audio controls><source src="./demo/audio/shrinkPaddle.ogg" type="audio/ogg"><source src="./demo/audio/shrinkPaddle.mp3" type="audio/mpeg"></audio></li>
+<li>Paddle stretch <audio controls><source src="./demo/audio/stretchPaddle.ogg" type="audio/ogg"><source src="./demo/audio/stretchPaddle.mp3" type="audio/mpeg"></audio></li>
+
+</ul></li>
+
+</ul>
+</section>
+<section>
+<ul>
+<li><b>Terrence McDonnell</b>
+<ul>
+<li>Invader power sound effects
+<ul>
+<li><audio controls><source src="./demo/audio/InvaderMove1.ogg" type="audio/ogg"><source src="./demo/audio/InvaderMove1.mp3" type="audio/mpeg"></audio></li>
+<li><audio controls><source src="./demo/audio/InvaderMove2.ogg" type="audio/ogg"><source src="./demo/audio/InvaderMove2.mp3" type="audio/mpeg"></audio></li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-orgeb89fa7">
+<h3 id="orgeb89fa7">Art</h3>
+<ul>
+<li><b>Christer "McFunkypants" Kaitila</b>
+<ul>
+<li>New plasma backgrounds
+<ul>
+<li><img src="./demo/images/plasma2.png" alt="plasma2.png" /></li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+</section>
+<section>
+<ul>
+<li><img src="./demo/images/plasma3.png" alt="plasma3.png" /></li>
+
+</ul>
+</section>
+<section>
+<ul>
+<li><img src="./demo/images/plasma4.png" alt="plasma4.png" /></li>
+
+</ul>
+</section>
+<section>
+<ul>
+<li><b>Gonzalo Delgado</b>
+<ul>
+<li>Frozen brick overlay <img src="./demo/images/brickFrozen.png" alt="brickFrozen.png" /></li>
+
+<li>Frozen paddle <img src="./demo/images/paddleFrozen.png" alt="paddleFrozen.png" /></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org67c83b3">
+<h3 id="org67c83b3">Code</h3>
+<ul>
+<li><b>Christer "McFunkypants" Kaitila</b>
+<ul>
+<li>Plasma background added to title screen and demo</li>
+<li>Extra layers background WIP</li>
+
+</ul></li>
+
+<li><b>Gonzalo Delgado</b>
+<ul>
+<li>Ice enemy melt and freeze brick</li>
+<li>Reset enemies on leve load</li>
+<li>Ice enemy attack</li>
+
+</ul></li>
+
+<li><b>Jeff "Axphin" Hanlon</b>
+<ul>
+<li>Brick hit steel</li>
+
+</ul></li>
+<li><b>Michelly Oliveira</b></li>
+
+</ul>
+
+</section>
+<section>
+<ul>
+<li><b>Stebs</b>
+<ul>
+<li>Multiball tweaks</li>
+<li>Audio buses WIP</li>
+
+</ul></li>
+
+<li><b>Terrence McDonnell</b>
+<ul>
+<li>Invader power sound effect integration</li>
+<li>Convert pill timers to frame-based</li>
+<li>Smoother demo AI movement</li>
+<li>Ball held while jumping bugfix</li>
+<li>Demo game progress reset</li>
+<li>Ball bounce angle+speed adjustment</li>
+
+</ul></li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgfbcb725">
+<h3 id="orgfbcb725">Levels</h3>
+<ul>
+<li><b>Cyriel De Neve</b>
+<ul>
+<li>Roses</li>
+
+</ul></li>
+
+</ul>
+
+<div class="figure">
+<p><img src="./images/roses-level.png" alt="roses-level.png" style="max-height:500px" />
+</p>
+</div>
+</section>
+<section>
+<ul>
+<li><b>Gonzalo Delgado</b>
+<ul>
+<li>Ice delight</li>
+
+</ul></li>
+
+</ul>
+
+
+<div class="figure">
+<p><img src="./images/icedelight-level.png" alt="icedelight-level.png" style="max-height:500px" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org1b832c1">
+<h2 id="org1b832c1">Demo</h2>
+<iframe src="demo/index.html" width="820" height="720"></iframe>
+
+</section>
+</section>
+<section>
+<section id="slide-orgc7baedb">
+<h2 id="orgc7baedb">Schedule</h2>
+<blockquote class="trello-board-compact">
+  <a href="https://trello.com/b/IhdcMwsh/ballrog">Ballrog Schedule</a>
+</blockquote>
+<script src="https://p.trellocdn.com/embed.min.js"></script>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/lib/js/head.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/js/reveal.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: true,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+pdfSeparateFragments: true,
+
+overview: true,
+margin: 0.20,
+minScale: 0.90,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'fast', // see README of reveal.js for options
+transitionSpeed: 'default',
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+</script>
+</body>
+</html>
