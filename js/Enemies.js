@@ -62,17 +62,19 @@ function FSMEnemyClass() {
 			this.state.enter(this, dt);
 			return;
 		}
+		this.state.update(this, dt);
 		for (let i=0; i<this.transitions.length; i++) {
 			let stateFrom = this.transitions[i][0];
 			let stateTo = this.transitions[i][1];
 			let condition = this.transitions[i][2];
 			if (stateFrom == this.currentStateKey && condition(this)) {
+				console.log('Switching from ' + stateFrom + ' to ' + stateTo);
 				this.state.exit(this, dt);
 				this.setState(stateTo);
 				this.state.enter(this, dt);
+				return;
 			}
 		}
-		this.state.update(this, dt);
 	}
 
 	this.setState = function(stateKey) {
@@ -98,6 +100,7 @@ function iceEnemyClass() {
 	this.live = false;
 	this.visible = true;
 	this.transitions = [
+		// [FROM_STATE, TO_STATE, CONDITION_FOR_SWITCH]
 		['drop', 'slide', isCollidingWithBrickTop],
 		['slide', 'drop', reachedBrickEdge],
 		['slide', 'melt', slideTimerEnded],
@@ -147,7 +150,6 @@ function iceEnemyClass() {
 				enemy.slideTimer = 0;
 			},
 			update: function(enemy, dt) {
-				enemy.X += enemy.velX*dt;
 				if (enemy.X < 0) {
 					enemy.X = 0;
 					enemy.velX *= -1;
@@ -163,6 +165,7 @@ function iceEnemyClass() {
 						enemy.velX *= -1;
 					}
 				}
+				enemy.X += enemy.velX*dt;
 				enemy.slideTimer += dt;
 			},
 			exit: function(enemy, dt) {
@@ -195,9 +198,9 @@ function iceEnemyClass() {
 				// FREEZE BRICK BELOW
 				let tile = getTileForPixelCoord(
 					enemy.X + enemy.width/2,
-					enemy.Y + enemy.height*2,
+					enemy.Y + enemy.height/2
 				);
-				let index = brickToTileIndex(tile.col, tile.row);
+				let index = brickToTileIndex(tile.col, tile.row + 1);
 				let brickType = brickGrid[index] % 100;
 				let brickState = brickGrid[index] - brickType;
 				if (isValidBrick(brickGrid[index]) && brickState != BRICK_SPECIAL_STATES.frozen) {
@@ -215,11 +218,13 @@ function iceEnemyClass() {
 			}
 		}
 	};
+
 	function isCollidingWithBrickTop(enemy) {
-		var tile = getTileForPixelCoord(
-			enemy.velX < 0 ? enemy.X + enemy.width : enemy.X,
-			enemy.Y + enemy.height + 2
-		);
+		let enemyBottomY = enemy.Y + enemy.height;
+		let enemyEndX = enemy.velX < 0 ? enemy.X + enemy.width : enemy.X;
+		enemyEndX = Math.min(enemyEndX, canvas.width);
+		enemyEndX = Math.max(enemyEndX, 0);
+		let tile = getTileForPixelCoord(enemyEndX, enemyBottomY)
 		return isValidBrick(getBrickAtTileCoord(tile.col, tile.row));
 	}
 
