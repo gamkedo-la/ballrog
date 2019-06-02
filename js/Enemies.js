@@ -1,6 +1,6 @@
 var enemiesManager = new (function() {
 	const ENABLED_ENEMIES = [iceEnemyClass];
-	const RESPAWN_TIMEOUT = 12;
+	const RESPAWN_TIMEOUT = 10;
 	const MAX_ENEMIES_PER_LEVEL = 20;
 	var enemies = [];
 	var reSpawnTimer = 0;
