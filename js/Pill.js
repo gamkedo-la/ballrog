@@ -10,7 +10,7 @@ const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, sticky
 
 // used for testing specific powerups - comment out other initializations
 //const PILL_DROP_CHANCE = 1.1; //Math.random is 0-1 so random will always be < 1.1;
-//const ENABLED_PILLS = [multiBallPill];
+//const ENABLED_PILLS = [accellPill];
 //const ENABLED_PILLS = [magnetPill];
 
 var pills = [];
@@ -25,6 +25,8 @@ var spaceInvading = false;
 var invaderSteppedDown = false;
 var invaderMovementTimerFull;
 var invaderMovementTimer;
+
+var speedIncreased = true;
 
 pointsPill.prototype = new pillClass();
 function pointsPill() {
@@ -163,13 +165,13 @@ accellPill.prototype = new pillClass();
 function accellPill() {
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H * 4;
-	this.powerTime = framesPerSecond * 10;
+	this.powerTime = framesPerSecond * 15;
 	this.startPower = function () {
-		//needs to be added
+		speedIncreased = true;
 	}
 
 	this.endPower = function () {
-		//needs to be added
+		speedIncreased = false;
 	}
 }
 

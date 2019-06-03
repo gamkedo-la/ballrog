@@ -59,13 +59,13 @@ var sounds = {
 	invaderPillMove2: new SoundOverlapsClass("audio/InvaderMove2", "invaderPillMove2"),
 	// FIXME: gameStart: new SoundOverlapsClass("audio/gameStart"),
 	// FIXME: newLevel: new SoundOverlapsClass("audio/newLevel"),
-	// FIXME: lifeGet: new SoundOverlapsClass("audio/lifeGet"),//this file is missing, causing a 404 error
-	lifeLost: new SoundOverlapsClass("audio/lifeLost"),
-	levelComplete: new SoundOverlapsClass("audio/levelComplete"),
-	gameOver: new SoundOverlapsClass("audio/gameOver"),
-	spawnMultiBall: new SoundOverlapsClass("audio/multiBallSpawn"),
-	stretchPaddleSound: new SoundOverlapsClass("audio/stretchPaddle"),
-	shrinkPaddleSound: new SoundOverlapsClass("audio/shrinkPaddle")
+	// FIXME: lifeGet: new SoundOverlapsClass("audio/lifeGet"), //this file is missing, causing a 404 error
+	lifeLost: new SoundOverlapsClass("audio/lifeLost", "lifeLost"),
+	levelComplete: new SoundOverlapsClass("audio/levelComplete", "levelComplete"),
+	gameOver: new SoundOverlapsClass("audio/gameOver", "gameOver"),
+	spawnMultiBall: new SoundOverlapsClass("audio/multiBallSpawn", "spawnMultiBall"),
+	stretchPaddleSound: new SoundOverlapsClass("audio/stretchPaddle", "stretchPaddleSound"),
+	shrinkPaddleSound: new SoundOverlapsClass("audio/shrinkPaddle", "shrinkPaddleSound")
 };
 
 var arrayOfBrickHitSounds = [sounds.brickHit, sounds.brickHitHalfStepDown, sounds.brickHitHalfStepUp,
@@ -342,7 +342,7 @@ function drawEverything() {
 		drawBricks();
 		drawPills();
 		drawPaddle();
-		console.log(sounds.paddleHit.mainSound.volume);
+		//console.log(sounds.paddleHit.mainSound.volume);
 	}
 }
 
