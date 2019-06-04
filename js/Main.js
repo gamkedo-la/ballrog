@@ -1,6 +1,7 @@
 const INITIAL_LIVES = 3;
 const BRICK_HIT_POINTS = 100;
 const NEW_LIFE_SCORE_MILESTONE = 3000;
+
 var debugMode = false;
 var canvas;
 var canvasContext;
@@ -144,7 +145,7 @@ window.onload = function() {
 				demoScreen = false;
 				showTitle = true;
 			} else {
-				if (bricksInPlace) {
+				if (bricksInPlace && ballHeld) {
 					ballHeld = false;
 					stickyBall = false;
 				}

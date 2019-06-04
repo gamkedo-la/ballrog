@@ -122,13 +122,9 @@ stickyBallPill.prototype = new pillClass();
 function stickyBallPill() {
 	this.imageOffsetX = 0;
 	this.imageOffsetY = PILL_H * 3;
-	this.powerTime = 4000;
+
 	this.startPower = function () {
 		stickyBall = true;
-	}
-
-	this.endPower = function () {
-		stickyBall = false;
 	}
 }
 

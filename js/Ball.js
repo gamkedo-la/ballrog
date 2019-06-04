@@ -5,6 +5,8 @@ const INITIAL_MAX_SPEED = 400; // pixels/second
 var highestHitRow = BRICK_ROWS;
 
 var debugBall = false;
+var servingX = undefined;
+var servingY = undefined;
 
 function increaseBallSpeed(evt) {
 	var ball = allBalls[0];
@@ -50,8 +52,7 @@ function ballClass(x,y,vx,vy){
 			this.minSpeed = this.baseSpeed;
 			this.X = paddleX + paddleWidth/2;
 			this.Y = paddleY - BALL_RADIUS/2;
-			this.updateVelocity(this.VelX, this.VelY > 0 ? -this.VelY : this.VelY);
-			this.updateSpeed(this.minSpeed);
+			this.serveReset();
 			highestHitRow = BRICK_ROWS;
 			this.ballResetEvent = new CustomEvent('ballReset');
 			canvas.dispatchEvent(this.ballResetEvent);
@@ -97,6 +98,18 @@ function ballClass(x,y,vx,vy){
 		var speed = this.getSpeedFromVelocity(velX, velY);
 		return {x: velX/speed, y: velY/speed};
 	}
+
+	this.serveReset = function() {
+		//console.log('getting new serve');
+		var servingDegree = getRandomIntInclusive(83,90);
+		servingY = Math.sin(servingDegree * DEGREES_TO_RADS);
+		var x = Math.cos(servingDegree * DEGREES_TO_RADS);
+		servingX = (Math.random() > 0.5) ? x : -x;
+		
+		this.VelX = servingX;
+		this.VelY = -servingY;
+		this.updateSpeed(this.minSpeed);
+	}
 	
 	this.ballMove = function(dt) {
 		if (debugBall) {
@@ -107,7 +120,13 @@ function ballClass(x,y,vx,vy){
 
 		if (ballHeld) {
 			allBalls[0].Y = paddleY - BALL_RADIUS/2;
+			if (servingX == undefined && stickyBall) {
+				this.serveReset();
+			}
+			return;
 		} else {
+			servingX = undefined; 
+			servingY = undefined;
 			//update ball position using current velocity
 			this.X += this.VelX*dt;
 			this.Y += this.VelY*dt;
@@ -149,8 +168,9 @@ function ballClass(x,y,vx,vy){
 
 	 this.bounceOffPaddleIfAppropriate = function() {
 		if (this.didHitPaddle()) { //ball hit the paddle
-			if(stickyBall) {
+			if (stickyBall) {
 				ballHeld = true;
+				return;
 			}
 
 			let deltaX = this.X - (paddleX + paddleWidth/(2*paddleScale.x));
@@ -175,7 +195,7 @@ function ballClass(x,y,vx,vy){
 			(this.VelY > 0)) { //same vertical position as paddle
 				if ((this.X + BALL_RADIUS > paddleX) &&
 				    (this.X - BALL_RADIUS < paddleX + paddleWidth)) { //same horizontal position as paddle
-					//ball hits the paddle
+					//console.log("hit paddle");
 					result = true;
 				}
 			}
