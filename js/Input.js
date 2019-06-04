@@ -110,7 +110,12 @@ function keyPressed(evt) {
 		initLevelEditor();
 		messageArea.innerHTML = '<strong>LEVEL EDITOR ENABLED</strong>';
 	} else if (debugMode) {
-		messageArea.innerHTML = '<strong>DEBUG MODE ENABLED</strong><br>left and right arrow keys move through levels<br>"r" key reloads current level<br>"b" key starts multiball<br>"j"starts paddleJump()';
+		messageArea.innerHTML = '<strong>DEBUG MODE ENABLED</strong><br>' +
+		'left and right arrow keys move through levels<br>' +
+		'"r" key reloads current level<br>' +
+		'"b" key starts multiball<br>' +
+		'"j" starts paddleJump()<br>' +
+		'"l" starts debug ball';
 		switch (evt.key) {
 		case 'b': // debug test multiball
 			startMultiBall(4);
@@ -127,7 +132,11 @@ function keyPressed(evt) {
 		case 's':// debug stretchedPaddle
 			stretchPill.startPower();
 			console.log("s key pressed");
-		break;
+			break;
+		case 'l':// debug ball
+			debugBall = !debugBall;
+			console.log("debugBall: " + debugBall);
+			break;
 		case 'ArrowRight':
 			currentLevelIndex++;
 			if (currentLevelIndex >= LEVEL_SEQ.length) {
@@ -148,5 +157,6 @@ function keyPressed(evt) {
 		}
 	} else {
 		messageArea.innerHTML = '';
+		debugBall = false;
 	}
  }//end keyPressed function

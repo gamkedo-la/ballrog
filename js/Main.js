@@ -112,6 +112,7 @@ window.onload = function() {
 		enemiesManager.init();
 		canvas.addEventListener('mousemove', movePaddleOnMouseMove);
 		canvas.addEventListener('mousemove', handleEditorMouseMove);
+		canvas.addEventListener('mousemove', debugBallMovement);
 		canvas.addEventListener('ballMiss', dropLife);
 		canvas.addEventListener('brickHit', handleBrickHit);
 		canvas.addEventListener('brickHit', function() {playMultiSound(arrayOfBrickHitSounds)});
@@ -123,10 +124,10 @@ window.onload = function() {
 		canvas.addEventListener('wallHit', function() {playMultiSound(arrayOfWallHitSounds)});
 		canvas.addEventListener('outaLives', resetGame);
 		canvas.addEventListener('noMoreBricks', loadNextLevel);
-		canvas.addEventListener('outaLives', sounds.gameOver.play);
+		//canvas.addEventListener('outaLives', sounds.gameOver.play);
 		canvas.addEventListener('scoreIncrease', checkAndRewardPlayer);
 		//FIXME: canvas.addEventListener('newLevel', sounds.newLevel.play);
-		canvas.addEventListener('ballMiss', sounds.lifeLost.play);
+		//FIXME: canvas.addEventListener('ballMiss', sounds.lifeLost.play);
 		canvas.addEventListener('wheel', handleEditorMouseScroll);
 		canvas.addEventListener('mouseup', setEditorPencilUp);
 		canvas.addEventListener('mousedown', setEditorPencilDown);
@@ -193,6 +194,9 @@ function resetGame() {
 
 	lives = INITIAL_LIVES;
 	showTitle = true;
+	testBackgroundMusic.pause();
+	testBackgroundMusic.currentTime = 0;
+	sounds.gameOver.play();
 	titleScreenTimer = 0;
 	clearAllPillTimers();
 	clearPillAbilites();

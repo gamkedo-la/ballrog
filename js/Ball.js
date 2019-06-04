@@ -4,6 +4,8 @@ const INITIAL_SPEED = 180; // pixels/second
 const INITIAL_MAX_SPEED = 400; // pixels/second
 var highestHitRow = BRICK_ROWS;
 
+var debugBall = false;
+
 function increaseBallSpeed(evt) {
 	var ball = allBalls[0];
 	if (evt.detail.row < highestHitRow) {
@@ -13,6 +15,19 @@ function increaseBallSpeed(evt) {
 		if (ball.minSpeed > ball.getSpeedFromVelocity(ball.VelX, ball.VelY)) {
 			ball.updateSpeed(ball.minSpeed);
 		}
+	}
+}
+
+function debugBallMovement(evt) {
+	if (debugBall) {
+		var mouse = calculateMousePos(evt);
+		allBalls[0].X = mouse.x;
+		allBalls[0].Y = mouse.y;
+		allBalls[0].breakAndBounceOffBrickAtPixelCoord(
+			allBalls[0].X - spaceInvadeX,
+			allBalls[0].Y - spaceInvadeY,
+			dt
+		);
 	}
 }
 
@@ -82,8 +97,14 @@ function ballClass(x,y,vx,vy){
 		var speed = this.getSpeedFromVelocity(velX, velY);
 		return {x: velX/speed, y: velY/speed};
 	}
-
+	
 	this.ballMove = function(dt) {
+		if (debugBall) {
+			this.VelX = 1;
+			this.VelY = 1;
+			return;
+		}
+
 		if (ballHeld) {
 			allBalls[0].Y = paddleY - BALL_RADIUS/2;
 		} else {
