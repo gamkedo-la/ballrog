@@ -261,7 +261,7 @@ function ballClass(x,y,vx,vy){
 			}
 
 			if (bothTestsFailed) {
-				this.updateVelocity(-1*this.VelX, -1*this.VelY);
+				this.updateVelocity(-1*this.VelX, 1*this.VelY);
 			}
 
 			var brickHitEvent = new CustomEvent('brickHit', {detail: {
