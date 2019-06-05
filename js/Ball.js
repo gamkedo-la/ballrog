@@ -263,7 +263,8 @@ function ballClass(x,y,vx,vy){
 				(dir.y < 0 ? pixelY - nextY : nextY - pixelY) > 0));
 
 		if (isValidBrick(brickGrid[brickIndex])) {
-			var prevTileCol = Math.floor(prevBallX / BRICK_W);
+			if (checkBrickIndexWithPixelCoord(brickIndex, pixelX, pixelY - TOP_MARGIN)) {
+				var prevTileCol = Math.floor(prevBallX / BRICK_W);
 			if (prevTileCol != tileCol) {
 				prevTileCol = tileCol + Math.sign(this.VelX);
 			}
@@ -316,7 +317,7 @@ function ballClass(x,y,vx,vy){
 			canvas.dispatchEvent(brickHitEvent);
 
 			this.bounceEffect.trigger(this.X,this.Y+(this.VelY<0?BALL_RADIUS:-BALL_RADIUS));
-
+			}
 		}
 	}
 

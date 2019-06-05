@@ -10,7 +10,7 @@ const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, sticky
 
 // used for testing specific powerups - comment out other initializations
 //const PILL_DROP_CHANCE = 1.1; //Math.random is 0-1 so random will always be < 1.1;
-//const ENABLED_PILLS = [stickyBallPill];
+//const ENABLED_PILLS = [invaderPill];
 
 var pills = [];
 
@@ -21,6 +21,8 @@ var spaceInvadeX = 0;
 var spaceInvadeY = 0;
 var invadingDirection = 1;
 var spaceInvading = false;
+var invadeStepX = 10;
+var invadeStepY = 10;
 var invaderSteppedDown = false;
 var invaderMovementTimerFull;
 var invaderMovementTimer;
@@ -194,9 +196,6 @@ function invaderPill() {
 	this.powerTime = framesPerSecond * 24; // seconds in frames
 	this.startPower = function () {
 		spaceInvading = true;
-	}
-	this.endPower = function () {
-		spaceInvading = false;
 	}
 }
 

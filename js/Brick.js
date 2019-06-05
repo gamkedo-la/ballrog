@@ -83,19 +83,28 @@ function drawBricks() {
 function drawLevelBricks() {
 	if (spaceInvading) {
 		if (spaceInvadeY == BRICK_H && spaceInvadeX == 0) {
-			// ride out the rest of the pill time in this new position
+			invadeStepX *= -1;
+			invadeStepY *= -1;
+		}
+
+		if (spaceInvadeY == 0 && spaceInvadeX == 0 && invadeStepX < 0) {
+			spaceInvading = false;
+			invadeStepX *= -1;
+			invadeStepY *= -1;
 		} else {
 			if (invaderMovementTimer <= 0) {
 				if (Math.abs(spaceInvadeX) == BRICK_W && !invaderSteppedDown) {
-					spaceInvadeY += BRICK_H/2;
+					spaceInvadeY += invadeStepY;
 					invadingDirection *= -1;
 					invaderSteppedDown = true;
 				} else {
-					spaceInvadeX += BRICK_W/8 * invadingDirection;
+					spaceInvadeX += invadeStepX * invadingDirection;
 					invaderSteppedDown = false;
 				}
+
 				playMultiSound(arrayOfInvaderSounds);
 				invaderMovementTimer = invaderMovementTimerFull;
+
 			} else {
 				invaderMovementTimer--;
 			}
@@ -183,6 +192,25 @@ function getTileForPixelCoord(pixelX, pixelY) {
 		col: Math.floor(pixelX/COL_W),
 		row: Math.floor((pixelY - TOP_MARGIN)/ROW_H)
 	}
+}
+
+function checkBrickIndexWithPixelCoord(index, pixelX, pixelY) {
+	var indexPosition = {
+		left: ((index % BRICK_COLS) * COL_W),
+		right: ((index % BRICK_COLS) * COL_W) + BRICK_W,
+		top: (Math.floor(index / BRICK_COLS)) * ROW_H,
+		bottom: ((Math.floor(index / BRICK_COLS)) * ROW_H) + BRICK_H,		
+	}; 
+	//console.log(indexPosition);
+	//console.log(pixelX + " , " + pixelY);
+	if (indexPosition.right <= 0 || indexPosition.left >= canvas.width) {
+		return false;
+	}
+	if (pixelX > indexPosition.left && pixelX < indexPosition.right &&
+		pixelY > indexPosition.top && pixelY < indexPosition.bottom) {
+		return true;
+	}
+	return false; 
 }
 
 function getBrickAtTileCoord(brickTileCol, brickTileRow) {
