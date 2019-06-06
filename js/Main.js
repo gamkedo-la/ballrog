@@ -343,9 +343,9 @@ function drawEverything() {
 		drawBackground(plasmaPic);
 		drawGUI();
 		allBalls.forEach(function (ball) { ball.drawBall(); }); // multiball
-		enemiesManager.draw();
 		drawBricks();
 		drawPills();
+		enemiesManager.draw();
 		drawPaddle();
 		//console.log(sounds.paddleHit.mainSound.volume);
 	}

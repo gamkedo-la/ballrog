@@ -24,6 +24,7 @@ var editorBackgroundTile = document.createElement("img");
 var plasmaPic = document.createElement("img");
 var plasma2Pic = document.createElement("img");
 var iceEnemyPic = document.createElement("img");
+var wizEnemyPic = document.createElement("img");
 var imageList = [
 	{varName: ballPic, theFile: "../images/ball.png"},
 	{varName: paddlePic, theFile: "../images/paddle.png"},
@@ -50,7 +51,8 @@ var imageList = [
 	{varName: editorBackgroundTile, theFile: "../images/editorBG.png"},
 	{varName: plasmaPic, theFile: "../images/plasma.png"},
 	{varName: plasma2Pic, theFile: "../images/plasma2.png"},
-	{varName: iceEnemyPic, theFile: "../images/iceEnemy.png"}
+	{varName: iceEnemyPic, theFile: "../images/iceEnemy.png"},
+	{varName: wizEnemyPic, theFile: "../images/wizEnemy.png"}
 ];
 var picsToLoad = imageList.length;
 var allImagesLoadedEvent = new CustomEvent('allImagesLoaded');
