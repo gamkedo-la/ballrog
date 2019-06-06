@@ -1,5 +1,5 @@
 var enemiesManager = new (function() {
-	const ENABLED_ENEMIES = [iceEnemyClass];
+	const ENABLED_ENEMIES = [iceEnemyClass, wizEnemyClass];
 	const RESPAWN_TIMEOUT = 10;
 	const MAX_ENEMIES_PER_LEVEL = 20;
 	var enemies = [];
