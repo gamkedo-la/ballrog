@@ -303,7 +303,11 @@ function ballClass(x,y,vx,vy){
 			}
 
 			if (bothTestsFailed) {
-				this.updateVelocity(-1*this.VelX, 1*this.VelY);
+				if(tileRow == BRICK_ROWS - 1){
+					this.updateVelocity(-1*this.VelX, -1*this.VelY);
+				} else {
+					this.updateVelocity(-1*this.VelX, 1*this.VelY);
+				}
 			}
 
 			var brickHitEvent = new CustomEvent('brickHit', {detail: {
