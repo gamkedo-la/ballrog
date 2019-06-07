@@ -230,6 +230,9 @@ function wizEnemyClass() {
 				var brickIndex = brickToTileIndex(enemy.targetTile.col, enemy.targetTile.row);
 				if (brickGrid[brickIndex] < BRICK_TYPES.threehit) {
 					brickGrid[brickIndex]++;
+					if (brickGrid[brickIndex] - 1 == BRICK_TYPES.empty) {
+						bricksLeft++;
+					}
 				}
 			}
 		},
