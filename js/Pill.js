@@ -1,3 +1,8 @@
+// gameplay experiment:
+// bricks are always moving like space invaders
+// set to false to revert to previous breakout style
+const INVASION_MODE = true;
+
 const PILL_W = 50;
 const PILL_H = 20;
 const PILL_DROP_SPEED = 200; // pixels/second
@@ -13,21 +18,19 @@ const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, sticky
 //const ENABLED_PILLS = [invaderPill];
 
 var pills = [];
-
 var activePills = 0;
 var waitForLastPills = false;
+var speedIncreased = false; // used by accelPill
 
+var spaceInvading = INVASION_MODE; 
 var spaceInvadeX = 0;
 var spaceInvadeY = 0;
 var invadingDirection = 1;
-var spaceInvading = false;
 var invadeStepX = 10;
 var invadeStepY = 10;
 var invaderSteppedDown = false;
 var invaderMovementTimerFull;
 var invaderMovementTimer;
-
-var speedIncreased = false;
 
 pointsPill.prototype = new pillClass();
 function pointsPill() {
