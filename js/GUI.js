@@ -11,8 +11,10 @@ function drawGUI() {
     
     canvasContext.drawImage(guiBGPic,0,0);
 
+    guiTXT('High Score: ' + highScore.toString(), 8, GUI_Y, "white","left");
     guiTXT('Score: '+ prevScore, canvas.width/2, GUI_Y);
-    guiTXT('High Score: ' + highScore.toString(), 60, GUI_Y);
+    guiTXT('Level: '+ currentLevelIndex, canvas.width/2 + 200, GUI_Y, "silver", "center");
+
     drawLives();
     drawGAMKEDO();
 }
@@ -37,10 +39,11 @@ function drawGAMKEDO(){
 	}
 }
 
-function guiTXT(str,x,y,c) {
+function guiTXT(str,x,y,c,align) {
     if (!c) c = 'white';
+    if (!align) align = 'center';
     canvasContext.font = "bold 16px Arial";
-    canvasContext.textAlign = 'center';
+    canvasContext.textAlign = align;
     canvasContext.fillStyle = 'black';
     canvasContext.fillText(str,x+1,y+1);
     canvasContext.fillStyle = c;
