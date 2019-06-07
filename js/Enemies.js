@@ -1,55 +1,66 @@
 var enemiesManager = new (function() {
 	const ENABLED_ENEMIES = [iceEnemyClass, wizEnemyClass];
-	const RESPAWN_TIMEOUT = 10;
 	const MAX_ENEMIES_PER_LEVEL = 20;
-	var enemies = [];
+	const DEFAULT_RESPAWN_TIMEOUT = 10;
+	var activeEnemies = [];
+	var reSpawnQueue = [];
 	var reSpawnTimer = 0;
+	var nextReSpawnTimeout = DEFAULT_RESPAWN_TIMEOUT;
+	var nextReSpawnIndex = 0;
 
 	this.init = function() {
 		for (var i=0; i<MAX_ENEMIES_PER_LEVEL; i++) {
 			let enemyType = ENABLED_ENEMIES[Math.floor(Math.random() * ENABLED_ENEMIES.length)];
-			enemies.push(new enemyType());
+			reSpawnQueue.push(new enemyType());
 		}
+		setNextReSpawnTimeout();
 	};
 
 	this.reset = function() {
 		reSpawnTimer = 0;
-		for (var i=0; i<MAX_ENEMIES_PER_LEVEL; i++) {
-			enemies[i].reset();
+		while (activeEnemies.length) {
+			let enemy = activeEnemies.shift();
+			enemy.reset();
+			reSpawnQueue.push(enemy);
 		}
 	};
 
-	reSpawn = function() {
-		for (var i=0; i<MAX_ENEMIES_PER_LEVEL; i++) {
-			let enemy = enemies[i];
-			if (!enemy.live) {
-				enemy.reSpawn();
-				break;
-			}
+	function reSpawn() {
+		let enemy = reSpawnQueue.shift();
+		if (enemy) {
+			enemy.reSpawn();
+			activeEnemies.push(enemy);
+		}
+		setNextReSpawnTimeout();
+	}
+
+	function setNextReSpawnTimeout() {
+		if (reSpawnQueue.length) {
+			nextReSpawnTimeout = reSpawnQueue[0].reSpawnTimeout;
 		}
 	}
 
 	this.update = function(dt) {
 		reSpawnTimer += dt;
-		let liveEnemies = enemies.filter(function (enemy) {
-			return enemy.live;
-		}).length
-		if (reSpawnTimer >= RESPAWN_TIMEOUT && liveEnemies < MAX_ENEMIES_PER_LEVEL) {
+		if (reSpawnTimer >= nextReSpawnTimeout && activeEnemies < MAX_ENEMIES_PER_LEVEL) {
 			reSpawn();
 			reSpawnTimer = 0;
 		}
-		for (let i=0; i<enemies.length; i++) {
-			if (enemies[i].live) {
-				enemies[i].update(dt);
+		activeEnemies.forEach(function(enemy, index) {
+			if (enemy.live) {
+				enemy.update(dt);
+			} else {
+				reSpawnQueue.push(enemy);
+				activeEnemies.splice(index, 1);
 			}
-		}
+		});
 	};
 
 	this.draw = function() {
-		for (let i=0; i<enemies.length; i++) {
-			let enemy = enemies[i];
+		for (let i=0; i<activeEnemies.length; i++) {
+			let enemy = activeEnemies[i];
 			if (enemy.live) {
-				enemies[i].draw();
+				activeEnemies[i].draw();
 			}
 		}
 	};
@@ -63,6 +74,7 @@ function BaseEnemyClass() {
 	// this.image = squareEnemyPic;
 	this.live = false;
 	this.visible = true;
+	this.reSpawnTimeout = 10;
 
 	this.init = function() {
 		this.live = false;
@@ -134,6 +146,7 @@ function wizEnemyClass() {
 	this.height = 45;
 	this.VelX = 0;
 	this.image = wizEnemyPic;
+	this.reSpawnTimeout = 20;
 	this.targetTile = getTileForPixelCoord(canvas.width/2, canvas.height/2);
 	this.attackTimer = 0;
 	this.transitions = [
