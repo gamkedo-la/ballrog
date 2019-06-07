@@ -290,7 +290,7 @@ function checkAndRewardPlayer() {
 function drawTitleScreen() {
 	var line = 120;
 	//colorRect(0, 0, canvas.width, canvas.height, 'black');
-	drawBackground(plasma2Pic,plasma2Pic);
+	drawBackground(plasma4Pic,plasma4Pic);
 	drawBitMap(titlePic, 0, 0);
 	canvasContext.fillStyle = 'white';
 	canvasContext.textAlign = 'center';
@@ -352,9 +352,9 @@ function drawEverything() {
 }
 
 function drawGameOverScreen(){
-	drawBackground(plasma3Pic,plasma4Pic);
 	var line = 120;
 	colorRect(0, 0, canvas.width, canvas.height, 'black');
+	drawBackground(plasma2Pic,plasma2Pic);
 	canvasContext.fillStyle = 'white';
 	canvasContext.textAlign = 'center';
 	canvasContext.fillText("TEMP GAME OVER SCREEN", canvas.width/2, line);
