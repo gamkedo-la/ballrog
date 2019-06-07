@@ -88,7 +88,7 @@ function drawLevelBricks() {
 		}
 
 		if (spaceInvadeY == 0 && spaceInvadeX == 0 && invadeStepX < 0) {
-			spaceInvading = false;
+			if (!INVASION_MODE) spaceInvading = false;
 			invadeStepX *= -1;
 			invadeStepY *= -1;
 		} else {

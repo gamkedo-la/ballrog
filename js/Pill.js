@@ -11,7 +11,11 @@ const STRETCHED_PADDLE_MULTIPLIER = 2;
 const SHRINK_PADDLE_MULTIPLIER = 0.5;
 const MULTI_BALL_QUANTITY = 2;
 const PILL_DROP_CHANCE = 0.4;
-const ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, extraLifePill, letterGPill, letterAPill, letterMPill, letterKPill, letterEPill, letterDPill, letterOPill];
+
+var ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, extraLifePill, letterGPill, letterAPill, letterMPill, letterKPill, letterEPill, letterDPill, letterOPill];
+
+// remove invaderPill if invasion mode: it would have no effect
+if (INVASION_MODE) ENABLED_PILLS = ENABLED_PILLS.filter( el => el !== invaderPill ); 
 
 // used for testing specific powerups - comment out other initializations
 //const PILL_DROP_CHANCE = 1.1; //Math.random is 0-1 so random will always be < 1.1;
@@ -451,7 +455,7 @@ function clearPillAbilites() {
 	spaceInvadeX = 0;
 	spaceInvadeY = 0;
 	invadingDirection = (Math.random() > .5) ? 1 : -1;
-	spaceInvading = false;
+	if (!INVASION_MODE) spaceInvading = false;
 	stickyBall = false;
 	paddleJumping = false;
 	paddleAlpha = 1;
