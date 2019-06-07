@@ -290,7 +290,7 @@ function checkAndRewardPlayer() {
 function drawTitleScreen() {
 	var line = 120;
 	//colorRect(0, 0, canvas.width, canvas.height, 'black');
-	drawBackground(plasmaPic);
+	drawBackground(plasma2Pic,plasma2Pic);
 	drawBitMap(titlePic, 0, 0);
 	canvasContext.fillStyle = 'white';
 	canvasContext.textAlign = 'center';
@@ -339,8 +339,8 @@ function drawEverything() {
 	} else if(gameOverScreen){
 		drawGameOverScreen();
 
-	} else {
-		drawBackground(plasmaPic);
+	} else { // normal gameplay render:
+		drawBackground(plasmaPic,plasmaPic);
 		drawGUI();
 		allBalls.forEach(function (ball) { ball.drawBall(); }); // multiball
 		drawBricks();
@@ -352,7 +352,7 @@ function drawEverything() {
 }
 
 function drawGameOverScreen(){
-	drawBackground(plasmaPic);
+	drawBackground(plasma3Pic,plasma4Pic);
 	var line = 120;
 	colorRect(0, 0, canvas.width, canvas.height, 'black');
 	canvasContext.fillStyle = 'white';

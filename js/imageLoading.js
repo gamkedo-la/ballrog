@@ -23,6 +23,8 @@ var bouncePic = document.createElement("img");
 var editorBackgroundTile = document.createElement("img");
 var plasmaPic = document.createElement("img");
 var plasma2Pic = document.createElement("img");
+var plasma3Pic = document.createElement("img");
+var plasma4Pic = document.createElement("img");
 var iceEnemyPic = document.createElement("img");
 var wizEnemyPic = document.createElement("img");
 var imageList = [
@@ -51,6 +53,8 @@ var imageList = [
 	{varName: editorBackgroundTile, theFile: "../images/editorBG.png"},
 	{varName: plasmaPic, theFile: "../images/plasma.png"},
 	{varName: plasma2Pic, theFile: "../images/plasma2.png"},
+	{varName: plasma3Pic, theFile: "../images/plasma3.png"},
+	{varName: plasma4Pic, theFile: "../images/plasma4.png"},
 	{varName: iceEnemyPic, theFile: "../images/iceEnemy.png"},
 	{varName: wizEnemyPic, theFile: "../images/wizEnemy.png"}
 ];

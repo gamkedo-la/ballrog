@@ -20,7 +20,7 @@ function demoKeepTime(){
 
 function drawDemoScreen(){
 		colorRect(0, 0, canvas.width, canvas.height, 'rgb(75,105,47 )');
-		drawBackground(plasmaPic);		
+		drawBackground(plasmaPic,plasmaPic);		
 		colorText(score.toString(), canvas.width/2, 20, 'white');
 		colorText('High Score: ' + highScore.toString(), 10, 20, 'white');
 		drawLives();
