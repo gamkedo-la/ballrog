@@ -1,6 +1,6 @@
 // in-game GUI display (score, lives, etc)
 
-const GUI_Y = 20; // where the text is in relation to the top of the screen
+const GUI_Y = 22; // where the text is in relation to the top of the screen
 const GAMKEDO_X = 200; // where the collectable letters start
 const GAMKEDO_LETTER_W = 12; // pixels per letter
 
@@ -8,6 +8,9 @@ var prevScore = 0; // so we can animate the increase
 
 function drawGUI() {
     if (prevScore<score) prevScore += 10;
+    
+    canvasContext.drawImage(guiBGPic,0,0);
+
     guiTXT('Score: '+ prevScore, canvas.width/2, GUI_Y);
     guiTXT('High Score: ' + highScore.toString(), 60, GUI_Y);
     drawLives();
