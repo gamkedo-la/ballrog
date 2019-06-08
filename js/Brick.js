@@ -81,14 +81,14 @@ function drawBricks() {
 }
 
 function drawLevelBricks() {
-	if (spaceInvading) {
+	if (spaceInvading && !levelEditor.enabled) {
 		if (spaceInvadeY == BRICK_H && spaceInvadeX == 0) {
 			invadeStepX *= -1;
 			invadeStepY *= -1;
 		}
 
 		if (spaceInvadeY == 0 && spaceInvadeX == 0 && invadeStepX < 0) {
-			if (!INVASION_MODE) spaceInvading = false;
+			if (!INVASION_MODE || levelEditor.enabled) spaceInvading = false;
 			invadeStepX *= -1;
 			invadeStepY *= -1;
 		} else {
