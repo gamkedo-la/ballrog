@@ -320,44 +320,50 @@ function iceEnemyClass() {
 		this.Y = this.height;
 	}
 
+	this.draw = function() {
+		if (this.visible) {
+			drawBitMap(this.image, this.X + spaceInvadeX, this.Y + spaceInvadeY);
+		}
+	}
+
 	this.states = {
 		drop: {
 			enter: function (enemy, dt) {
-				enemy.velY = DROP_SPEED;
+				enemy.VelY = DROP_SPEED;
 			},
 			update: function(enemy, dt) {
-				enemy.Y += enemy.velY*dt;
+				enemy.Y += enemy.VelY*dt;
 			},
 			exit: function(enemy, dt) {
-				enemy.velY = 0;
+				enemy.VelY = 0;
 			}
 		},
 		slide: {
 			enter: function (enemy, dt) {
-				enemy.velX = SLIDE_SPEED;
+				enemy.VelX = SLIDE_SPEED;
 				enemy.slideTimer = 0;
 			},
 			update: function(enemy, dt) {
 				if (enemy.X < 0) {
 					enemy.X = 0;
-					enemy.velX *= -1;
+					enemy.VelX *= -1;
 				} else if (enemy.X > canvas.width - enemy.width) {
 					enemy.X = canvas.width - enemy.width;
-					enemy.velX *= -1;
+					enemy.VelX *= -1;
 				} else {
 					let tile = getTileForPixelCoord(
-						enemy.velX > 0 ? enemy.X + enemy.width : enemy.X,
+						enemy.VelX > 0 ? enemy.X + enemy.width : enemy.X,
 						enemy.Y + enemy.height/2
 					);
 					if (isValidBrick(getBrickAtTileCoord(tile.col, tile.row))) {
-						enemy.velX *= -1;
+						enemy.VelX *= -1;
 					}
 				}
-				enemy.X += enemy.velX*dt;
+				enemy.X += enemy.VelX*dt;
 				enemy.slideTimer += dt;
 			},
 			exit: function(enemy, dt) {
-				enemy.velX = 0;
+				enemy.VelX = 0;
 				enemy.slideTimer = 0;
 			}
 		},
@@ -409,7 +415,7 @@ function iceEnemyClass() {
 
 	function isCollidingWithBrickTop(enemy) {
 		let enemyBottomY = enemy.Y + enemy.height;
-		let enemyEndX = enemy.velX < 0 ? enemy.X + enemy.width : enemy.X;
+		let enemyEndX = enemy.VelX < 0 ? enemy.X + enemy.width : enemy.X;
 		enemyEndX = Math.min(enemyEndX, canvas.width);
 		enemyEndX = Math.max(enemyEndX, 0);
 		let tile = getTileForPixelCoord(enemyEndX, enemyBottomY)
