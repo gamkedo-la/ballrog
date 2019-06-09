@@ -290,15 +290,20 @@ function checkAndRewardPlayer() {
 function drawTitleScreen() {
 	var line = 120;
 	//colorRect(0, 0, canvas.width, canvas.height, 'black');
-	drawBackground(plasma4Pic,plasma4Pic);
+	drawBackground(plasma4Pic,plasma4Pic,plasma4Pic,plasma4Pic);
 	drawBitMap(titlePic, 0, 0);
-	canvasContext.fillStyle = 'white';
 	canvasContext.textAlign = 'center';
 	if (lastScore > 0) {
+		canvasContext.fillStyle = 'black';
+		canvasContext.fillText("LAST SCORE " + lastScore.toString(), canvas.width/2+1, line+1);
+		canvasContext.fillStyle = 'white';
 		canvasContext.fillText("LAST SCORE " + lastScore.toString(), canvas.width/2, line);
 		line += 20;
 	}
-	canvasContext.fillText("GET A NEW LIFE ON EVERY " + NEW_LIFE_SCORE_MILESTONE + " POINTS!", canvas.width/2, line);
+	canvasContext.fillStyle = 'black';
+	canvasContext.fillText("GET A NEW LIFE EVERY " + NEW_LIFE_SCORE_MILESTONE + " POINTS!", canvas.width/2+1, line+1);
+	canvasContext.fillStyle = 'white';
+	canvasContext.fillText("GET A NEW LIFE EVERY " + NEW_LIFE_SCORE_MILESTONE + " POINTS!", canvas.width/2, line);
 }
 
 
