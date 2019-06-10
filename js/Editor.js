@@ -82,6 +82,9 @@ function drawLevelSelector() {
 	for (var col=0; col<totalCols; col++) {
 		for (var row=0; row<totalRows; row++) {
 			let key = levelEditor.editableLevels[col + totalCols*row];
+			if (typeof(key) == "undefined") {
+				break;
+			}
 			if (key == levelEditor.currentLevelKey) {
 				color = '#6abe30';
 			} else {
@@ -91,11 +94,8 @@ function drawLevelSelector() {
 			let y = startAtY + row*(LEVEL_SELECT_H + LEVEL_SELECT_SEP);
 			colorRect(x, y, LEVEL_SELECT_W, LEVEL_SELECT_H, color);
 			canvasContext.fillStyle = 'black';
-			canvasContext.fillText(
-				key,
-				x + LEVEL_SELECT_W/2.2,
-				y + LEVEL_SELECT_H/1.7
-			);
+			canvasContext.textAlign = 'center';
+			canvasContext.fillText(key,	x + LEVEL_SELECT_W/2, y + LEVEL_SELECT_H/2);
 		}
 	}
 }
