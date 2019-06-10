@@ -385,6 +385,7 @@ function moveEverything(dt) {
 		allBalls.forEach(function (ball) { ball.ballMove(dt); }); // multiball
 		pillsMove(dt);
 		enemiesManager.update(dt);
+		handleJoystickControls();
 		if (paddleJumping) {
 			paddleJump(dt);
 		}
