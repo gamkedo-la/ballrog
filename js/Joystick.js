@@ -24,6 +24,7 @@ function handleJoystickControls() {
     // gamepad.buttons[1].value
     
     // force it to stay on-screen
+    // TODO: confirm this still works if padding changes size due to a powerup
     if (paddleX<0) paddleX = 0;
     if (paddleX>canvas.width-paddleWidth) paddleX = canvas.width-paddleWidth
 
