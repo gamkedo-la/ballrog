@@ -25,7 +25,7 @@ function movePaddleOnMouseMove(evt) {
 	if(!(demoScreen || paddleFrozen)){
 		paddleX = mousePos.x - (paddleWidth/2);
 	}
-	
+
 	len = allBalls.length;
 	for (var i = 0; i < len;i++) {
 		ball = allBalls[i];
@@ -133,10 +133,16 @@ function drawGooglyEyes(whichBall) {
 	var eyeY = paddleY + 21;
 	var eyeSpacing = 62;
 	var pupilDistance = 4; // how much movement
-	var angle = Math.atan2(whichBall.Y-paddleY, whichBall.X-paddleX);
+	var angle;
+	if (!paddleFrozen) {
+		angle = Math.atan2(whichBall.Y-paddleY, whichBall.X-paddleX);
+	} else {
+		eyeX = Math.floor((paddleX)/paddleScale.x);
+		eyeY = paddleY;
+	}
 
 	// blink occasionally
-	if (blinkCounter) {
+	if (blinkCounter && !paddleFrozen) {
 		drawBitMap(eyelidsPic,eyeX,eyeY);
 		drawBitMap(eyelidsPic,eyeX+eyeSpacing,eyeY);
 		blinkCounter--;
@@ -151,9 +157,12 @@ function drawGooglyEyes(whichBall) {
 		drawBitMap(pupilPic,eyeX+eyeSpacing,eyeY);
 	}
 
-	if (Math.random() < 0.01) { // maybe start a new blink or stay closed longer
+	if (!paddleFrozen) {
+		if (Math.random() < 0.01) { // maybe start a new blink or stay closed longer
 		blinkCounter = 5; // frames of closed eyes
+		}
 	}
+	
 }
 
 function drawPaddle() {

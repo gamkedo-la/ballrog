@@ -10,13 +10,13 @@ const MAX_PILLS = 40;
 const STRETCHED_PADDLE_MULTIPLIER = 2;
 const SHRINK_PADDLE_MULTIPLIER = 0.5;
 const MULTI_BALL_QUANTITY = 2;
-//const PILL_DROP_CHANCE = 0.4;
+const PILL_DROP_CHANCE = 0.4;
 
-//var ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, gunPill, extraLifePill, letterGPill, letterAPill, letterMPill, letterKPill, letterEPill, letterDPill, letterOPill];
+var ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, gunPill, extraLifePill, letterGPill, letterAPill, letterMPill, letterKPill, letterEPill, letterDPill, letterOPill];
 
 // used for testing specific powerups - comment out other initializations
-const PILL_DROP_CHANCE = 1.1; //Math.random is 0-1 so random will always be < 1.1;
-var ENABLED_PILLS = [multiBallPill, stickyBallPill];
+//const PILL_DROP_CHANCE = 1.1; //Math.random is 0-1 so random will always be < 1.1;
+//var ENABLED_PILLS = [multiBallPill, stickyBallPill];
 
 // remove invaderPill if invasion mode: it would have no effect
 if (INVASION_MODE) ENABLED_PILLS = ENABLED_PILLS.filter( el => el !== invaderPill ); 

@@ -13,7 +13,7 @@ function titleScreenKeepTime(){
 	}
 }
 
-function demoKeepTime(){
+function demoKeepTime() {
 	demoModeTimer++;
 	allBallsUnheld();
 }
