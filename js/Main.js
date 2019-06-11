@@ -12,6 +12,7 @@ var lives = INITIAL_LIVES;
 var outaLivesEvent = new CustomEvent('outaLives');
 var allBalls = [];
 allBalls[0] = new ballClass();
+const boss = new bossClass();
 var ballCount = 1;
 var ballHeld = true;
 //power ups
@@ -35,6 +36,8 @@ var levelTransition = false;
 var lastScore = score;
 var currentLevelIndex = 0;
 var gameMuted = false;
+var battlingBoss = false;
+var rollCredits = false;
 var sounds = {
 	paddleHit: new SoundOverlapsClass("audio/paddleHit", "paddleHit"),
 	paddleHitHalfStepDown: new SoundOverlapsClass("audio/paddleHitHalfStepDown", "paddleHitHalfStepDown"),
@@ -116,6 +119,7 @@ window.onload = function() {
 		resetBricks();
 		initPills();
 		enemiesManager.init();
+		boss.init();
 		canvas.addEventListener('mousemove', movePaddleOnMouseMove);
 		canvas.addEventListener('mousemove', handleEditorMouseMove);
 		canvas.addEventListener('mousemove', debugBallMovement);
@@ -134,6 +138,10 @@ window.onload = function() {
 		canvas.addEventListener('scoreIncrease', checkAndRewardPlayer);
 		//FIXME: canvas.addEventListener('newLevel', sounds.newLevel.play);
 		//FIXME: canvas.addEventListener('ballMiss', sounds.lifeLost.play);
+		canvas.addEventListener('bossDefeated', function () {
+			console.log('DEFEATED BOSS!');
+			loadNextLevel(); // NOTE: goes to credits roll
+		});
 		canvas.addEventListener('wheel', handleEditorMouseScroll);
 		canvas.addEventListener('mouseup', setEditorPencilUp);
 		canvas.addEventListener('mousedown', setEditorPencilDown);
@@ -210,6 +218,7 @@ function resetGame() {
 	clearPillAbilites();
 	initPills();
 	enemiesManager.init();
+	boss.reset();
 }
 
 function resetGAMKEDO(){
@@ -237,15 +246,34 @@ function resetLevel() {
 	testBackgroundMusic.play();
 }
 
-function loadNextLevel() {
+function checkLevelIndex() {
+	if (currentLevelIndex < 0) {
+		currentLevelIndex = LEVEL_SEQ.length;
+	}
+	if (currentLevelIndex == LEVEL_SEQ.length) {
+		clearBricks();
+		battlingBoss = true;
+	} else if (currentLevelIndex == LEVEL_SEQ.length + 1) {
+		rollCredits = true;
+		battlingBoss = false;
+	} else if (currentLevelIndex > LEVEL_SEQ.length + 1) {
+		currentLevelIndex = 0;
+		battlingBoss = false;
+		rollCredits = false;
+	} else {
+		rollCredits = false;
+		battlingBoss = false;
+	}
+}
 
+function loadNextLevel() {
 	setTimeout(function () {
 		levelTransition = true;
 		bricksInPlace = false;
 		currentLevelIndex++;
-
-		if (currentLevelIndex >= LEVEL_SEQ.length) {
-			currentLevelIndex = 0;
+		checkLevelIndex();
+		if (battlingBoss || rollCredits) {
+			return;
 		}
 		setTimeout(function () {
 			resetLevel();
@@ -350,7 +378,15 @@ function drawEverything() {
 		drawLevelTransition();
 	} else if(gameOverScreen){
 		drawGameOverScreen();
-
+	} else if(battlingBoss) {
+		drawBackground(plasmaPic,plasmaPic);
+		drawGUI();
+		boss.draw();
+		allBalls.forEach(function (ball) { ball.drawBall(); }); // multiball
+		drawPills();
+		drawPaddle();
+	} else if(rollCredits) {
+		// TODO: credits
 	} else { // normal gameplay render:
 		drawBackground(plasmaPic,plasmaPic);
 		drawGUI();
@@ -405,6 +441,15 @@ function moveEverything(dt) {
 	}
 	if (gamePaused){
 		lettersMove();
+	} else if (battlingBoss) {
+		allBalls[0].ballMove(dt);
+		allBalls.forEach(function (ball) { ball.ballMove(dt); }); // multiball
+		pillsMove(dt);
+		boss.update(dt);
+		handleJoystickControls();
+		if (paddleJumping) {
+			paddleJump(dt);
+		}
 	}
 }
 

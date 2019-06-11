@@ -137,18 +137,14 @@ function keyPressed(evt) {
 			debugBall = !debugBall;
 			console.log("debugBall: " + debugBall);
 			break;
-		case 'ArrowRight':
+	case 'ArrowRight':
 			currentLevelIndex++;
-			if (currentLevelIndex >= LEVEL_SEQ.length) {
-				currentLevelIndex = 0;
-			}
-			resetLevel();
+			checkLevelIndex();
+			resetLevel()
 			break;
 		case 'ArrowLeft':
 			currentLevelIndex--;
-			if (currentLevelIndex < 0) {
-				currentLevelIndex = LEVEL_SEQ.length - 1;
-			}
+			checkLevelIndex();
 			resetLevel();
 			break;
 		case 'r':

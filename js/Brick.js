@@ -168,7 +168,11 @@ function easeBricksbricksInPlace() {
 	} // end of for b < brickInfo.length
 } // end of easeBricksbricksInPlace();
 
+
 function resetBricks(grid) {
+	if (battlingBoss || rollCredits) {
+		return;
+	}
 	if (typeof(grid) == 'undefined') {
 		brickGrid = LEVELS[LEVEL_SEQ[currentLevelIndex]].slice();
 	} else {
@@ -185,6 +189,10 @@ function resetBricks(grid) {
 	calculateMusicVolumeIncreasPace();
 	testBackgroundMusic.playbackRate = 1;
 	testBackgroundMusic.volume = 0.15;
+}
+
+function clearBricks() {
+	brickGrid = [];
 }
 
 function getTileForPixelCoord(pixelX, pixelY) {

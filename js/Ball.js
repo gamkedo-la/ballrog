@@ -42,6 +42,7 @@ function ballClass(x,y,vx,vy){
 	this.baseSpeed = INITIAL_SPEED;
 	this.minSpeed = this.baseSpeed;
 	this.ballMissEvent = new CustomEvent('ballMiss');
+	this.bossMissedBallEvent = new CustomEvent('bossMissedBall');
 	this.ballResetEvent = new CustomEvent('ballReset');
 	this.wallHitEvent = new CustomEvent('wallHit');
 	this.ballTrail = new TrailFX(ballTrailPic);
@@ -135,13 +136,25 @@ function ballClass(x,y,vx,vy){
 			this.bounceOffSidesIfAppropriate();
 
 			// bounce off the paddle
-			this.bounceOffPaddleIfAppropriate();
+			this.bounceOffPaddleIfAppropriate(paddleX, paddleY, paddleWidth, paddleScale);
+			if (battlingBoss) {
+				this.bounceOffPaddleIfAppropriate(
+					boss.X,
+					boss.Y,
+					boss.width,
+					{x: 1, y: 1}
+				);
+			}
 
 			// fell through floor
 			this.fallThroughFloorIfAppropriate();
 
 			// hit ceiling
-			this.bounceOffCeilingIfAppropriate();
+			if (battlingBoss) {
+				this.goThroughCeilingIfAppropriate();
+			} else {
+				this.bounceOffCeilingIfAppropriate();
+			}
 
 			// break a brick
 			this.breakAndBounceOffBrickAtPixelCoord(
@@ -166,14 +179,14 @@ function ballClass(x,y,vx,vy){
 		}
 	 }
 
-	 this.bounceOffPaddleIfAppropriate = function() {
-		if (this.didHitPaddle()) { //ball hit the paddle
+	this.bounceOffPaddleIfAppropriate = function(posX, posY, width, scale) {
+		if (this.didHitPaddle(posX, posY, width)) { //ball hit the paddle
 			if (stickyBall) {
 				ballHeld = true;
 				return;
 			}
 
-			let deltaX = this.X - (paddleX + paddleWidth/(2*paddleScale.x));
+			let deltaX = this.X - (posX + width/(2*scale.x));
 			var randomAngle = (Math.random() * 0.1);
 			this.updateVelocity(deltaX*6.3, -1*this.VelY);
 			let currentSpeed = this.getSpeedFromVelocity(this.VelX, this.VelY);
@@ -186,37 +199,54 @@ function ballClass(x,y,vx,vy){
 			canvas.dispatchEvent(paddleHitEvent);
 			this.bounceEffect.trigger(this.X,this.Y+BALL_RADIUS+5);
 		}
-	 }
+	}
 
-	 this.didHitPaddle = function() {
+	this.didHitPaddle = function(posX, posY, width) {
 		let result = false;
-		if ((this.Y + BALL_RADIUS > paddleY) &&
-			(this.Y - BALL_RADIUS < paddleY + PADDLE_THICKNESS) &&
-			(this.VelY > 0)) { //same vertical position as paddle
-				if ((this.X + BALL_RADIUS > paddleX) &&
-				    (this.X - BALL_RADIUS < paddleX + paddleWidth)) { //same horizontal position as paddle
-					//console.log("hit paddle");
-					result = true;
+		let thickness = posY > canvas.height/2 ? PADDLE_THICKNESS : 0;
+		if ((this.Y + BALL_RADIUS > posY) &&
+			(this.Y - BALL_RADIUS < posY + PADDLE_THICKNESS) &&
+			((posY > canvas.height/2 && this.VelY > 0) || (posY < canvas.height/2 && this.VelY < 0))) { //same vertical position as paddle
+				if ((this.X + BALL_RADIUS > posX) &&
+				    (this.X - BALL_RADIUS < posX + width)) { //same horizontal position as paddle
+						//console.log("hit paddle");
+						result = true;
 				}
-			}
+		}
 
 		return result;
-	 }
+	}
 
-	 this.fallThroughFloorIfAppropriate = function() {
+	this.goThroughCeilingIfAppropriate = function() {
+		if (this.Y + BALL_RADIUS*2 < 0) {
+			this.ballReset(ballCount);
+			canvas.dispatchEvent(this.bossMissedBallEvent);
+			if (ballCount != 1) {
+				ballCount--;
+				for (let i=0; i<allBalls.length; i++) {
+					if (allBalls[i] === this) {
+						allBalls.splice(i, 1);
+						break;
+					}
+				}
+			}
+		}
+	}
+	
+    this.fallThroughFloorIfAppropriate = function() {
 		if (this.Y > canvas.height) {
 			this.ballReset(ballCount);
 			canvas.dispatchEvent(this.ballMissEvent);
-				if(ballCount != 1) {
-					ballCount--;
-					for(var i = 0; i < allBalls.length; i++) {
-						if(allBalls[i] === this) {
+			if(ballCount != 1) {
+				ballCount--;
+				for(var i = 0; i < allBalls.length; i++) {
+					if(allBalls[i] === this) {
 						allBalls.splice(i, 1); //destroy extra ball that falls through floor
-						}//end if
-					}//end for
-				}//end if
+					}//end if
+				}//end for
+			}//end if
 		}//end if
-	 }
+	}
 
 	 this.bounceOffCeilingIfAppropriate = function() {
 		if (this.Y < 0) {
