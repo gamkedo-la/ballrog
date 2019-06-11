@@ -1,3 +1,4 @@
+const TURBO_MODE = false; // hardcore 2x speed
 const INITIAL_LIVES = 3;
 const BRICK_HIT_POINTS = 100;
 const NEW_LIFE_SCORE_MILESTONE = 3000;
@@ -94,6 +95,10 @@ function runGameStep(browserTimeStamp) {
 		dt -= gameUpdateStep;
 		moveEverything(gameUpdateStep);
 		gameLogic(gameUpdateStep);
+		if (TURBO_MODE) {
+			moveEverything(gameUpdateStep);
+			gameLogic(gameUpdateStep);
+		}
 	}
 	drawEverything(dt);
 	last = browserTimeStamp;
