@@ -25,10 +25,15 @@ function movePaddleOnMouseMove(evt) {
 	if(!(demoScreen || paddleFrozen)){
 		paddleX = mousePos.x - (paddleWidth/2);
 	}
-	if (ballHeld) {
-		allBalls[0].X = paddleX + paddleWidth/2;
-	}
-}
+	
+	len = allBalls.length;
+	for (var i = 0; i < len;i++) {
+		ball = allBalls[i];
+		if (ball.ballHeld) {
+			ball.X = paddleX + paddleWidth/2;
+		}
+	} // end of for in
+} // end of movePaddleOnMouseMove
 
 let jumpSoundPlaying = false;
 let firstJumpSoundPlayed = false;

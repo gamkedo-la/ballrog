@@ -10,16 +10,16 @@ const MAX_PILLS = 40;
 const STRETCHED_PADDLE_MULTIPLIER = 2;
 const SHRINK_PADDLE_MULTIPLIER = 0.5;
 const MULTI_BALL_QUANTITY = 2;
-const PILL_DROP_CHANCE = 0.4;
+//const PILL_DROP_CHANCE = 0.4;
 
-var ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, gunPill, extraLifePill, letterGPill, letterAPill, letterMPill, letterKPill, letterEPill, letterDPill, letterOPill];
+//var ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, gunPill, extraLifePill, letterGPill, letterAPill, letterMPill, letterKPill, letterEPill, letterDPill, letterOPill];
+
+// used for testing specific powerups - comment out other initializations
+const PILL_DROP_CHANCE = 1.1; //Math.random is 0-1 so random will always be < 1.1;
+var ENABLED_PILLS = [multiBallPill, stickyBallPill];
 
 // remove invaderPill if invasion mode: it would have no effect
 if (INVASION_MODE) ENABLED_PILLS = ENABLED_PILLS.filter( el => el !== invaderPill ); 
-
-// used for testing specific powerups - comment out other initializations
-//const PILL_DROP_CHANCE = 1.1; //Math.random is 0-1 so random will always be < 1.1;
-//const ENABLED_PILLS = [invaderPill];
 
 var pills = [];
 var activePills = 0;
@@ -133,7 +133,9 @@ function stickyBallPill() {
 	this.imageOffsetY = PILL_H * 3;
 
 	this.startPower = function () {
-		stickyBall = true;
+		if (!checkIfBallHeld()) {
+			stickyBall = true;
+		}
 	}
 }
 
@@ -410,6 +412,7 @@ function pillClass() {
 			if (this.x > paddleX - PILL_W - 1 && this.x < paddleX + paddleWidth && this.y > paddleY - PILL_H/2) {
 				// check if powerup already active
 				clearPillTimersBasedOnImage(this.imageOffsetX,this.imageOffsetY);
+				increaseScore(BRICK_HIT_POINTS);
 				this.startPower();
 				this.timer = this.powerTime;
 				this.reset();

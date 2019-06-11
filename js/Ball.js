@@ -41,6 +41,7 @@ function ballClass(x,y,vx,vy){
 	this.maxSpeed = INITIAL_MAX_SPEED;
 	this.baseSpeed = INITIAL_SPEED;
 	this.minSpeed = this.baseSpeed;
+	this.ballHeld = false;
 	this.ballMissEvent = new CustomEvent('ballMiss');
 	this.bossMissedBallEvent = new CustomEvent('bossMissedBall');
 	this.ballResetEvent = new CustomEvent('ballReset');
@@ -53,6 +54,7 @@ function ballClass(x,y,vx,vy){
 			this.minSpeed = this.baseSpeed;
 			this.X = paddleX + paddleWidth/2;
 			this.Y = paddleY - BALL_RADIUS/2;
+			this.ballHeld = true;
 			this.serveReset();
 			highestHitRow = BRICK_ROWS;
 			this.ballResetEvent = new CustomEvent('ballReset');
@@ -119,12 +121,11 @@ function ballClass(x,y,vx,vy){
 			return;
 		}
 
-		if (ballHeld) {
-			allBalls[0].Y = paddleY - BALL_RADIUS/2;
-			if (servingX == undefined && stickyBall) {
+		if (this.ballHeld) {
+			this.Y = paddleY - BALL_RADIUS/2;
+			if (servingX == undefined) {
 				this.serveReset();
 			}
-			return;
 		} else {
 			servingX = undefined; 
 			servingY = undefined;
@@ -182,7 +183,8 @@ function ballClass(x,y,vx,vy){
 	this.bounceOffPaddleIfAppropriate = function(posX, posY, width, scale) {
 		if (this.didHitPaddle(posX, posY, width)) { //ball hit the paddle
 			if (stickyBall) {
-				ballHeld = true;
+				stickyBall = false;
+				this.ballHeld = true;
 				return;
 			}
 
@@ -368,7 +370,7 @@ function ballClass(x,y,vx,vy){
 	}
 
 	this.drawBall = function() {
-		if(!ballHeld) {
+		if(!this.ballHeld) {
 			this.ballTrail.draw();
 		}
 
@@ -392,4 +394,27 @@ function startMultiBall(quantity) {
 	}
 	ballCount = ballCount + quantity;
 	sounds.spawnMultiBall.play();
+}
+
+function allBallsUnheld() {
+	len = allBalls.length;
+	for (let i=0; i < len; i++) {
+		ball = allBalls[i];
+		if (ball.ballHeld) {
+			ball.ballHeld = !ball.ballHeld;
+		}
+	}
+}
+
+function checkIfBallHeld() {
+	var result = false;
+	var len = allBalls.length;
+	for (let i=0; i < len; i++) {
+		ball = allBalls[i];
+		if (ball.ballHeld) {
+			result = true;
+			break;
+		}
+	}
+	return result;
 }

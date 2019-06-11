@@ -14,7 +14,6 @@ var allBalls = [];
 allBalls[0] = new ballClass();
 const boss = new bossClass();
 var ballCount = 1;
-var ballHeld = true;
 //power ups
 var paddleJumping = false;
 var stickyBall = false;
@@ -157,9 +156,8 @@ window.onload = function() {
 				resetGame();
 				demoScreen = false;
 				showTitle = true;
-			} else if (bricksInPlace && ballHeld) {
-					ballHeld = false;
-					stickyBall = false;
+			} else if (bricksInPlace && checkIfBallHeld()) {
+					allBallsUnheld();
 			} else {
 				if (paddleGun > 0) {
 					paddleShoot = true;
@@ -196,6 +194,7 @@ function resetGame() {
 	allBalls[0] = new ballClass();
 	ballCount = 1;
 	allBalls[0].ballReset(ballCount);
+	allBalls[0].ballHeld = true;
 	allBalls.forEach(function (ball) {
 		ball.baseSpeed = INITIAL_SPEED;
 		ball.maxSpeed = INITIAL_MAX_SPEED;
@@ -289,7 +288,7 @@ function loadNextLevel() {
 
 function dropLife() {
 	if(ballCount ==1){
-		ballHeld = true;
+		allBalls[0].ballHeld = true;
 		lives--;
 	}
 	if (lives < 0) {

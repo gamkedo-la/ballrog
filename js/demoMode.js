@@ -14,8 +14,8 @@ function titleScreenKeepTime(){
 }
 
 function demoKeepTime(){
-	demoModeTimer++
-	ballHeld = false;
+	demoModeTimer++;
+	allBallsUnheld();
 }
 
 function drawDemoScreen(){
