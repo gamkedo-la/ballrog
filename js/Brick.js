@@ -207,8 +207,8 @@ function checkBrickIndexWithPixelCoord(index, pixelX, pixelY) {
 		left: ((index % BRICK_COLS) * COL_W),
 		right: ((index % BRICK_COLS) * COL_W) + BRICK_W,
 		top: (Math.floor(index / BRICK_COLS)) * ROW_H,
-		bottom: ((Math.floor(index / BRICK_COLS)) * ROW_H) + BRICK_H,		
-	}; 
+		bottom: ((Math.floor(index / BRICK_COLS)) * ROW_H) + BRICK_H,
+	};
 	//console.log(indexPosition);
 	//console.log(pixelX + " , " + pixelY);
 	if (indexPosition.right <= 0 || indexPosition.left >= canvas.width) {
@@ -218,7 +218,7 @@ function checkBrickIndexWithPixelCoord(index, pixelX, pixelY) {
 		pixelY > indexPosition.top && pixelY < indexPosition.bottom) {
 		return true;
 	}
-	return false; 
+	return false;
 }
 
 function getBrickAtTileCoord(brickTileCol, brickTileRow) {
@@ -243,7 +243,7 @@ function handleBrickHit(evt) {
 
 	if(evt.detail.ball != null)
 		processBallEffects(brick, evt.detail.ball);
-	
+
 	processBrickEffects(brick, evt);
 
 	if (brickGrid[evt.detail.index] == BRICK_TYPES.empty) {
@@ -310,20 +310,24 @@ function processBrickEffects(brick, evt) {
 			break;//do nothing for empty spaces
 		case BRICK_TYPES.onehit:
 			brickGrid[evt.detail.index] -= 1;
+			playMultiSound(arrayOfBrickHitSounds);
 			break;
 		case BRICK_TYPES.twohit:
 		case BRICK_TYPES.threehit:
 			shineBrick(evt);
 			brickGrid[evt.detail.index] -= 1;
+			playMultiSound(arrayOfBrickHitSounds);
 			break;
 		case BRICK_TYPES.unbreakable:
 			shineBrick(evt);
+			sounds.brickHitSteel.play();
 			break;
 		case BRICK_TYPES.speedright:
 		case BRICK_TYPES.speedleft:
 		case BRICK_TYPES.speedvertical:
 			//these bricks are destroyed in one hit
 			brickGrid[evt.detail.index] = BRICK_TYPES.empty;
+			playMultiSound(arrayOfBrickHitSounds);
 			break;
 	}
 }
