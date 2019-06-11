@@ -20,6 +20,7 @@ var eyelidsPic = document.createElement("img");
 var ballTrailPic = document.createElement("img");
 var shinePic = document.createElement("img");
 var bouncePic = document.createElement("img");
+var shotPic = document.createElement("img");
 var editorBackgroundTile = document.createElement("img");
 var plasmaPic = document.createElement("img");
 var plasma2Pic = document.createElement("img");
@@ -51,6 +52,7 @@ var imageList = [
 	{varName: ballTrailPic, theFile: "../images/ballTrail.png"},
 	{varName: shinePic, theFile: "../images/shine.png"},
 	{varName: bouncePic, theFile: "../images/bounceEffect.png"},
+	{varName: shotPic, theFile: "../images/shot.png"},
 	{varName: editorBackgroundTile, theFile: "../images/editorBG.png"},
 	{varName: plasmaPic, theFile: "../images/plasma.png"},
 	{varName: plasma2Pic, theFile: "../images/plasma2.png"},

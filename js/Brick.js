@@ -233,7 +233,9 @@ function getRowYCoord(row) {
 function handleBrickHit(evt) {
 	var brick = brickGrid[evt.detail.index];
 
-	processBallEffects(brick, evt.detail.ball);
+	if(evt.detail.ball != null)
+		processBallEffects(brick, evt.detail.ball);
+	
 	processBrickEffects(brick, evt);
 
 	if (brickGrid[evt.detail.index] == BRICK_TYPES.empty) {

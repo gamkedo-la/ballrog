@@ -4,6 +4,10 @@ const PADDLE_THICKNESS = 48;
 var paddleX = (800 - paddleWidth)/2;
 const PADDLE_ORIGINAL_Y = 540;
 var paddleY = PADDLE_ORIGINAL_Y;
+var paddleGun = 0;
+var paddleShoot = false;
+var paddleShotDraw = 0;
+var paddleAltShot = false;
 
 var jumpSpeedY = 0;
 var currentJumpFactorIndex = 0;
@@ -59,6 +63,38 @@ function paddleJump(dt) {
 		}
 	}
 
+}
+
+function paddleShooting()
+{
+	var brickIndex = -1;
+	var shootX = paddleX - (paddleWidth/2) + (paddleAltShot ? paddleWidth : 0);
+	var tileRow = 0;
+	do {
+		var tileCol = Math.floor(shootX / BRICK_W);
+		brickIndex = brickToTileIndex(tileCol, tileRow);
+		tileRow++;
+	} while (!isValidBrick(brickGrid[brickIndex]) && tileRow < BRICK_ROWS);
+	
+	if(isValidBrick(brickGrid[brickIndex]))
+	{
+		var brickHitEvent = new CustomEvent('brickHit', {detail: {
+			index: brickIndex,
+			col: tileCol,
+			row: tileRow,
+			x: shootX,
+			y: tileRow * ROW_H,
+			ball: null
+		}});
+		canvas.dispatchEvent(brickHitEvent);
+	}
+	
+	paddleShoot = false;
+	paddleGun -= 1;
+	
+	paddleAltShot = !paddleAltShot;
+	
+	paddleShotDraw = 4;
 }
 
 function moveComputerPaddle(whichBall) {
@@ -121,6 +157,11 @@ function drawPaddle() {
 	canvasContext.globalAlpha = paddleAlpha;
 	canvasContext.scale(paddleScale.x, paddleScale.y);
 	drawBitMap(image, Math.floor(paddleX/paddleScale.x), paddleY + 5);
+	if(paddleShotDraw > 0)
+	{
+		drawBitMap(shotPic, paddleX  - (paddleWidth/2) + (paddleAltShot ? 0 : paddleWidth), paddleY - 70);
+		paddleShotDraw--;
+	}
 	drawGooglyEyes(allBalls[0]);
 	canvasContext.restore();
 }

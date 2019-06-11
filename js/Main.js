@@ -149,10 +149,12 @@ window.onload = function() {
 				resetGame();
 				demoScreen = false;
 				showTitle = true;
-			} else {
-				if (bricksInPlace && ballHeld) {
+			} else if (bricksInPlace && ballHeld) {
 					ballHeld = false;
 					stickyBall = false;
+			} else {
+				if (paddleGun > 0) {
+					paddleShoot = true;
 				}
 			}
 		});
@@ -393,6 +395,9 @@ function moveEverything(dt) {
 		handleJoystickControls();
 		if (paddleJumping) {
 			paddleJump(dt);
+		}
+		if (paddleShoot) {
+			paddleShooting();
 		}
 		if(demoScreen){
 			moveComputerPaddle(allBalls[0]);

@@ -12,7 +12,7 @@ const SHRINK_PADDLE_MULTIPLIER = 0.5;
 const MULTI_BALL_QUANTITY = 2;
 const PILL_DROP_CHANCE = 0.4;
 
-var ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, extraLifePill, letterGPill, letterAPill, letterMPill, letterKPill, letterEPill, letterDPill, letterOPill];
+var ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, gunPill, extraLifePill, letterGPill, letterAPill, letterMPill, letterKPill, letterEPill, letterDPill, letterOPill];
 
 // remove invaderPill if invasion mode: it would have no effect
 if (INVASION_MODE) ENABLED_PILLS = ENABLED_PILLS.filter( el => el !== invaderPill ); 
@@ -218,6 +218,20 @@ function jumpPill() {
 	this.endPower = function () {
 		paddleJumping = false;
 		paddleY = PADDLE_ORIGINAL_Y;
+	}
+}
+
+gunPill.prototype = new pillClass();
+function gunPill() {
+	this.imageOffsetX = 0;
+	this.imageOffsetY = PILL_H * 2;
+	this.powerTime = framesPerSecond * 10;
+	this.startPower = function () {
+		paddleGun = 1000;
+	}
+
+	this.endPower = function () {
+		paddleGun = 0;
 	}
 }
 

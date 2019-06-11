@@ -316,7 +316,7 @@ function ballClass(x,y,vx,vy){
 				row: tileRow,
 				x: this.X,
 				y: this.Y,
-				ball:this
+				ball: this
 			}});
 			canvas.dispatchEvent(brickHitEvent);
 
