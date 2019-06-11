@@ -269,6 +269,8 @@ function ballClass(x,y,vx,vy){
 		var prevBallY = srcY;
 		var nextX, nextY;
 		var dir = this.getVelocityDir(this.VelX, this.VelY);
+		var counter = 0;
+		const MAX_LOOPS = 10;
 		do {
 			nextX = srcX + dir.x*COLLISION_STEP;
 			if (nextX < 0) {
@@ -289,6 +291,9 @@ function ballClass(x,y,vx,vy){
 			srcX = nextX;
 			srcY = nextY;
 			brickIndex = brickToTileIndex(tileCol, tileRow);
+			if (++counter > MAX_LOOPS) {
+				break;
+			}
 		} while (nextY < TOP_MARGIN || (
 			!isValidBrick(brickGrid[brickIndex]) &&
 				(dir.x > 0 ? pixelX - nextX : nextX - pixelX) > 0 &&
