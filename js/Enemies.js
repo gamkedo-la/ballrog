@@ -317,7 +317,7 @@ function iceEnemyClass() {
 	this.init = function() {
 		this.superClassInit();
 		this.X = Math.random()*(canvas.width - this.width);
-		this.Y = this.height;
+		this.Y = -this.height;
 	}
 
 	this.draw = function() {
@@ -344,6 +344,10 @@ function iceEnemyClass() {
 				enemy.slideTimer = 0;
 			},
 			update: function(enemy, dt) {
+				let tile = getTileForPixelCoord(
+					enemy.VelX > 0 ? enemy.X + enemy.width : enemy.X,
+					enemy.Y + enemy.height/2
+				);
 				if (enemy.X < 0) {
 					enemy.X = 0;
 					enemy.VelX *= -1;
@@ -351,15 +355,12 @@ function iceEnemyClass() {
 					enemy.X = canvas.width - enemy.width;
 					enemy.VelX *= -1;
 				} else {
-					let tile = getTileForPixelCoord(
-						enemy.VelX > 0 ? enemy.X + enemy.width : enemy.X,
-						enemy.Y + enemy.height/2
-					);
 					if (isValidBrick(getBrickAtTileCoord(tile.col, tile.row))) {
 						enemy.VelX *= -1;
 					}
 				}
 				enemy.X += enemy.VelX*dt;
+				enemy.Y = getRowYCoord(tile.row);
 				enemy.slideTimer += dt;
 			},
 			exit: function(enemy, dt) {
