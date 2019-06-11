@@ -1,4 +1,4 @@
-var enemiesManager = new (function() {
+const enemiesManager = new (function() {
 	const ENABLED_ENEMIES = [iceEnemyClass, wizEnemyClass];
 	const MAX_ENEMIES_PER_LEVEL = 20;
 	const DEFAULT_RESPAWN_TIMEOUT = 10;
