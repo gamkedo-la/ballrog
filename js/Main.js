@@ -94,6 +94,7 @@ function timestamp() {
 }
 
 function runGameStep(browserTimeStamp) {
+	handleJoystickControls();
 	dt += Math.min(1, (browserTimeStamp - last)/1000);
 	while(dt > gameUpdateStep) {
 		dt -= gameUpdateStep;
@@ -107,6 +108,26 @@ function runGameStep(browserTimeStamp) {
 	drawEverything(dt);
 	last = browserTimeStamp;
 	window.requestAnimationFrame(runGameStep);
+}
+
+// onclick or button press to start game or release ball
+function gameClicked(evt) { 
+	if (showTitle) {
+		showTitle = false;
+		// FIXME: sounds.gameStart.play();
+		testBackgroundMusic.play();
+		resetBricks();
+	} else if (demoScreen) {
+		resetGame();
+		demoScreen = false;
+		showTitle = true;
+	} else if (bricksInPlace && checkIfBallHeld()) {
+			allBallsUnheld();
+	} else {
+		if (paddleGun > 0) {
+			paddleShoot = true;
+		}
+	}
 }
 
 window.onload = function() {
@@ -148,24 +169,7 @@ window.onload = function() {
 		canvas.addEventListener('mousedown', setEditorPencilDown);
 		canvas.addEventListener('mousedown', selectLevelOnMouseDown);
 		canvas.addEventListener('mousedown', pushEditorButton);
-		canvas.addEventListener('mousedown', function(evt) {
-			if (showTitle) {
-				showTitle = false;
-				// FIXME: sounds.gameStart.play();
-				testBackgroundMusic.play();
-				resetBricks();
-			} else if (demoScreen) {
-				resetGame();
-				demoScreen = false;
-				showTitle = true;
-			} else if (bricksInPlace && checkIfBallHeld()) {
-					allBallsUnheld();
-			} else {
-				if (paddleGun > 0) {
-					paddleShoot = true;
-				}
-			}
-		});
+		canvas.addEventListener('mousedown', gameClicked);
 		window.addEventListener('focus', function () {
 			gamePaused = false;
 		});
