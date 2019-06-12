@@ -15,6 +15,8 @@ const DESTROY_BRICK = 'Minus';
 let didInteract = false;
 let cmd_cntrl_down = false;
 let shift_down = false;
+const VOLUME_DOWN = 'Minus';
+const VOLUME_UP = 'Plus';
 
 function calculateMousePos(evt) {
 	var rect = canvas.getBoundingClientRect();
@@ -137,7 +139,7 @@ function keyPressed(evt) {
 			debugBall = !debugBall;
 			console.log("debugBall: " + debugBall);
 			break;
-	case 'ArrowRight':
+		case 'ArrowRight':
 			currentLevelIndex++;
 			checkLevelIndex();
 			resetLevel()
@@ -154,5 +156,26 @@ function keyPressed(evt) {
 	} else {
 		messageArea.innerHTML = '';
 		debugBall = false;
+
+		switch(evt.code) {
+		case 'Minus':
+			if(testBackgroundMusic.volume >= 0.1) {
+				testBackgroundMusic.volume -= 0.1;
+			} else {
+				testBackgroundMusic.volume = 0;
+			}
+			
+			const keys = Object.keys(sounds);
+			console.log(keys);
+			for(let i = 0; i < keys.length; i++) {
+				if(sounds[keys[i]].volume >= 0.1) {
+					console.log("lowered volume for: " + keys[i]);
+					sounds[keys[i]].volume -= 0.1;
+				} else {
+					sounds[keys[i]].volume = 0;
+				}
+			}
+			break;
+		}
 	}
  }//end keyPressed function
