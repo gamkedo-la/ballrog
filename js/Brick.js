@@ -192,7 +192,9 @@ function resetBricks(grid) {
 }
 
 function clearBricks() {
-	brickGrid = [];
+	for (let i=0; i<BRICK_ROWS*BRICK_COLS; i++) {
+		brickGrid[i] = BRICK_TYPES.empty;
+	}
 }
 
 function getTileForPixelCoord(pixelX, pixelY) {

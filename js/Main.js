@@ -219,6 +219,7 @@ function resetGame() {
 	initPills();
 	enemiesManager.init();
 	boss.reset();
+	battlingBoss = false;
 }
 
 function resetGAMKEDO(){
@@ -389,6 +390,7 @@ function drawEverything() {
 		drawGUI();
 		boss.draw();
 		allBalls.forEach(function (ball) { ball.drawBall(); }); // multiball
+		drawBricks();
 		drawPills();
 		drawPaddle();
 	} else if(rollCredits) {
@@ -433,7 +435,11 @@ function moveEverything(dt) {
 		allBalls[0].ballMove(dt);
 		allBalls.forEach(function (ball) { ball.ballMove(dt); }); // multiball
 		pillsMove(dt);
-		enemiesManager.update(dt);
+		if (battlingBoss) {
+			boss.update(dt);
+		} else {
+			enemiesManager.update(dt);
+		}
 		handleJoystickControls();
 		if (paddleJumping) {
 			paddleJump(dt);
@@ -447,15 +453,6 @@ function moveEverything(dt) {
 	}
 	if (gamePaused){
 		lettersMove();
-	} else if (battlingBoss) {
-		allBalls[0].ballMove(dt);
-		allBalls.forEach(function (ball) { ball.ballMove(dt); }); // multiball
-		pillsMove(dt);
-		boss.update(dt);
-		handleJoystickControls();
-		if (paddleJumping) {
-			paddleJump(dt);
-		}
 	}
 }
 

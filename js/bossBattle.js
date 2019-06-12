@@ -8,12 +8,21 @@ function bossClass() {
 	this.speed = 500;
 	this.image = paddlePic;
 	this.visible = true;
+	this.ballIntersect = null;
 	this.transitions = [
-		['slide', 'noop', function() {return false;}],
+		['wait', 'slide', ballNotHeld],
+		['slide', 'brickAttack', justMissedBall],
+		['brickAttack', 'wait', brickAttackFinished],
+		['slide', 'freezeAttack', ballTravellingDown],
+		['freezeAttack', 'slide', ballTravellingUp],
+		['slide', 'wait', ballHeld]
 	];
-	this.startState = 'slide';
+	this.startState = 'wait';
 	this.lives = MAX_BOSS_LIVES;
+	this.attackRow = BRICK_ROWS - 1;
+	this.attackCol = 0;
 	this.defeatedEvent = new CustomEvent('bossDefeated');
+	this.justMissedBall = false;
 
 	this.superClassInit = this.init;
 	this.init = function() {
@@ -33,41 +42,44 @@ function bossClass() {
 	
 	this.dropLife = function() {
 		this.live = --this.lives > 0;
+		this.justMissedBall = true;
 		if (!this.live) {
 			canvas.dispatchEvent(this.defeatedEvent);
 		}
-		console.log('Bossed lost life, lives remaining', this.lives);
+		console.log('Boss lost life, lives remaining', this.lives);
 	};
 	
 	this.states = {
-		slide: {
+		wait: {
 			enter: function(boss, dt) {
 			},
 			update: function(boss, dt) {
+			},
+			exit: function(boss, dt) {
+			},
+		},
+		slide: {
+			enter: function(boss, dt) {
 				const ball = allBalls[0];
-				// if (ball.Y > canvas.height - PADDLE_ORIGINAL_Y - BALL_RADIUS*2) {
-				// 	return;
-				// }
-				boss.speed = 2*ball.getSpeedFromVelocity(ball.VelX, ball.VelY);
-				let checkY, intersect;
 				let velX = ball.VelX;
 				let velY = ball.VelY;
-				let posX = ball.X;
-				let posY = ball.Y;
+				boss.ballIntersect = {X: ball.X, Y: ball.Y};
 				let interY = boss.Y + boss.height;
 				do {
-					intersect = getIntersectPoint(
+					boss.ballIntersect = getIntersectPoint(
 						velX, velY,
-						posX, posY,
+						boss.ballIntersect.X, boss.ballIntersect.Y,
 						interY
 					);
-					posX = intersect.X;
-					posY = intersect.Y;
 					velX *= -1;
-				} while(intersect.Y > interY);
-				if (intersect.X > boss.X + boss.width/2 + 20) {
+				} while(boss.ballIntersect.Y > interY);
+			},
+			update: function(boss, dt) {
+				boss.speed = ball.getSpeedFromVelocity(ball.VelX, ball.VelY);
+				boss.speed *= MAX_BOSS_LIVES/boss.lives;
+				if (boss.ballIntersect.X > boss.X + boss.width/2 + 20) {
 					boss.X += boss.speed*dt;
-				} else if (intersect.X < boss.X + boss.width/2 - 20) {
+				} else if (boss.ballIntersect.X < boss.X + boss.width/2 - 20) {
 					boss.X -= boss.speed*dt;
 				}
 				if (boss.X < 0) {
@@ -77,10 +89,33 @@ function bossClass() {
 					boss.X = canvas.width - boss.width;
 				}				
 			},
+			exit: function(boss, dt) {}
+		},
+		brickAttack: {
+			enter: function(boss, dt) {
+				boss.attackCol = 0;
+			},
+			update: function(boss, dt) {
+				if (boss.attackCol < BRICK_COLS) {
+					let brickIndex = brickToTileIndex(
+						boss.attackCol,
+						boss.attackRow
+					);
+					if (brickGrid[brickIndex] < BRICK_TYPES.threehit) {
+						brickGrid[brickIndex]++;
+						sounds.wizardPlacesBrick.play();
+					}
+					boss.attackCol++;
+				}
+			},
 			exit: function(boss, dt) {
+				boss.attackRow--;
+				if (boss.attackRow < 1) {
+					boss.attackRow = BRICK_ROWS - 1;
+				}
 			}
 		},
-		noop: {
+		freezeAttack: {
 			enter: function(boss, dt) {
 			},
 			update: function(boss, dt) {
@@ -88,6 +123,34 @@ function bossClass() {
 			exit: function(boss, dt) {
 			}
 		}
+	}
+
+	function ballHeld(boss) {
+		return allBalls[0].ballHeld;
+	}
+
+	function ballNotHeld(boss) {
+		return !ballHeld(boss);
+	}
+
+	function justMissedBall(boss) {
+		if (boss.justMissedBall) {
+			boss.justMissedBall = false;
+			return true;
+		}
+		return false;
+	}
+
+	function brickAttackFinished(boss) {
+		return boss.attackCol >= BRICK_COLS;
+	}
+
+	function ballTravellingDown(boss) {
+		return (allBalls[0].VelY > 0);
+	}
+
+	function ballTravellingUp(boss) {
+		return (allBalls[0].VelY < 0);
 	}
 }
 
