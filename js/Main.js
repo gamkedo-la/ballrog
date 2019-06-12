@@ -345,9 +345,15 @@ function drawTitleScreen() {
 function drawLevelTransition() {
 	var line = 120;
 	colorRect(0, 0, canvas.width, canvas.height, 'black');
-	canvasContext.fillStyle = 'white';
+	drawBackground(plasma4Pic,plasma4Pic,plasma4Pic,plasma4Pic);
 	canvasContext.textAlign = 'center';
+	canvasContext.fillStyle = 'black';
+	canvasContext.fillText("LOADING NEW LEVEL", canvas.width/2 + 1, line + 1);
+	canvasContext.fillStyle = 'white';
 	canvasContext.fillText("LOADING NEW LEVEL", canvas.width/2, line);
+	canvasContext.fillStyle = 'black';
+	canvasContext.fillText("GET PSYCHED!", canvas.width/2 + 1, line + 20 + 1);
+	canvasContext.fillStyle = 'white';
 	canvasContext.fillText("GET PSYCHED!", canvas.width/2, line + 20);
 }
 
