@@ -108,12 +108,12 @@ function ballClass(x,y,vx,vy){
 		servingY = Math.sin(servingDegree * DEGREES_TO_RADS);
 		var x = Math.cos(servingDegree * DEGREES_TO_RADS);
 		servingX = (Math.random() > 0.5) ? x : -x;
-		
+
 		this.VelX = servingX;
 		this.VelY = -servingY;
 		this.updateSpeed(this.minSpeed);
 	}
-	
+
 	this.ballMove = function(dt) {
 		if (debugBall) {
 			this.VelX = 1;
@@ -127,7 +127,7 @@ function ballClass(x,y,vx,vy){
 				this.serveReset();
 			}
 		} else {
-			servingX = undefined; 
+			servingX = undefined;
 			servingY = undefined;
 			//update ball position using current velocity
 			this.X += this.VelX*dt;
@@ -234,11 +234,12 @@ function ballClass(x,y,vx,vy){
 			}
 		}
 	}
-	
+
     this.fallThroughFloorIfAppropriate = function() {
 		if (this.Y > canvas.height) {
 			this.ballReset(ballCount);
 			canvas.dispatchEvent(this.ballMissEvent);
+			sounds.lifeLost.play();
 			if(ballCount != 1) {
 				ballCount--;
 				for(var i = 0; i < allBalls.length; i++) {
