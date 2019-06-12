@@ -24,12 +24,7 @@ var paddleAlpha = 1;
 var paddleScale = {x: 1, y: 1};
 var paddleFrozen = false;
 
-function movePaddleOnMouseMove(evt) {
-	var mousePos = calculateMousePos(evt);
-	if(!(demoScreen || paddleFrozen)){
-		paddleX = mousePos.x - (paddleWidth/2);
-	}
-
+function maybeMoveHeldBall() {
 	len = allBalls.length;
 	for (var i = 0; i < len;i++) {
 		ball = allBalls[i];
@@ -37,6 +32,14 @@ function movePaddleOnMouseMove(evt) {
 			ball.X = paddleX + paddleWidth/2;
 		}
 	} // end of for in
+}
+
+function movePaddleOnMouseMove(evt) {
+	var mousePos = calculateMousePos(evt);
+	if(!(demoScreen || paddleFrozen)){
+		paddleX = mousePos.x - (paddleWidth/2);
+	}
+	maybeMoveHeldBall();
 } // end of movePaddleOnMouseMove
 
 let jumpSoundPlaying = false;
