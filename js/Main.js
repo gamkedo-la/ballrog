@@ -70,7 +70,8 @@ var sounds = {
 	spawnMultiBall: new SoundOverlapsClass("audio/multiBallSpawn", "spawnMultiBall"),
 	stretchPaddleSound: new SoundOverlapsClass("audio/stretchPaddle", "stretchPaddleSound"),
 	shrinkPaddleSound: new SoundOverlapsClass("audio/shrinkPaddle", "shrinkPaddleSound"),
-	wizardFlyIn: new SoundOverlapsClass("audio/fairyEntrance", "wizardFlyIn")
+	wizardFlyIn: new SoundOverlapsClass("audio/fairyEntrance", "wizardFlyIn"),
+	wizardPlacesBrick: new SoundOverlapsClass("audio/wizardPlacesBrick", "wizardPlacesBrick")
 };
 
 var arrayOfBrickHitSounds = [sounds.brickHit, sounds.brickHitHalfStepDown, sounds.brickHitHalfStepUp,

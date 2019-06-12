@@ -233,6 +233,8 @@ function wizEnemyClass() {
 				var brickIndex = brickToTileIndex(enemy.targetTile.col, enemy.targetTile.row);
 				if (brickGrid[brickIndex] < BRICK_TYPES.threehit) {
 					brickGrid[brickIndex]++;
+					console.log("wizard places brick here?");
+					sounds.wizardPlacesBrick.play();
 					if (brickGrid[brickIndex] - 1 == BRICK_TYPES.empty) {
 						bricksLeft++;
 					}
