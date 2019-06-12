@@ -192,6 +192,8 @@ function wizEnemyClass() {
 			enter: function(enemy, dt) {
 				// select empty tile
 				//fairySound probably goes here
+				console.log("wizard flies in?");
+				sounds.wizardFlyIn.play();
 				var minCol, maxCol, targetTile;
 				var count = 0, maxTries = 10;
 				if (enemy.X < 0) {
