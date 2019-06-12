@@ -16,7 +16,7 @@ let didInteract = false;
 let cmd_cntrl_down = false;
 let shift_down = false;
 const VOLUME_DOWN = 'Minus';
-const VOLUME_UP = 'Plus';
+const VOLUME_UP = 'Equal';
 
 function calculateMousePos(evt) {
 	var rect = canvas.getBoundingClientRect();
@@ -156,23 +156,37 @@ function keyPressed(evt) {
 	} else {
 		messageArea.innerHTML = '';
 		debugBall = false;
+		const keys = Object.keys(sounds);
 
 		switch(evt.code) {
 		case 'Minus':
-			if(testBackgroundMusic.volume >= 0.1) {
-				testBackgroundMusic.volume -= 0.1;
+			if(testBackgroundMusic.volume >= 0.015) {
+				testBackgroundMusic.volume -= 0.015;
 			} else {
 				testBackgroundMusic.volume = 0;
 			}
 			
-			const keys = Object.keys(sounds);
-			console.log(keys);
 			for(let i = 0; i < keys.length; i++) {
 				if(sounds[keys[i]].volume >= 0.1) {
-					console.log("lowered volume for: " + keys[i]);
 					sounds[keys[i]].volume -= 0.1;
 				} else {
 					sounds[keys[i]].volume = 0;
+				}
+			}
+			break;
+		case 'Equal':
+			if(testBackgroundMusic.volume <= 0.985) {
+				testBackgroundMusic.volume += 0.015;
+			} else {
+				testBackgroundMusic.volume = 1;
+			}
+			
+			console.log(keys);
+			for(let i = 0; i < keys.length; i++) {
+				if(sounds[keys[i]].volume <= 0.9) {
+					sounds[keys[i]].volume += 0.1;
+				} else {
+					sounds[keys[i]].volume = 1;
 				}
 			}
 			break;

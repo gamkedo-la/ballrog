@@ -14,6 +14,7 @@ function SoundOverlapsClass(filenameWithPath, name) {
     var altSoundTurn = false;
     this.mainSound = new Audio(filenameWithPath + audioFormat);
     this.altSound = new Audio(filenameWithPath + audioFormat);
+    this.volume = 1;
 
     this.name = name;
 
@@ -22,10 +23,12 @@ function SoundOverlapsClass(filenameWithPath, name) {
 
 		if(gameMuted == false){
 			if (altSoundTurn) {
-				this.altSound.currentTime = 0;
+        this.altSound.currentTime = 0;
+        this.altSound.volume = this.volume;
 				this.altSound.play();
 			} else {
-				this.mainSound.currentTime = 0;
+        this.mainSound.currentTime = 0;
+        this.mainSound.volume = this.volume;
 				this.mainSound.play();
 			}
 		}//end check for gameMuted
@@ -72,7 +75,8 @@ function playMultiSound(arrayOfSoundsToVarietize) {
   let randomArrayIndex = getRandomInt(0, arrayLength - 1);
   let randomSoundFromArray = arrayOfSoundsToVarietize[randomArrayIndex];
   let randomVolume = getRandomInt(8,10);
-  randomVolume = randomVolume/10;
+//  console.log("base volume: " + randomSoundFromArray.volume + ", random volume: " + randomVolume);
+  randomVolume = Math.min(randomVolume/10, randomSoundFromArray.volume);
   randomSoundFromArray.volume = randomVolume;
   randomSoundFromArray.play();
 }
