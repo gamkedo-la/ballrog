@@ -188,6 +188,7 @@ function ballClass(x,y,vx,vy){
 				return;
 			}
 
+			paddleWobbleTimer = paddleWobbleTimerFull;
 			let deltaX = this.X - (posX + width/(2*scale.x));
 			var randomAngle = (Math.random() * 0.1);
 			this.updateVelocity(deltaX*6.3, -1*this.VelY);

@@ -9,6 +9,11 @@ var paddleShoot = false;
 var paddleShotDraw = 0;
 var paddleAltShot = false;
 
+var paddleWobbleTimerFull = 45;
+var paddleWobbleTimer = 0;
+var wobbleScaleAngle = Math.PI/6;
+var wobbleScale = {x: 1, y: 1};
+
 var jumpSpeedY = 0;
 var currentJumpFactorIndex = 0;
 const JUMP_POWER_FACTORS = [1.2*340, 1.5*340, 1.8*340];
@@ -18,7 +23,6 @@ const AIR_RESISTANCE = 9;
 var paddleAlpha = 1;
 var paddleScale = {x: 1, y: 1};
 var paddleFrozen = false;
-
 
 function movePaddleOnMouseMove(evt) {
 	var mousePos = calculateMousePos(evt);
@@ -143,18 +147,30 @@ function drawGooglyEyes(whichBall) {
 
 	// blink occasionally
 	if (blinkCounter && !paddleFrozen) {
-		drawBitMap(eyelidsPic,eyeX,eyeY);
-		drawBitMap(eyelidsPic,eyeX+eyeSpacing,eyeY);
+		canvasContext.drawImage(eyelidsPic, 0,0,eyelidsPic.width,eyelidsPic.height, 
+								eyeX, eyeY, 
+								eyelidsPic.width, eyelidsPic.height);
+		canvasContext.drawImage(eyelidsPic, 0,0,eyelidsPic.width,eyelidsPic.height, 
+								eyeX + eyeSpacing, eyeY, 
+								eyelidsPic.width, eyelidsPic.height);
 		blinkCounter--;
 	} else {
 		// whites
-		drawBitMap(eyeballPic,eyeX,eyeY);
-		drawBitMap(eyeballPic,eyeX+eyeSpacing,eyeY);
+		canvasContext.drawImage(eyeballPic, 0,0,eyeballPic.width,eyeballPic.height, 
+								eyeX, eyeY, 
+								eyeballPic.width, eyeballPic.height);
+		canvasContext.drawImage(eyeballPic, 0,0,eyeballPic.width,eyeballPic.height, 
+								eyeX + eyeSpacing, eyeY, 
+								eyeballPic.width, eyeballPic.height);
 		// pupils
 		eyeX += pupilDistance * Math.cos(angle) + 3;
 		eyeY += pupilDistance * Math.sin(angle) + 3;
-		drawBitMap(pupilPic,eyeX,eyeY);
-		drawBitMap(pupilPic,eyeX+eyeSpacing,eyeY);
+		canvasContext.drawImage(pupilPic, 0,0,pupilPic.width,pupilPic.height, 
+								eyeX, eyeY, 
+								pupilPic.width, pupilPic.height);
+		canvasContext.drawImage(pupilPic, 0,0,pupilPic.width,pupilPic.height, 
+								eyeX + eyeSpacing, eyeY, 
+								pupilPic.width, pupilPic.height);
 	}
 
 	if (!paddleFrozen) {
@@ -170,12 +186,40 @@ function drawPaddle() {
 	canvasContext.save();
 	canvasContext.globalAlpha = paddleAlpha;
 	canvasContext.scale(paddleScale.x, paddleScale.y);
-	drawBitMap(image, Math.floor(paddleX/paddleScale.x), paddleY + 5);
+
 	if(paddleShotDraw > 0)
 	{
 		drawBitMap(shotPic, paddleX  - (paddleWidth/2) + (paddleAltShot ? 0 : paddleWidth), paddleY - 70);
 		paddleShotDraw--;
 	}
+	if (paddleWobbleTimer > 0) {
+		if (paddleWobbleTimer % 7 == 0) {
+			wobbleScaleAngle = setWobbleScaleAngle(wobbleScaleAngle);
+			wobbleScale.x = Math.sin(wobbleScaleAngle);
+			wobbleScale.y = wobbleScale.x * 3;	
+		}
+		canvasContext.drawImage(image, 0,0,image.width,image.height, 
+								Math.floor(paddleX/paddleScale.x), paddleY + 5, 
+								image.width + wobbleScale.x, image.height + wobbleScale.y);
+		paddleWobbleTimer--;
+	} else {
+		drawBitMap(image, Math.floor(paddleX/paddleScale.x), paddleY + 5);
+		wobbleScale.x = 1;
+		wobbleScale.y = 1;
+	}
+
 	drawGooglyEyes(allBalls[0]);
 	canvasContext.restore();
+}
+
+var direction = 1;
+
+function setWobbleScaleAngle(angle) {
+
+	if (angle >= Math.PI || angle <= 0) {
+		direction *= -1;
+	}
+	
+	angle += Math.PI/12 * direction;
+	return angle * -1;
 }

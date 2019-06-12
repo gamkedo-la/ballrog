@@ -205,7 +205,6 @@ function resetGame() {
 	resetBricks();
 	resetScore();
 	resetGAMKEDO();
-	ballHeld = true;
 
 	//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball
 
