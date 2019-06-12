@@ -1,7 +1,7 @@
 const LEVEL_SELECT_SEP = 2;
 const LEVEL_SELECT_W = 78;
 const LEVEL_SELECT_H = 38;
-const BUTTON_W = 100;
+const BUTTON_W = 125;
 const BUTTON_H = 50;
 var levelEditor = {
 	undoManager: new UndoManager(),
@@ -36,6 +36,14 @@ var levelEditor = {
 			textColor: 'black',
 			active: true,
 			action: clearLevel
+		},
+		next: {
+			x: 0,
+			text: 'CHANGE BRICK',
+			color: 'grey',
+			textColor: 'white',
+			active: true,
+			action: nextBrick
 		},
 		download: {
 			x: 0,
@@ -128,6 +136,26 @@ function removeBrick() {
 		const action = new ActionObject(levelEditor.currentLevelKey, brickType, Action.Remove, brickIndex, null);
 		levelEditor.undoManager.tookAction(action);
 	}
+}
+
+function nextBrick() {
+	var currentSelection = levelEditor.selectedBrickType;
+	var brickTypeChoices = Object.values(BRICK_TYPES);
+	let index = brickTypeChoices.indexOf(currentSelection) + 1;
+	if (index >= brickTypeChoices.length) {
+		index = 0;
+	}
+	levelEditor.selectedBrickType = brickTypeChoices[index];
+}
+
+function prevBrick() {
+	var currentSelection = levelEditor.selectedBrickType;
+	var brickTypeChoices = Object.values(BRICK_TYPES);
+	let index = brickTypeChoices.indexOf(currentSelection) - 1;
+	if (index < 0) {
+		index = brickTypeChoices.length - 1;
+	}
+	levelEditor.selectedBrickType = brickTypeChoices[index];
 }
 
 function undo() {
