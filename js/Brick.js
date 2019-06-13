@@ -262,7 +262,7 @@ function handleBrickHit(evt) {
 			levelCompleteSoundEvents();
 
 			//console.log(activePills);
-			if (activePills <= 0) {
+			if (activePills <= 0 && !battlingBoss) {
 				setTimeout(function() {
 					let noMoreBricksEvent = new CustomEvent('noMoreBricks');
 					canvas.dispatchEvent(noMoreBricksEvent);
