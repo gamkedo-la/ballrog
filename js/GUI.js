@@ -6,6 +6,10 @@ const GAMKEDO_LETTER_W = 12; // pixels per letter
 
 var prevScore = 0; // so we can animate the increase
 
+var serveTimer = undefined;
+var serveTimerFull = 600; //framesPerSecond * perferredSeconds
+var timeRemaining = 5;
+
 function drawGUI() {
     if (prevScore<score) prevScore += 10;
     
@@ -17,6 +21,29 @@ function drawGUI() {
 
     drawLives();
     drawGAMKEDO();
+
+    if (checkIfBallHeld() && ballCount == 1 && serveTimer == undefined) {
+		serveTimer = serveTimerFull;
+	}
+
+	if (serveTimer > 0) {
+		serveTimer--;
+		if (serveTimer < 300) {
+			if (serveTimer % framesPerSecond == 0) {
+				timeRemaining--;
+			}
+			if (timeRemaining) {
+				canvasContext.fillStyle = 'black';
+				canvasContext.fillText("Auto-Serving in: " + timeRemaining, canvas.width/2 + 1, 121);
+				canvasContext.fillStyle = 'white';
+				canvasContext.fillText("Auto-Serving in: " + timeRemaining, canvas.width/2, 120);
+			}
+		}
+	} else {
+		allBallsUnheld();
+		timeRemaining = 5;
+		serveTimer = undefined;
+	}
 }
 
 function drawLives() {

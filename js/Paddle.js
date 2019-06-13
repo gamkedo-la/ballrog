@@ -82,9 +82,9 @@ function paddleJump(dt) {
 	jumpSpeedY += GRAVITY*dt;
 	paddleY += jumpSpeedY*dt;
 
-	console.log(jumpSoundPlaying);
+	//console.log(jumpSoundPlaying);
 	if (paddleY >= 535) {
-		console.log("paddleY", paddleY);
+		//console.log("paddleY", paddleY);
 		if (!jumpSoundPlaying) {
 			playMultiSound(arrayOfPaddleJumpSounds);
 			jumpSoundPlaying = true;
@@ -153,20 +153,20 @@ function paddleBlink() {
 
 // draw googly eyes that follow the ball just for fun =)
 var blinkCounter = 0;
-var serveTimer = 0;
-function drawGooglyEyes(whichBall) {
+var afterServeTimer = 0;
 
+function drawGooglyEyes(whichBall) {
 	var eyeX = Math.floor((paddleX)/paddleScale.x) + 7;
 	var eyeY = paddleY + 21;
 	var eyeSpacing = 62;
 	var pupilDistance = 4; // how much movement
 	var angle;
-	if (heldBall != undefined || serveTimer > 0) { 
+	if (heldBall != undefined || afterServeTimer > 0) { 
 		angle = Math.atan2((whichBall.Y - (BALL_RADIUS * 15)) - paddleY, whichBall.X-paddleX);
 		if (heldBall != undefined) {
-			serveTimer = 20;
+			afterServeTimer = 20;
 		} else {
-			serveTimer--;
+			afterServeTimer--;
 		}
 	} else if (!paddleFrozen) {
 		angle = Math.atan2(whichBall.Y - paddleY, whichBall.X-paddleX);

@@ -65,7 +65,7 @@ function ballClass(x,y,vx,vy){
 	this.updateVelocity = function(velX, velY) {
 		var speedMultiplier;
 		if (speedIncreased) {
-			speedMultiplier = 1.02;
+			speedMultiplier = 1.01;
 		} else {
 			speedMultiplier = 1;
 		}
