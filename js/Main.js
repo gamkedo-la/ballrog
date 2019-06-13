@@ -344,8 +344,21 @@ function drawTitleScreen() {
 	canvasContext.fillText("GET A NEW LIFE EVERY " + NEW_LIFE_SCORE_MILESTONE + " POINTS!", canvas.width/2+1, line+1);
 	canvasContext.fillStyle = 'white';
 	canvasContext.fillText("GET A NEW LIFE EVERY " + NEW_LIFE_SCORE_MILESTONE + " POINTS!", canvas.width/2, line);
+
+	drawCreditsPrompt(line);
 }
 
+function drawCreditsPrompt(line) {
+	canvasContext.save();
+	const creditsText = "[C] For Credits";
+	canvasContext.fillStyle = '#639bff';
+	canvasContext.font = 'small-caps bold 30px Sans-serif';
+	canvasContext.fillText(creditsText, canvas.width / 2, line + 325);
+	canvasContext.strokeStyle = 'black';
+	canvasContext.lineWidth = 2;
+	canvasContext.strokeText(creditsText, canvas.width / 2, line + 325);
+	canvasContext.restore();
+}
 
 function drawLevelTransition() {
 	var line = 120;
