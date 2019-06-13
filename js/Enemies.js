@@ -99,6 +99,8 @@ function BaseEnemyClass() {
 	}
 }
 
+const noop = function() {};
+const noopState = {enter: noop, update: noop, exit: noop};
 FSMEnemyClass.prototype = new BaseEnemyClass();
 function FSMEnemyClass() {
 	this.state = null;
@@ -298,7 +300,7 @@ function wizEnemyClass() {
 
 iceEnemyClass.prototype = new FSMEnemyClass();
 function iceEnemyClass() {
-	const ATTACK_TIMEOUT = 1.25;
+	const FREEZE_TIMEOUT = 1.25;
 	const SLIDE_TIMEOUT = 10;
 	const MELT_TIMEOUT = 1;
 	const DROP_SPEED = 200;
@@ -313,7 +315,7 @@ function iceEnemyClass() {
 		['slide', 'melt', slideTimerEnded],
 		['melt', 'die', meltTimerEnded],
 		['drop', 'attack', isCollidingWithPaddle],
-		['attack', 'die', attackTimerEnded],
+		['attack', 'die', paddleNotFrozen],
 		['drop', 'die', movedBelowCanvasHeight]
 	];
 	this.startState = 'drop';
@@ -375,16 +377,10 @@ function iceEnemyClass() {
 		},
 		attack: {
 			enter: function (enemy, dt) {
-				paddleFrozen = true;
-				enemy.visible = false;
-				enemy.attackTimer = 0;
+				freezePaddle(FREEZE_TIMEOUT);
 			},
-			update: function(enemy, dt) {
-				enemy.attackTimer += dt;
-			},
-			exit: function(enemy, dt) {
-				paddleFrozen = false;
-			}
+			update: noop,
+			exit: noop
 		},
 		melt: {
 			enter: function(enemy, dt) {
@@ -447,8 +443,8 @@ function iceEnemyClass() {
 				&& enemy.Y + enemy.height >= paddleY);
 	}
 
-	function attackTimerEnded(enemy) {
-		return enemy.attackTimer >= ATTACK_TIMEOUT;
+	function paddleNotFrozen(enemy) {
+		return !paddleFrozen;
 	}
 
 	function movedBelowCanvasHeight(enemy) {

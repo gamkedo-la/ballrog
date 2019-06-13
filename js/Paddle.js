@@ -45,6 +45,25 @@ function movePaddleOnMouseMove(evt) {
 let jumpSoundPlaying = false;
 let firstJumpSoundPlayed = false;
 
+function freezePaddle(timeout) {
+	paddleFrozen = true;
+	paddleFrozenTimer = 0;
+	paddleFrozenTimeout = timeout;
+}
+
+function updatePaddleState(dt) {
+	if (paddleFrozen) {
+		paddleFrozenTimer += dt;
+		paddleFrozen = paddleFrozenTimer < paddleFrozenTimeout;
+	}
+	if (paddleJumping) {
+		paddleJump(dt);
+	}
+	if (paddleShoot) {
+		paddleShooting();
+	}
+}
+
 function paddleJump(dt) {
 	if (!firstJumpSoundPlayed) {
 		playMultiSound(arrayOfPaddleJumpSounds);

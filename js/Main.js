@@ -452,18 +452,14 @@ function moveEverything(dt) {
 		allBalls[0].ballMove(dt);
 		allBalls.forEach(function (ball) { ball.ballMove(dt); }); // multiball
 		pillsMove(dt);
+
 		if (battlingBoss) {
 			boss.update(dt);
 		} else {
 			enemiesManager.update(dt);
 		}
 		handleJoystickControls();
-		if (paddleJumping) {
-			paddleJump(dt);
-		}
-		if (paddleShoot) {
-			paddleShooting();
-		}
+		updatePaddleState(dt);
 		if(demoScreen){
 			moveComputerPaddle(allBalls[0]);
 		}
