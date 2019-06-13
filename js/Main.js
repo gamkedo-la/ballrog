@@ -71,7 +71,13 @@ var sounds = {
 	stretchPaddleSound: new SoundOverlapsClass("audio/stretchPaddle", "stretchPaddleSound"),
 	shrinkPaddleSound: new SoundOverlapsClass("audio/shrinkPaddle", "shrinkPaddleSound"),
 	wizardFlyIn: new SoundOverlapsClass("audio/fairyEntrance", "wizardFlyIn"),
-	wizardPlacesBrick: new SoundOverlapsClass("audio/wizardPlacesBrick", "wizardPlacesBrick")
+	wizardPlacesBrick: new SoundOverlapsClass("audio/wizardPlacesBrick", "wizardPlacesBrick"),
+	swallowPill1: new SoundOverlapsClass("audio/swallow1", "swallow1"),
+	swallowPill2: new SoundOverlapsClass("audio/swallow2", "swallow2"),
+	swallowPill3: new SoundOverlapsClass("audio/swallow3", "swallow3"),
+	swallowPill4: new SoundOverlapsClass("audio/swallow4", "swallow4"),
+	swallowPill5: new SoundOverlapsClass("audio/swallow5", "swallow5")
+
 };
 
 var arrayOfBrickHitSounds = [sounds.brickHit, sounds.brickHitHalfStepDown, sounds.brickHitHalfStepUp,
@@ -83,6 +89,8 @@ var arrayOfWallHitSounds = [sounds.wallHit, sounds.wallHitHalfStepDown, sounds.w
 var arrayOfInvaderSounds = [sounds.invaderPillMove1, sounds.invaderPillMove2];
 var arrayOfPaddleJumpSounds = [sounds.paddleJump, sounds.paddleJumpHalfStepUp, sounds.paddleJumpWholeStepUp,
 															sounds.paddleJumpHalfStepDown, sounds.paddleJumpWholeStepDown];
+var arrayOfSwallowPillSounds = [sounds.swallowPill1, sounds.swallowPill2, sounds.swallowPill3, sounds.swallowPill4,
+																sounds.swallowPill5];
 
 var messageArea;
 var dt = 0, last = timestamp();
@@ -111,7 +119,7 @@ function runGameStep(browserTimeStamp) {
 }
 
 // onclick or button press to start game or release ball
-function gameClicked(evt) { 
+function gameClicked(evt) {
 	if (showTitle) {
 		showTitle = false;
 		// FIXME: sounds.gameStart.play();
