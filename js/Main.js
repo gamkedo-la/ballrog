@@ -117,10 +117,12 @@ function gameClicked(evt) {
 		// FIXME: sounds.gameStart.play();
 		testBackgroundMusic.play();
 		resetBricks();
+	} else if (gameOverScreen) {
+		resetGame();
+		gameOverScreen = false;
 	} else if (demoScreen) {
 		resetGame();
 		demoScreen = false;
-		showTitle = true;
 	} else if (bricksInPlace && checkIfBallHeld()) {
 			allBallsUnheld();
 	} else {
@@ -154,9 +156,9 @@ window.onload = function() {
 		canvas.addEventListener('paddleHit', function() {playMultiSound(arrayOfPaddleHitSounds)});
 		canvas.addEventListener('paddleHit', paddleBlink);
 		canvas.addEventListener('wallHit', function() {playMultiSound(arrayOfWallHitSounds)});
-		canvas.addEventListener('outaLives', resetGame);
+		//canvas.addEventListener('outaLives', resetGame);
 		canvas.addEventListener('noMoreBricks', loadNextLevel);
-		//canvas.addEventListener('outaLives', sounds.gameOver.play);
+		canvas.addEventListener('outaLives', sounds.gameOver.play);
 		canvas.addEventListener('scoreIncrease', checkAndRewardPlayer);
 		//FIXME: canvas.addEventListener('newLevel', sounds.newLevel.play);
 		//FIXME: canvas.addEventListener('ballMiss', sounds.lifeLost.play);
@@ -218,7 +220,6 @@ function resetGame() {
 	showTitle = true;
 	testBackgroundMusic.pause();
 	testBackgroundMusic.currentTime = 0;
-	sounds.gameOver.play();
 	titleScreenTimer = 0;
 	clearAllPillTimers();
 	clearPillAbilites();
@@ -301,6 +302,8 @@ function dropLife() {
 	}
 	if (lives < 0) {
 		canvas.dispatchEvent(outaLivesEvent);
+		testBackgroundMusic.pause();
+		sounds.gameOver.play();
 		gameOverScreen = true;
 	}
 }
