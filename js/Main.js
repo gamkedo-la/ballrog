@@ -218,6 +218,8 @@ function resetGame() {
 	//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball
 
 	lives = INITIAL_LIVES;
+	ballrogSpin = 0;
+	ballrogSpinStep = Math.PI/36;
 	showTitle = true;
 	testBackgroundMusic.pause();
 	testBackgroundMusic.currentTime = 0;
@@ -306,6 +308,8 @@ function dropLife() {
 		testBackgroundMusic.pause();
 		sounds.gameOver.play();
 		gameOverScreen = true;
+		paddleY = -canvas.height/1.5;
+		paddleWobbleTimer = paddleWobbleTimerFull;
 	}
 }
 
@@ -430,13 +434,46 @@ function drawEverything() {
 	}
 }
 
+var ballrogSpin = 0;
+var ballrogSpinStep = Math.PI/36;
+
 function drawGameOverScreen(){
 	var line = 120;
 	colorRect(0, 0, canvas.width, canvas.height, 'black');
 	drawBackground(plasma2Pic,plasma2Pic);
-	canvasContext.fillStyle = 'white';
+	canvasContext.save();
+	if (paddleY < -paddlePic.height/2) {
+		paddleY++;
+	} else {
+		ballrogSpinStep = lerp(ballrogSpinStep, Math.PI/90, 0.05);
+	}
+	if (paddleWobbleTimer >= 0) {
+		if (paddleWobbleTimer % 7 == 0) {
+			wobbleScaleAngle = setWobbleScaleAngle(wobbleScaleAngle);
+			wobbleScale.x = Math.sin(wobbleScaleAngle) * 3;
+			wobbleScale.y = wobbleScale.x;	
+		}
+		paddleWobbleTimer--;
+	} else {
+		paddleWobbleTimer = paddleWobbleTimerFull;
+	}
+	ballrogSpin += ballrogSpinStep;
+	canvasContext.translate(canvas.width/2,canvas.height/2);
+	canvasContext.rotate(ballrogSpin);
+	canvasContext.drawImage(paddlePic, 0,0,paddlePic.width,paddlePic.height, 
+					-paddlePic.width/2 + (-0.5 * wobbleScale.x), paddleY + (-0.5 * wobbleScale.y),  
+					paddlePic.width + wobbleScale.x, paddlePic.height + wobbleScale.y);
+	canvasContext.restore(); 
 	canvasContext.textAlign = 'center';
-	canvasContext.fillText("TEMP GAME OVER SCREEN", canvas.width/2, line);
+	canvasContext.fillStyle = 'black';
+	canvasContext.fillText("GAME OVER", canvas.width/2 + 1, line + 1);
+	canvasContext.fillStyle = 'white';
+	canvasContext.fillText("GAME OVER", canvas.width/2, line);
+	canvasContext.textAlign = 'center';
+	canvasContext.fillStyle = 'black';
+	canvasContext.fillText("Click for Main Menu!", canvas.width/2 + 1, (line * 4) + 1);
+	canvasContext.fillStyle = 'white';
+	canvasContext.fillText("Click for Main Menu!", canvas.width/2, line * 4);
 }
 
 function gameLogic(dt) {
@@ -454,7 +491,7 @@ function gameLogic(dt) {
 }
 
 function moveEverything(dt) {
-	if (!showTitle && !gamePaused && !levelTransition && !levelEditor.enabled) {
+	if (!showTitle && !gamePaused && !levelTransition && !levelEditor.enabled && !gameOverScreen) {
 		allBalls[0].ballMove(dt);
 		allBalls.forEach(function (ball) { ball.ballMove(dt); }); // multiball
 		pillsMove(dt);
@@ -473,8 +510,4 @@ function moveEverything(dt) {
 	if (gamePaused){
 		lettersMove();
 	}
-}
-
-function lerp(startPos, endPos, value) {
-	return (endPos - startPos) * value + startPos;
 }
