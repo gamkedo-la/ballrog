@@ -160,8 +160,15 @@ function drawGooglyEyes(whichBall) {
 	var eyeSpacing = 62;
 	var pupilDistance = 4; // how much movement
 	var angle;
-	if (!paddleFrozen) {
-		angle = Math.atan2(whichBall.Y-paddleY, whichBall.X-paddleX);
+	if (heldBall != undefined || serveTimer > 0) { 
+		angle = Math.atan2((whichBall.Y - (BALL_RADIUS * 15)) - paddleY, whichBall.X-paddleX);
+		if (heldBall != undefined) {
+			serveTimer = 20;
+		} else {
+			serveTimer--;
+		}
+	} else if (!paddleFrozen) {
+		angle = Math.atan2(whichBall.Y - paddleY, whichBall.X-paddleX);
 	} else {
 		eyeX = Math.floor((paddleX)/paddleScale.x);
 		eyeY = paddleY;
@@ -209,7 +216,7 @@ function drawPaddle() {
 	canvasContext.globalAlpha = paddleAlpha;
 	canvasContext.scale(paddleScale.x, paddleScale.y);
 
-	if(paddleShotDraw > 0)
+	if (paddleShotDraw > 0)
 	{
 		drawBitMap(shotPic, paddleX  - (paddleWidth/2) + (paddleAltShot ? 0 : paddleWidth), paddleY - 70);
 		paddleShotDraw--;
@@ -230,7 +237,14 @@ function drawPaddle() {
 		wobbleScale.y = 1;
 	}
 
-	drawGooglyEyes(allBalls[0]);
+	if (checkIfBallHeld()) {
+		drawGooglyEyes(heldBall);
+	} else {
+		if (allBalls.length > 1) {
+			sortForLowestBall();
+		}
+		drawGooglyEyes(allBalls[0]);
+	}
 	canvasContext.restore();
 }
 

@@ -411,17 +411,26 @@ function allBallsUnheld() {
 			ball.ballHeld = !ball.ballHeld;
 		}
 	}
+	heldBall = undefined;
 }
+
+var heldBall;
 
 function checkIfBallHeld() {
 	var result = false;
 	var len = allBalls.length;
 	for (let i=0; i < len; i++) {
-		ball = allBalls[i];
-		if (ball.ballHeld) {
+		if (allBalls[i].ballHeld) {
 			result = true;
-			break;
+			heldBall = allBalls[i];
+			return result;
 		}
 	}
 	return result;
+}
+
+function sortForLowestBall() {
+	allBalls.sort(function(a,b) {
+		return b.Y - a.Y;
+    });
 }

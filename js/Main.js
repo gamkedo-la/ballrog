@@ -201,6 +201,7 @@ function resetGame() {
 	ballCount = 1;
 	allBalls[0].ballReset(ballCount);
 	allBalls[0].ballHeld = true;
+	heldBall = allBalls[0];
 	allBalls.forEach(function (ball) {
 		ball.baseSpeed = INITIAL_SPEED;
 		ball.maxSpeed = INITIAL_MAX_SPEED;
