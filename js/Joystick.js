@@ -4,7 +4,8 @@
 function handleJoystickControls() {
 
     // pixles per frame at max joystick reading
-    const JOYSTICK_SPEED_SCALE = 30; 
+    const JOYSTICK_SPEED_SCALE = 8; 
+    
     var x = 0;
     var buttonWasPressed = false;
 
