@@ -95,7 +95,7 @@ var arrayOfSwallowPillSounds = [sounds.swallowPill1, sounds.swallowPill2, sounds
 var messageArea;
 var dt = 0, last = timestamp();
 const gameUpdateStep = 1/30;
-const framesPerSecond = 30;
+const framesPerSecond = 60;
 
 function timestamp() {
 	return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
@@ -113,7 +113,7 @@ function runGameStep(browserTimeStamp) {
 			gameLogic(gameUpdateStep);
 		}
 	}
-	drawEverything(dt);
+	drawEverything(); // was drawEverything(dt) - not needed?
 	last = browserTimeStamp;
 	window.requestAnimationFrame(runGameStep);
 }
@@ -133,6 +133,7 @@ function gameClicked(evt) {
 		demoScreen = false;
 	} else if (bricksInPlace && checkIfBallHeld()) {
 			allBallsUnheld();
+			serveTimer = undefined;
 	} else {
 		if (paddleGun > 0) {
 			paddleShoot = true;
