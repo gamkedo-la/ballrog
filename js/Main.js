@@ -37,6 +37,8 @@ var currentLevelIndex = 0;
 var gameMuted = false;
 var battlingBoss = false;
 var rollCredits = false;
+var creditsScroll = 0;
+var creditsSpeed = 20;
 var sounds = {
 	paddleHit: new SoundOverlapsClass("audio/paddleHit", "paddleHit"),
 	paddleHitHalfStepDown: new SoundOverlapsClass("audio/paddleHitHalfStepDown", "paddleHitHalfStepDown"),
@@ -426,6 +428,7 @@ function drawEverything() {
 		drawPaddle();
 	} else if(rollCredits) {
 		// TODO: credits
+		drawCreditsScreen();
 	} else { // normal gameplay render:
 		drawBackground(plasmaPic,plasmaPic);
 		drawGUI();
@@ -445,6 +448,19 @@ function drawGameOverScreen(){
 	canvasContext.fillStyle = 'white';
 	canvasContext.textAlign = 'center';
 	canvasContext.fillText("TEMP GAME OVER SCREEN", canvas.width/2, line);
+}
+
+function drawCreditsScreen() {
+	colorRect(0, 0, canvas.width, canvas.height, '#222034');
+	drawBitMap(paddlePic, 20, 20); // TODO: draw eyes, scale paddle up a bit
+	for (let i=0; i<(canvas.height - (20 + paddlePic.height)); i++) {
+		drawBitMap(nyanPic, 20, 20 + paddlePic.height + i*nyanPic.height);
+	}
+	// TODO: animate nyan rainbow
+	canvasContext.save();
+	canvasContext.translate(0, creditsScroll);
+	colorTextCentered("CREDITS HERE", canvas.width/2, canvas.height/2);
+	canvasContext.restore();
 }
 
 function gameLogic(dt) {
@@ -476,6 +492,9 @@ function moveEverything(dt) {
 		updatePaddleState(dt);
 		if(demoScreen){
 			moveComputerPaddle(allBalls[0]);
+		}
+		if (rollCredits) {
+			creditsScroll -= creditsSpeed*dt;
 		}
 	}
 	if (gamePaused){
