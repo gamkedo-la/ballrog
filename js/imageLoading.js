@@ -2,6 +2,7 @@ var ballPic = document.createElement("img");
 var letterBrickPic = document.createElement("img");
 var paddlePic = document.createElement("img");
 var paddleFrozenPic = document.createElement("img");
+var nyanPic = document.createElement("img");
 var brick1Pic = document.createElement("img");
 var brick2Pic = document.createElement("img");
 var brick3Pic = document.createElement("img");
@@ -33,6 +34,7 @@ var imageList = [
 	{varName: ballPic, theFile: "../images/ball.png"},
 	{varName: paddlePic, theFile: "../images/paddle.png"},
 	{varName: paddleFrozenPic, theFile: "../images/paddleFrozen.png"},
+	{varName: nyanPic, theFile: "../images/nyan.png"},
 	{varName: brick1Pic, theFile: "../images/brick1.png"},
 	{varName: brick2Pic, theFile: "../images/brick2.png"},
 	{varName: brick3Pic, theFile: "../images/brick3.png"},

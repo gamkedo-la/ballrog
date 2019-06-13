@@ -19,14 +19,14 @@ var ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, stickyBa
 //var ENABLED_PILLS = [multiBallPill, stickyBallPill];
 
 // remove invaderPill if invasion mode: it would have no effect
-if (INVASION_MODE) ENABLED_PILLS = ENABLED_PILLS.filter( el => el !== invaderPill ); 
+if (INVASION_MODE) ENABLED_PILLS = ENABLED_PILLS.filter( el => el !== invaderPill );
 
 var pills = [];
 var activePills = 0;
 var waitForLastPills = false;
 var speedIncreased = false; // used by accelPill
 
-var spaceInvading = INVASION_MODE; 
+var spaceInvading = INVASION_MODE;
 var spaceInvadeX = 0;
 var spaceInvadeY = 0;
 var invadingDirection = 1;
@@ -412,6 +412,7 @@ function pillClass() {
 			if (this.x > paddleX - PILL_W - 1 && this.x < paddleX + paddleWidth && this.y > paddleY - PILL_H/2) {
 				// check if powerup already active
 				clearPillTimersBasedOnImage(this.imageOffsetX,this.imageOffsetY);
+				playMultiSound(arrayOfSwallowPillSounds);
 				increaseScore(BRICK_HIT_POINTS);
 				this.startPower();
 				this.timer = this.powerTime;

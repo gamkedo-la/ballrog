@@ -37,6 +37,8 @@ var currentLevelIndex = 0;
 var gameMuted = false;
 var battlingBoss = false;
 var rollCredits = false;
+var creditsScroll = 0;
+var creditsSpeed = 20;
 var sounds = {
 	paddleHit: new SoundOverlapsClass("audio/paddleHit", "paddleHit"),
 	paddleHitHalfStepDown: new SoundOverlapsClass("audio/paddleHitHalfStepDown", "paddleHitHalfStepDown"),
@@ -71,7 +73,13 @@ var sounds = {
 	stretchPaddleSound: new SoundOverlapsClass("audio/stretchPaddle", "stretchPaddleSound"),
 	shrinkPaddleSound: new SoundOverlapsClass("audio/shrinkPaddle", "shrinkPaddleSound"),
 	wizardFlyIn: new SoundOverlapsClass("audio/fairyEntrance", "wizardFlyIn"),
-	wizardPlacesBrick: new SoundOverlapsClass("audio/wizardPlacesBrick", "wizardPlacesBrick")
+	wizardPlacesBrick: new SoundOverlapsClass("audio/wizardPlacesBrick", "wizardPlacesBrick"),
+	swallowPill1: new SoundOverlapsClass("audio/swallow1", "swallow1"),
+	swallowPill2: new SoundOverlapsClass("audio/swallow2", "swallow2"),
+	swallowPill3: new SoundOverlapsClass("audio/swallow3", "swallow3"),
+	swallowPill4: new SoundOverlapsClass("audio/swallow4", "swallow4"),
+	swallowPill5: new SoundOverlapsClass("audio/swallow5", "swallow5")
+
 };
 
 var arrayOfBrickHitSounds = [sounds.brickHit, sounds.brickHitHalfStepDown, sounds.brickHitHalfStepUp,
@@ -83,6 +91,8 @@ var arrayOfWallHitSounds = [sounds.wallHit, sounds.wallHitHalfStepDown, sounds.w
 var arrayOfInvaderSounds = [sounds.invaderPillMove1, sounds.invaderPillMove2];
 var arrayOfPaddleJumpSounds = [sounds.paddleJump, sounds.paddleJumpHalfStepUp, sounds.paddleJumpWholeStepUp,
 															sounds.paddleJumpHalfStepDown, sounds.paddleJumpWholeStepDown];
+var arrayOfSwallowPillSounds = [sounds.swallowPill1, sounds.swallowPill2, sounds.swallowPill3, sounds.swallowPill4,
+																sounds.swallowPill5];
 
 var messageArea;
 var dt = 0, last = timestamp();
@@ -111,7 +121,7 @@ function runGameStep(browserTimeStamp) {
 }
 
 // onclick or button press to start game or release ball
-function gameClicked(evt) { 
+function gameClicked(evt) {
 	if (showTitle) {
 		showTitle = false;
 		// FIXME: sounds.gameStart.play();
@@ -422,6 +432,7 @@ function drawEverything() {
 		drawPaddle();
 	} else if(rollCredits) {
 		// TODO: credits
+		drawCreditsScreen();
 	} else { // normal gameplay render:
 		drawBackground(plasmaPic,plasmaPic);
 		drawGUI();
@@ -476,6 +487,19 @@ function drawGameOverScreen(){
 	canvasContext.fillText("Click for Main Menu!", canvas.width/2, line * 4);
 }
 
+function drawCreditsScreen() {
+	colorRect(0, 0, canvas.width, canvas.height, '#222034');
+	drawBitMap(paddlePic, 20, 20); // TODO: draw eyes, scale paddle up a bit
+	for (let i=0; i<(canvas.height - (20 + paddlePic.height)); i++) {
+		drawBitMap(nyanPic, 20, 20 + paddlePic.height + i*nyanPic.height);
+	}
+	// TODO: animate nyan rainbow
+	canvasContext.save();
+	canvasContext.translate(0, creditsScroll);
+	colorTextCentered("CREDITS HERE", canvas.width/2, canvas.height/2);
+	canvasContext.restore();
+}
+
 function gameLogic(dt) {
 	if (waitForLastPills) {
 		checkPillsLive();
@@ -505,6 +529,9 @@ function moveEverything(dt) {
 		updatePaddleState(dt);
 		if(demoScreen){
 			moveComputerPaddle(allBalls[0]);
+		}
+		if (rollCredits) {
+			creditsScroll -= creditsSpeed*dt;
 		}
 	}
 	if (gamePaused){
