@@ -162,6 +162,7 @@ window.onload = function() {
 		//FIXME: canvas.addEventListener('ballMiss', sounds.lifeLost.play);
 		canvas.addEventListener('bossDefeated', function () {
 			console.log('DEFEATED BOSS!');
+			increaseScore(lives * 1000);
 			loadNextLevel(); // NOTE: goes to credits roll
 		});
 		canvas.addEventListener('wheel', handleEditorMouseScroll);
