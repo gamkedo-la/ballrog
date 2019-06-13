@@ -153,6 +153,7 @@ function paddleBlink() {
 
 // draw googly eyes that follow the ball just for fun =)
 var blinkCounter = 0;
+var serveTimer = 0;
 function drawGooglyEyes(whichBall) {
 
 	var eyeX = Math.floor((paddleX)/paddleScale.x) + 7;
