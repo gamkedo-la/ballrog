@@ -12,7 +12,7 @@ var timeRemaining = 5;
 
 function drawGUI() {
     if (prevScore<score) prevScore += 10;
-    
+
     canvasContext.drawImage(guiBGPic,0,0);
 
     guiTXT('High Score: ' + highScore.toString(), 8, GUI_Y, "white","left");
@@ -55,7 +55,7 @@ function drawLives() {
 }
 
 function drawGAMKEDO(){
-    var letterPills = [letterG, letterA, letterM, letterK, letterE, letterD, letterD];
+    var letterPills = [letterG, letterA, letterM, letterK, letterE, letterD, letterO];
 	var letters = ['G','A','M','K','E','D','O'];
 	for(i = 0; i < 7; i++){
 		if(letterPills[i]){

@@ -76,7 +76,21 @@ var sounds = {
 	swallowPill2: new SoundOverlapsClass("audio/swallow2", "swallow2"),
 	swallowPill3: new SoundOverlapsClass("audio/swallow3", "swallow3"),
 	swallowPill4: new SoundOverlapsClass("audio/swallow4", "swallow4"),
-	swallowPill5: new SoundOverlapsClass("audio/swallow5", "swallow5")
+	swallowPill5: new SoundOverlapsClass("audio/swallow5", "swallow5"),
+	gPillSound: new SoundOverlapsClass("audio/gPill", "gPill"),
+	aPillSound: new SoundOverlapsClass("audio/aPill", "aPill"),
+	mPillSound: new SoundOverlapsClass("audio/mPill", "mPill"),
+	kPillSound: new SoundOverlapsClass("audio/kPill", "kPill"),
+	ePillSound: new SoundOverlapsClass("audio/ePill", "ePill"),
+	dPillSound: new SoundOverlapsClass("audio/dPill", "dPill"),
+	oPillSound: new SoundOverlapsClass("audio/oPill", "oPill")
+
+
+
+
+
+
+
 
 };
 

@@ -232,9 +232,12 @@ letterGPill.prototype = new pillClass();
 function letterGPill() {
 	this.imageOffsetX = 0;
 	this.imageOffsetY = PILL_H * 7;
+	this.sound = sounds.gPillSound;
+
 
 	this.startPower = function() {
 		letterG = true;
+		this.sound.play();
 	}
 	checkForGAMKEDO();
 }
@@ -243,9 +246,12 @@ letterAPill.prototype = new pillClass();
 function letterAPill() {
 	this.imageOffsetX = 0;
 	this.imageOffsetY = PILL_H * 8;
+	this.sound = sounds.aPillSound;
+
 
 	this.startPower = function() {
 		letterA = true;
+		this.sound.play();
 	}
 	checkForGAMKEDO();
 }
@@ -254,9 +260,12 @@ letterMPill.prototype = new pillClass();
 function letterMPill() {
 	this.imageOffsetX = 0;
 	this.imageOffsetY = PILL_H * 9;
+	this.sound = sounds.mPillSound;
+
 
 	this.startPower = function() {
 		letterM = true;
+		this.sound.play();
 	}
 	checkForGAMKEDO();
 }
@@ -265,9 +274,12 @@ letterKPill.prototype = new pillClass();
 function letterKPill() {
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H * 7;
+	this.sound = sounds.kPillSound;
+
 
 	this.startPower = function() {
 		letterK = true;
+		this.sound.play();
 	}
 	checkForGAMKEDO();
 }
@@ -276,9 +288,12 @@ letterEPill.prototype = new pillClass();
 function letterEPill() {
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H * 8;
+	this.sound = sounds.ePillSound;
+
 
 	this.startPower = function() {
 		letterE = true;
+		this.sound.play();
 	}
 	checkForGAMKEDO();
 }
@@ -287,9 +302,11 @@ letterDPill.prototype = new pillClass();
 function letterDPill() {
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H * 9;
+	this.sound = sounds.dPillSound;
 
 	this.startPower = function() {
 		letterD = true;
+		this.sound.play();
 	}
 	checkForGAMKEDO();
 }
@@ -298,9 +315,11 @@ letterOPill.prototype = new pillClass();
 function letterOPill() {
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H * 10;
+	this.sound = sounds.oPillSound;
 
 	this.startPower = function() {
 		letterO = true;
+		this.sound.play();
 	}
 	checkForGAMKEDO();
 }
@@ -374,6 +393,7 @@ function pillClass() {
 	this.live = false;
 	this.powerTime = 0;
 	this.timer = undefined;
+	this.sound = undefined;
 
 	this.draw = function () {
 		if (this.live) {
