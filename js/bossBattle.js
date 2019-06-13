@@ -23,6 +23,33 @@ function bossClass() {
 	this.attackCol = 0;
 	this.defeatedEvent = new CustomEvent('bossDefeated');
 	this.justMissedBall = false;
+	const FREEZE_TIMEOUT = 1 + 1/3;
+	this.freezeShot = {
+		live: false,
+		X: this.X,
+		Y: this.Y,
+		width: 10,
+		height: this.height*0.6,
+		speed: 500,
+		draw: function() {
+			if (this.live) {
+				colorRect(this.X, this.Y, this.width, this.height, 'white');
+			}
+		},
+		update: function(dt) {
+			if (this.live) {
+				this.Y += this.speed*dt;
+				if (this.Y > canvas.height) {
+					this.live = false;
+				}
+				if (this.X + this.width >= paddleX
+					&& this.X <= paddleX + paddleWidth
+					&& this.Y + this.height >= paddleY) {
+					freezePaddle(FREEZE_TIMEOUT);
+				}
+			}
+		}
+	}
 
 	this.superClassInit = this.init;
 	this.init = function() {
@@ -34,12 +61,25 @@ function bossClass() {
 		});			
 	};
 
+	this.superClassUpdate = this.update;
+	this.update = function(dt) {
+		if (this.live) {
+			this.superClassUpdate(dt);
+		}
+	}
+
 	this.superClassReset = this.reset;
 	this.reset = function() {
 		this.live = true;
 		this.lives = MAX_BOSS_LIVES;
 	};
-	
+
+	this.superClassDraw = this.draw;
+	this.draw = function() {
+		this.superClassDraw();
+		this.freezeShot.draw();
+	};
+
 	this.dropLife = function() {
 		this.live = --this.lives > 0;
 		this.justMissedBall = true;
@@ -50,14 +90,7 @@ function bossClass() {
 	};
 	
 	this.states = {
-		wait: {
-			enter: function(boss, dt) {
-			},
-			update: function(boss, dt) {
-			},
-			exit: function(boss, dt) {
-			},
-		},
+		wait: noopState,
 		slide: {
 			enter: function(boss, dt) {
 				const ball = allBalls[0];
@@ -89,7 +122,7 @@ function bossClass() {
 					boss.X = canvas.width - boss.width;
 				}				
 			},
-			exit: function(boss, dt) {}
+			exit: noop
 		},
 		brickAttack: {
 			enter: function(boss, dt) {
@@ -123,10 +156,15 @@ function bossClass() {
 		},
 		freezeAttack: {
 			enter: function(boss, dt) {
+				boss.freezeShot.live = boss.freezeShot.visible = true;
+				boss.freezeShot.X = boss.X + boss.width/2;
+				boss.freezeShot.Y = boss.Y + boss.height;
 			},
 			update: function(boss, dt) {
+				boss.freezeShot.update(dt);
 			},
 			exit: function(boss, dt) {
+				boss.freezeShot.live = boss.freezeShot.visible = false;
 			}
 		}
 	}
