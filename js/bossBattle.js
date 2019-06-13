@@ -104,6 +104,12 @@ function bossClass() {
 					if (brickGrid[brickIndex] < BRICK_TYPES.threehit) {
 						brickGrid[brickIndex]++;
 						sounds.wizardPlacesBrick.play();
+
+						// don't end the level too soon
+						if (brickGrid[brickIndex] - 1 == BRICK_TYPES.empty) {
+							bricksLeft++; 
+						}
+
 					}
 					boss.attackCol++;
 				}
