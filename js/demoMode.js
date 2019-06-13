@@ -27,9 +27,8 @@ function drawDemoScreen(){
 		drawGAMKEDO();
 		drawPaddle();
 		drawBricks();
-		for(let i = 0; i < allBalls.length; i++) {
-			allBalls[i].drawBall();
-		}
+		allBalls.forEach(function (ball) { ball.drawBall(); }); // multiball
+		enemiesManager.draw();
 		drawPills();
 		drawClickToStart();
 		if (displayClickToStart){

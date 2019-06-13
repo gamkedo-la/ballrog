@@ -338,7 +338,7 @@ function shineBrick(evt) {
 	// add an Arkanoid-inspired "shine" animation on hit bricks
 	var effectX = (evt.detail.col * BRICK_W);
 	var effectY = evt.detail.row * BRICK_H + BRICK_H + BRICK_H;
-	brickShineEffect.trigger(effectX + spaceInvadeX,effectY + spaceInvadeY);
+	brickShineEffect.trigger(effectX,effectY);
 }
 
 function isValidBrick(brickValue) {
