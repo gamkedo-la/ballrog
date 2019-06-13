@@ -217,11 +217,11 @@ function drawPaddle() {
 	if (paddleWobbleTimer > 0) {
 		if (paddleWobbleTimer % 7 == 0) {
 			wobbleScaleAngle = setWobbleScaleAngle(wobbleScaleAngle);
-			wobbleScale.x = Math.sin(wobbleScaleAngle);
-			wobbleScale.y = wobbleScale.x * 3;	
+			wobbleScale.x = Math.sin(wobbleScaleAngle) * 3;
+			wobbleScale.y = wobbleScale.x;	
 		}
 		canvasContext.drawImage(image, 0,0,image.width,image.height, 
-								Math.floor(paddleX/paddleScale.x), paddleY + 5, 
+								Math.floor(paddleX/paddleScale.x) + (-0.5 * wobbleScale.x), paddleY + 5 + (-0.5 * wobbleScale.y),  
 								image.width + wobbleScale.x, image.height + wobbleScale.y);
 		paddleWobbleTimer--;
 	} else {
