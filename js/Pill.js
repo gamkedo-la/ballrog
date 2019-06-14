@@ -95,8 +95,11 @@ function volcanoPill() {
 	this.imageOffsetX = 0;
 	this.imageOffsetY = PILL_H;
 	this.powerTime = 4000;
+	this.sound = sounds.stickyPillSound;
+
 	this.startPower = function () {
 		stickyBall = true;
+		this.sound.play();
 	}
 	this.endPower = function () {
 		stickyBall = false;

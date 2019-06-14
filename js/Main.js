@@ -86,7 +86,8 @@ var sounds = {
 	ePillSound: new SoundOverlapsClass("audio/ePill", "ePill"),
 	dPillSound: new SoundOverlapsClass("audio/dPill", "dPill"),
 	oPillSound: new SoundOverlapsClass("audio/oPill", "oPill"),
-	stickyPillSound: new SoundOverlapsClass("audio/stickToPaddleSound", "stickyPillSound")
+	stickyPillSound: new SoundOverlapsClass("audio/stickToPaddleSound", "stickyPillSound"),
+	paddleFreezeSound: new SoundOverlapsClass("audio/player_freeze_3", "paddleFreezeSound")
 
 
 

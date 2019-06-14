@@ -47,6 +47,7 @@ let firstJumpSoundPlayed = false;
 
 function freezePaddle(timeout) {
 	paddleFrozen = true;
+	sounds.paddleFreezeSound.play();
 	paddleFrozenTimer = 0;
 	paddleFrozenTimeout = timeout;
 }
@@ -106,7 +107,7 @@ function paddleShooting()
 		brickIndex = brickToTileIndex(tileCol, tileRow);
 		tileRow++;
 	} while (!isValidBrick(brickGrid[brickIndex]) && tileRow < BRICK_ROWS);
-	
+
 	if(isValidBrick(brickGrid[brickIndex]))
 	{
 		var brickHitEvent = new CustomEvent('brickHit', {detail: {
@@ -119,12 +120,12 @@ function paddleShooting()
 		}});
 		canvas.dispatchEvent(brickHitEvent);
 	}
-	
+
 	paddleShoot = false;
 	paddleGun -= 1;
-	
+
 	paddleAltShot = !paddleAltShot;
-	
+
 	paddleShotDraw = 4;
 }
 
@@ -161,7 +162,7 @@ function drawGooglyEyes(whichBall) {
 	var eyeSpacing = 62;
 	var pupilDistance = 4; // how much movement
 	var angle;
-	if (heldBall != undefined || afterServeTimer > 0) { 
+	if (heldBall != undefined || afterServeTimer > 0) {
 		angle = Math.atan2((whichBall.Y - (BALL_RADIUS * 15)) - paddleY, whichBall.X-paddleX);
 		if (heldBall != undefined) {
 			afterServeTimer = 20;
@@ -177,29 +178,29 @@ function drawGooglyEyes(whichBall) {
 
 	// blink occasionally
 	if (blinkCounter && !paddleFrozen) {
-		canvasContext.drawImage(eyelidsPic, 0,0,eyelidsPic.width,eyelidsPic.height, 
-								eyeX, eyeY, 
+		canvasContext.drawImage(eyelidsPic, 0,0,eyelidsPic.width,eyelidsPic.height,
+								eyeX, eyeY,
 								eyelidsPic.width, eyelidsPic.height);
-		canvasContext.drawImage(eyelidsPic, 0,0,eyelidsPic.width,eyelidsPic.height, 
-								eyeX + eyeSpacing, eyeY, 
+		canvasContext.drawImage(eyelidsPic, 0,0,eyelidsPic.width,eyelidsPic.height,
+								eyeX + eyeSpacing, eyeY,
 								eyelidsPic.width, eyelidsPic.height);
 		blinkCounter--;
 	} else {
 		// whites
-		canvasContext.drawImage(eyeballPic, 0,0,eyeballPic.width,eyeballPic.height, 
-								eyeX, eyeY, 
+		canvasContext.drawImage(eyeballPic, 0,0,eyeballPic.width,eyeballPic.height,
+								eyeX, eyeY,
 								eyeballPic.width, eyeballPic.height);
-		canvasContext.drawImage(eyeballPic, 0,0,eyeballPic.width,eyeballPic.height, 
-								eyeX + eyeSpacing, eyeY, 
+		canvasContext.drawImage(eyeballPic, 0,0,eyeballPic.width,eyeballPic.height,
+								eyeX + eyeSpacing, eyeY,
 								eyeballPic.width, eyeballPic.height);
 		// pupils
 		eyeX += pupilDistance * Math.cos(angle) + 3;
 		eyeY += pupilDistance * Math.sin(angle) + 3;
-		canvasContext.drawImage(pupilPic, 0,0,pupilPic.width,pupilPic.height, 
-								eyeX, eyeY, 
+		canvasContext.drawImage(pupilPic, 0,0,pupilPic.width,pupilPic.height,
+								eyeX, eyeY,
 								pupilPic.width, pupilPic.height);
-		canvasContext.drawImage(pupilPic, 0,0,pupilPic.width,pupilPic.height, 
-								eyeX + eyeSpacing, eyeY, 
+		canvasContext.drawImage(pupilPic, 0,0,pupilPic.width,pupilPic.height,
+								eyeX + eyeSpacing, eyeY,
 								pupilPic.width, pupilPic.height);
 	}
 
@@ -208,7 +209,7 @@ function drawGooglyEyes(whichBall) {
 		blinkCounter = 5; // frames of closed eyes
 		}
 	}
-	
+
 }
 
 function drawPaddle() {
@@ -226,10 +227,10 @@ function drawPaddle() {
 		if (paddleWobbleTimer % 7 == 0) {
 			wobbleScaleAngle = setWobbleScaleAngle(wobbleScaleAngle);
 			wobbleScale.x = Math.sin(wobbleScaleAngle) * 3;
-			wobbleScale.y = wobbleScale.x;	
+			wobbleScale.y = wobbleScale.x;
 		}
-		canvasContext.drawImage(image, 0,0,image.width,image.height, 
-								Math.floor(paddleX/paddleScale.x) + (-0.5 * wobbleScale.x), paddleY + 5 + (-0.5 * wobbleScale.y),  
+		canvasContext.drawImage(image, 0,0,image.width,image.height,
+								Math.floor(paddleX/paddleScale.x) + (-0.5 * wobbleScale.x), paddleY + 5 + (-0.5 * wobbleScale.y),
 								image.width + wobbleScale.x, image.height + wobbleScale.y);
 		paddleWobbleTimer--;
 	} else {
@@ -256,7 +257,7 @@ function setWobbleScaleAngle(angle) {
 	if (angle >= Math.PI || angle <= 0) {
 		direction *= -1;
 	}
-	
+
 	angle += Math.PI/12 * direction;
 	return angle * -1;
 }
