@@ -141,6 +141,7 @@ function gameClicked(evt) {
 		// FIXME: sounds.gameStart.play();
 		testBackgroundMusic.play();
 		resetBricks();
+		createBackground();
 	} else if (gameOverScreen) {
 		resetGame();
 		gameOverScreen = false;
@@ -216,7 +217,6 @@ window.onload = function() {
 	testBackgroundMusic = new Audio("audio/gameplayMusic" + audioFormat);
 	testBackgroundMusic.loop = true;
 	testBackgroundMusic.volume = 0.15;
-
 }
 
 function resetGame() {
@@ -397,7 +397,8 @@ function drawCreditsPrompt(line) {
 function drawLevelTransition() {
 	var line = 120;
 	colorRect(0, 0, canvas.width, canvas.height, 'black');
-	drawBackground(plasma4Pic,plasma4Pic,plasma4Pic,plasma4Pic);
+	createBackground();
+	drawBackground(newBackground[0],newBackground[1],newBackground[2],newBackground[3]);
 	canvasContext.textAlign = 'center';
 	canvasContext.fillStyle = 'black';
 	canvasContext.fillText("LOADING NEW LEVEL", canvas.width/2 + 1, line + 1);
@@ -448,7 +449,7 @@ function drawEverything() {
 		// TODO: credits
 		drawCreditsScreen();
 	} else { // normal gameplay render:
-		drawBackground(plasmaPic,plasmaPic);
+		drawBackground(newBackground[0],newBackground[1],newBackground[2],newBackground[3]);
 		drawGUI();
 		allBalls.forEach(function (ball) { ball.drawBall(); }); // multiball
 		drawBricks();

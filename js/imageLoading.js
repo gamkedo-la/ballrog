@@ -64,6 +64,7 @@ var imageList = [
 	{varName: iceEnemyPic, theFile: "../images/iceEnemy.png"},
 	{varName: wizEnemyPic, theFile: "../images/wizEnemy.png"}
 ];
+var backgroundImages = [plasmaPic,plasma2Pic,plasma3Pic,plasma4Pic];
 var picsToLoad = imageList.length;
 var allImagesLoadedEvent = new CustomEvent('allImagesLoaded');
 

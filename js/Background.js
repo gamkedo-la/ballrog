@@ -1,6 +1,7 @@
 // an animated fullscreen background
 
 var bgFrameCount = 0;
+var newBackground = [];
 
 function drawBackground(pic1,pic2,pic3,pic4) {
     
@@ -58,3 +59,20 @@ function drawBackground(pic1,pic2,pic3,pic4) {
 
 
 }
+
+function createBackground() {
+	newBackground = [];
+	for (var i = 0; i < 3; i++) {
+		if (Math.random() > 0.3) {
+			newBackground.push(backgroundImages[getRandomIntInclusive(0, backgroundImages.length - 1)]);
+			//console.log("Added background");
+		}
+	};
+}
+
+
+
+
+
+
+

@@ -10,6 +10,7 @@ function titleScreenKeepTime(){
 	if(titleScreenTimer > TITLE_SCREEN_DELAY){
 		showTitle = false;
 		demoScreen = true;
+		createBackground();
 	}
 }
 
