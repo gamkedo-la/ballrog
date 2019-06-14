@@ -114,6 +114,7 @@ function ghostPill() {
 	this.powerTime = framesPerSecond/2 * 7;
 	this.startPower = function () {
 		paddleAlpha = 0.08;
+		sounds.ghostPillSound.play();
 	}
 
 	this.endPower = function () {
@@ -193,10 +194,12 @@ function moveUpPill() {
 	this.startPower = function () {
 		if (paddleY == PADDLE_ORIGINAL_Y) {
 			paddleY -= PADDLE_THICKNESS * 2;
+			sounds.stretchPaddleSound.play();
 		}
 	}
 	this.endPower = function () {
 		paddleY = 540;
+		sounds.shrinkPaddleSound.play();
 	}
 }
 

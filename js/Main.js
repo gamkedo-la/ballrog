@@ -91,7 +91,8 @@ var sounds = {
 	gamePlayMusic1: new Audio("audio/gamePlayMusic" + audioFormat),
 	gamePlayMusic2: new Audio("audio/gamePlayMusicV2" + audioFormat),
 	gamePlayMusic3: new Audio("audio/gamePlayMusicV3" + audioFormat),
-	moneyPillSound: new SoundOverlapsClass("audio/moneyPill", "moneyPillSound")
+	moneyPillSound: new SoundOverlapsClass("audio/moneyPill", "moneyPillSound"),
+	ghostPillSound: new SoundOverlapsClass("audio/ghostPill", "ghostPillSound")
 };
 
 var arrayOfBrickHitSounds = [sounds.brickHit, sounds.brickHitHalfStepDown, sounds.brickHitHalfStepUp,
