@@ -90,7 +90,8 @@ var sounds = {
 	paddleFreezeSound: new SoundOverlapsClass("audio/player_freeze_3", "paddleFreezeSound"),
 	gamePlayMusic1: new Audio("audio/gamePlayMusic" + audioFormat),
 	gamePlayMusic2: new Audio("audio/gamePlayMusicV2" + audioFormat),
-	gamePlayMusic3: new Audio("audio/gamePlayMusicV3" + audioFormat)
+	gamePlayMusic3: new Audio("audio/gamePlayMusicV3" + audioFormat),
+	moneyPillSound: new SoundOverlapsClass("audio/moneyPill", "moneyPillSound")
 };
 
 var arrayOfBrickHitSounds = [sounds.brickHit, sounds.brickHitHalfStepDown, sounds.brickHitHalfStepUp,
@@ -215,7 +216,9 @@ window.onload = function() {
 	let randomBackgroundMusicIndex = getRandomInt(0, arrayOfBackgroundMusicTracks.length - 1);
 	testBackgroundMusic = arrayOfBackgroundMusicTracks[randomBackgroundMusicIndex];
 	console.log(testBackgroundMusic);
-	testBackgroundMusic.loop = true;
+	for (let i = 0; arrayOfBackgroundMusicTracks.length - 1; i++) {
+		arrayOfBackgroundMusicTracks[i].loop = true;
+	}
 	testBackgroundMusic.volume = 0.15;
 }
 
@@ -247,8 +250,6 @@ function resetGame() {
 	showTitle = true;
 	testBackgroundMusic.pause();
 	testBackgroundMusic.currentTime = 0;
-	let randomBackgroundMusicIndex = getRandomInt(0, arrayOfBackgroundMusicTracks.length - 1);
-	testBackgroundMusic = arrayOfBackgroundMusicTracks[randomBackgroundMusicIndex];
 	titleScreenTimer = 0;
 	clearAllPillTimers();
 	clearPillAbilites();

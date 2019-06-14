@@ -43,6 +43,7 @@ function pointsPill() {
 
 	this.startPower = function () {
 		increaseScore(BRICK_HIT_POINTS*4);
+		sounds.moneyPillSound.play();
 	}
 
 	this.endPower = function () {

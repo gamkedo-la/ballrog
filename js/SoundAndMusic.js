@@ -102,6 +102,9 @@ function levelCompleteSoundEvents() {
   testBackgroundMusic.pause();
   testBackgroundMusic.currentTime = 0;
   sounds.levelComplete.play();
+  let randomBackgroundMusicIndex = getRandomInt(0, arrayOfBackgroundMusicTracks.length - 1);
+	testBackgroundMusic = arrayOfBackgroundMusicTracks[randomBackgroundMusicIndex];
+  console.log(testBackgroundMusic);
   testBackgroundMusic.volume = 0.15;
   testBackgroundMusic.playbackRate = 1;
 }
