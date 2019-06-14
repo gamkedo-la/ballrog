@@ -12,6 +12,7 @@ const SHIFT_KEY = 'Shift';
 const CNTRL_KEY = 'Control';
 const CMD_KEY = 'Meta';
 const DESTROY_BRICK = 'Minus';
+const CREDITS_KEY = 'c';
 let didInteract = false;
 let cmd_cntrl_down = false;
 let shift_down = false;
@@ -102,6 +103,11 @@ function keyPressed(evt) {
 			}
 		}
 	}
+	if (showTitle && evt.key == CREDITS_KEY) {
+		showTitle = false;
+		rollCredits = true;
+	}
+
 	if (evt.key == EDIT_KEY) {
 		levelEditor.enabled = !levelEditor.enabled;
 	}
