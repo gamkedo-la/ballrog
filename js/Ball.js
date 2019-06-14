@@ -183,6 +183,7 @@ function ballClass(x,y,vx,vy){
 	this.bounceOffPaddleIfAppropriate = function(posX, posY, width, scale) {
 		if (this.didHitPaddle(posX, posY, width)) { //ball hit the paddle
 			if (stickyBall) {
+				sounds.stickyPillSound.play();
 				stickyBall = false;
 				this.ballHeld = true;
 				return;
