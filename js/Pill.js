@@ -57,10 +57,12 @@ function magnetPill() {
 	this.powerTime = 10000;
 	this.startPower = function () {
 		magneticBall = true;
+		console.log("magnet pill swallowed");
 	}
 
 	this.endPower = function () {
 		magneticBall = false;
+		console.log("magnet pill power ended");
 	}
 }
 

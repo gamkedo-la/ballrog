@@ -366,13 +366,29 @@ function ballClass(x,y,vx,vy){
 	}
 
 	this.magneticBall = function() {
+		let magnetizing = false;
 		if(magneticBall && this.VelY > 0) {
 			if(paddleX+paddleWidth/2 < this.X-BALL_RADIUS) {
 				//Ball on the right of paddle
 				this.X -= 7;
+				console.log("magnetizing");
+				if (!magnetizing) {
+					sounds.magnetizingSound.play();
+					magnetizing = true;
+					console.log("magnetizing sound");
+				}
 			} else if(paddleX+paddleWidth/2 > this.X+BALL_RADIUS) {
 				//Ball on the left of paddle
 				this.X += 7;
+				console.log("magnetizing");
+				if (!magnetizing) {
+					sounds.magnetizingSound.play();
+					magnetizing = true;
+					console.log("magnetizing sound");
+
+				}
+			} else {
+				magnetizing = false;
 			}
 		}
 	}
