@@ -87,15 +87,10 @@ var sounds = {
 	dPillSound: new SoundOverlapsClass("audio/dPill", "dPill"),
 	oPillSound: new SoundOverlapsClass("audio/oPill", "oPill"),
 	stickyPillSound: new SoundOverlapsClass("audio/stickToPaddleSound", "stickyPillSound"),
-	paddleFreezeSound: new SoundOverlapsClass("audio/player_freeze_3", "paddleFreezeSound")
-
-
-
-
-
-
-
-
+	paddleFreezeSound: new SoundOverlapsClass("audio/player_freeze_3", "paddleFreezeSound"),
+	gamePlayMusic1: new Audio("audio/gamePlayMusic" + audioFormat),
+	gamePlayMusic2: new Audio("audio/gamePlayMusicV2" + audioFormat),
+	gamePlayMusic3: new Audio("audio/gamePlayMusicV3" + audioFormat)
 };
 
 var arrayOfBrickHitSounds = [sounds.brickHit, sounds.brickHitHalfStepDown, sounds.brickHitHalfStepUp,
@@ -109,6 +104,7 @@ var arrayOfPaddleJumpSounds = [sounds.paddleJump, sounds.paddleJumpHalfStepUp, s
 															sounds.paddleJumpHalfStepDown, sounds.paddleJumpWholeStepDown];
 var arrayOfSwallowPillSounds = [sounds.swallowPill1, sounds.swallowPill2, sounds.swallowPill3, sounds.swallowPill4,
 																sounds.swallowPill5];
+var arrayOfBackgroundMusicTracks = [sounds.gamePlayMusic1, sounds.gamePlayMusic2, sounds.gamePlayMusic3];
 
 var messageArea;
 var dt = 0, last = timestamp();
@@ -216,7 +212,9 @@ window.onload = function() {
 		invaderMovementTimer = invaderMovementTimerFull;
 		window.requestAnimationFrame(runGameStep);
 	});
-	testBackgroundMusic = new Audio("audio/gameplayMusic" + audioFormat);
+	let randomBackgroundMusicIndex = getRandomInt(0, arrayOfBackgroundMusicTracks.length - 1);
+	testBackgroundMusic = arrayOfBackgroundMusicTracks[randomBackgroundMusicIndex];
+	console.log(testBackgroundMusic);
 	testBackgroundMusic.loop = true;
 	testBackgroundMusic.volume = 0.15;
 }
@@ -249,6 +247,8 @@ function resetGame() {
 	showTitle = true;
 	testBackgroundMusic.pause();
 	testBackgroundMusic.currentTime = 0;
+	let randomBackgroundMusicIndex = getRandomInt(0, arrayOfBackgroundMusicTracks.length - 1);
+	testBackgroundMusic = arrayOfBackgroundMusicTracks[randomBackgroundMusicIndex];
 	titleScreenTimer = 0;
 	clearAllPillTimers();
 	clearPillAbilites();
