@@ -36,9 +36,6 @@ var lastScore = score;
 var currentLevelIndex = 0;
 var gameMuted = false;
 var battlingBoss = false;
-var rollCredits = false;
-var creditsScroll = 0;
-var creditsSpeed = 20;
 var sounds = {
 	paddleHit: new SoundOverlapsClass("audio/paddleHit", "paddleHit"),
 	paddleHitHalfStepDown: new SoundOverlapsClass("audio/paddleHitHalfStepDown", "paddleHitHalfStepDown"),
@@ -294,14 +291,14 @@ function checkLevelIndex() {
 		clearBricks();
 		battlingBoss = true;
 	} else if (currentLevelIndex == LEVEL_SEQ.length + 1) {
-		rollCredits = true;
 		battlingBoss = false;
+		creditsManager.roll();
 	} else if (currentLevelIndex > LEVEL_SEQ.length + 1) {
 		currentLevelIndex = 0;
 		battlingBoss = false;
-		rollCredits = false;
+		creditsManager.stop();
 	} else {
-		rollCredits = false;
+		creditsManager.stop();
 		battlingBoss = false;
 	}
 }
@@ -312,7 +309,7 @@ function loadNextLevel() {
 		bricksInPlace = false;
 		currentLevelIndex++;
 		checkLevelIndex();
-		if (battlingBoss || rollCredits) {
+		if (battlingBoss || creditsManager.rolling) {
 			return;
 		}
 		setTimeout(function () {
@@ -450,9 +447,8 @@ function drawEverything() {
 		drawBricks();
 		drawPills();
 		drawPaddle();
-	} else if(rollCredits) {
-		// TODO: credits
-		drawCreditsScreen();
+	} else if(creditsManager.rolling) {
+		creditsManager.draw();
 	} else { // normal gameplay render:
 		drawBackground(newBackground[0],newBackground[1],newBackground[2],newBackground[3]);
 		drawGUI();
@@ -507,19 +503,6 @@ function drawGameOverScreen(){
 	canvasContext.fillText("Click for Main Menu!", canvas.width/2, line * 4);
 }
 
-function drawCreditsScreen() {
-	colorRect(0, 0, canvas.width, canvas.height, '#222034');
-	drawBitMap(paddlePic, 20, 20); // TODO: draw eyes, scale paddle up a bit
-	for (let i=0; i<(canvas.height - (20 + paddlePic.height)); i++) {
-		drawBitMap(nyanPic, 20, 20 + paddlePic.height + i*nyanPic.height);
-	}
-	// TODO: animate nyan rainbow
-	canvasContext.save();
-	canvasContext.translate(0, creditsScroll);
-	colorTextCentered("CREDITS HERE", canvas.width/2, canvas.height/2);
-	canvasContext.restore();
-}
-
 function gameLogic(dt) {
 	if (waitForLastPills) {
 		checkPillsLive();
@@ -550,9 +533,7 @@ function moveEverything(dt) {
 		if(demoScreen){
 			moveComputerPaddle(allBalls[0]);
 		}
-		if (rollCredits) {
-			creditsScroll -= creditsSpeed*dt;
-		}
+		creditsManager.update(dt);
 	}
 	if (gamePaused){
 		lettersMove();

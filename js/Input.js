@@ -105,7 +105,10 @@ function keyPressed(evt) {
 	}
 	if (showTitle && evt.key == CREDITS_KEY) {
 		showTitle = false;
-		rollCredits = true;
+		creditsManager.roll();
+	} else if (creditsManager.rolling && (evt.key == CREDITS_KEY || evt.key == 'Escape')) {
+		creditsManager.stop();
+		showTitle = true;
 	}
 
 	if (evt.key == EDIT_KEY) {

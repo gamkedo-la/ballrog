@@ -170,7 +170,7 @@ function easeBricksbricksInPlace() {
 
 
 function resetBricks(grid) {
-	if (battlingBoss || rollCredits) {
+	if (battlingBoss || creditsManager.rolling) {
 		return;
 	}
 	if (typeof(grid) == 'undefined') {
