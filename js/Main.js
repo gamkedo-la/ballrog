@@ -85,7 +85,8 @@ var sounds = {
 	kPillSound: new SoundOverlapsClass("audio/kPill", "kPill"),
 	ePillSound: new SoundOverlapsClass("audio/ePill", "ePill"),
 	dPillSound: new SoundOverlapsClass("audio/dPill", "dPill"),
-	oPillSound: new SoundOverlapsClass("audio/oPill", "oPill")
+	oPillSound: new SoundOverlapsClass("audio/oPill", "oPill"),
+	stickyPillSound: new SoundOverlapsClass("audio/stickToPaddleSound", "stickyPillSound")
 
 
 
@@ -477,7 +478,7 @@ function drawGameOverScreen(){
 		if (paddleWobbleTimer % 7 == 0) {
 			wobbleScaleAngle = setWobbleScaleAngle(wobbleScaleAngle);
 			wobbleScale.x = Math.sin(wobbleScaleAngle) * 3;
-			wobbleScale.y = wobbleScale.x;	
+			wobbleScale.y = wobbleScale.x;
 		}
 		paddleWobbleTimer--;
 	} else {
@@ -486,10 +487,10 @@ function drawGameOverScreen(){
 	ballrogSpin += ballrogSpinStep;
 	canvasContext.translate(canvas.width/2,canvas.height/2);
 	canvasContext.rotate(ballrogSpin);
-	canvasContext.drawImage(paddlePic, 0,0,paddlePic.width,paddlePic.height, 
-					-paddlePic.width/2 + (-0.5 * wobbleScale.x), paddleY + (-0.5 * wobbleScale.y),  
+	canvasContext.drawImage(paddlePic, 0,0,paddlePic.width,paddlePic.height,
+					-paddlePic.width/2 + (-0.5 * wobbleScale.x), paddleY + (-0.5 * wobbleScale.y),
 					paddlePic.width + wobbleScale.x, paddlePic.height + wobbleScale.y);
-	canvasContext.restore(); 
+	canvasContext.restore();
 	canvasContext.textAlign = 'center';
 	canvasContext.fillStyle = 'black';
 	canvasContext.fillText("GAME OVER", canvas.width/2 + 1, line + 1);

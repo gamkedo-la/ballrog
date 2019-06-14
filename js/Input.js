@@ -139,6 +139,10 @@ function keyPressed(evt) {
 			debugBall = !debugBall;
 			console.log("debugBall: " + debugBall);
 			break;
+		case 'v'://volcano, aka sticky pill
+			stickyBall = true;
+			console.log("v key pressed");
+			break;
 		case 'ArrowRight':
 			currentLevelIndex++;
 			checkLevelIndex();
@@ -165,7 +169,7 @@ function keyPressed(evt) {
 			} else {
 				testBackgroundMusic.volume = 0;
 			}
-			
+
 			for(let i = 0; i < keys.length; i++) {
 				if(sounds[keys[i]].volume >= 0.1) {
 					sounds[keys[i]].volume -= 0.1;
@@ -180,7 +184,7 @@ function keyPressed(evt) {
 			} else {
 				testBackgroundMusic.volume = 1;
 			}
-			
+
 			console.log(keys);
 			for(let i = 0; i < keys.length; i++) {
 				if(sounds[keys[i]].volume <= 0.9) {
