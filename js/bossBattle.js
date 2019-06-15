@@ -224,8 +224,9 @@ function getIntersectPoint(velX, velY, posX, posY, interY) {
 }
 
 const beatGameState = new (function() {
-	const PADDLE_FLY_ACCEL = 200;
 	var paddleFlySpeed = 0;
+	var timer = 0;
+	const PADDLE_FLY_ACCEL = 200;
 	const STATE_TIMEOUT = 3;
 	const COLOR_SWITCH_TIMEOUT = 1/6;
 	const CONGRATS = {
@@ -235,7 +236,7 @@ const beatGameState = new (function() {
 		colorSwitchTimer: 0,
 		X: 400,
 		Y: 600,
-		speed: 80,
+		speed: 60,
 		draw: function() {
 			colorTextCentered(this.text, this.X, this.Y, this.colors[this.colorIndex], "64px Arial Black");
 		},
@@ -254,17 +255,18 @@ const beatGameState = new (function() {
 			}
 		}
 	};
-	let timer = 0;
 
 	this.init = function() {
-		CONGRATS.X = canvas.width/2;
-		CONGRATS.Y = canvas.height;
+		timer = 0;
+		CONGRATS.X = allBalls[0].X = canvas.width/2;
+		CONGRATS.Y = allBalls[0].Y = canvas.height;
 		CONGRATS.colorIndex = 0;
 		paddleFlySpeed = 0;
 	};
 	
 	this.update = function(dt) {
 		CONGRATS.update(dt);
+		allBalls[0].Y = CONGRATS.Y;
 		if (CONGRATS.Y <= canvas.height/2) {
 			paddleFlySpeed += PADDLE_FLY_ACCEL*dt;
 			paddleY -= paddleFlySpeed*dt;
@@ -274,7 +276,7 @@ const beatGameState = new (function() {
 		}
 		if (timer >= STATE_TIMEOUT) {
 			bossDefeated = false;
-			creditsManager.roll();			
+			creditsManager.roll();
 		}
 	};
 
