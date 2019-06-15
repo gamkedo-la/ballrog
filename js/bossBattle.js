@@ -46,6 +46,7 @@ function bossClass() {
 					&& this.X <= paddleX + paddleWidth
 					&& this.Y + this.height >= paddleY) {
 					freezePaddle(FREEZE_TIMEOUT);
+					this.live = false;
 				}
 			}
 		}
@@ -65,6 +66,7 @@ function bossClass() {
 	this.update = function(dt) {
 		if (this.live) {
 			this.superClassUpdate(dt);
+			this.freezeShot.update(dt);
 		}
 	}
 
@@ -160,12 +162,8 @@ function bossClass() {
 				boss.freezeShot.X = boss.X + boss.width/2;
 				boss.freezeShot.Y = boss.Y + boss.height;
 			},
-			update: function(boss, dt) {
-				boss.freezeShot.update(dt);
-			},
-			exit: function(boss, dt) {
-				boss.freezeShot.live = boss.freezeShot.visible = false;
-			}
+			update: noop,
+			exit: noop,
 		}
 	}
 
