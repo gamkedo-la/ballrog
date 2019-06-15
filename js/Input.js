@@ -161,16 +161,24 @@ function keyPressed(evt) {
 		case 'ArrowRight':
 			currentLevelIndex++;
 			checkLevelIndex();
-			resetLevel()
+			resetLevel();
+			levelCompleteSoundEvents();
 			break;
 		case 'ArrowLeft':
 			currentLevelIndex--;
 			checkLevelIndex();
 			resetLevel();
+			levelCompleteSoundEvents();
 			break;
 		case 'r':
 			resetLevel();
 			break;
+		case 'f':
+			if (!battlingBoss) {
+				battlingBoss = true;
+			} else {
+				battlingBoss = false;
+			}
 		}
 	} else {
 		messageArea.innerHTML = '';

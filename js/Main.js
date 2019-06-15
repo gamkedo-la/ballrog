@@ -89,6 +89,7 @@ var sounds = {
 	gamePlayMusic1: new Audio("audio/gamePlayMusic" + audioFormat),
 	gamePlayMusic2: new Audio("audio/gamePlayMusicV2" + audioFormat),
 	gamePlayMusic3: new Audio("audio/gamePlayMusicV3" + audioFormat),
+	bossBattleMusic: new Audio("audio/bossBattleMusic" + audioFormat),
 	moneyPillSound: new SoundOverlapsClass("audio/moneyPill", "moneyPillSound"),
 	ghostPillSound: new SoundOverlapsClass("audio/ghostPill", "ghostPillSound"),
 	magnetizingSound: new SoundOverlapsClass("audio/magnetizingSound", "magnetizingSound")
@@ -287,7 +288,8 @@ function resetLevel() {
 	//allBalls.forEach(function (ball) { ball.ballReset(); }); // multiball
 	activePills = 0;
 	enemiesManager.reset();
-	testBackgroundMusic.play();
+	//testBackgroundMusic.play();
+	//levelCompleteSoundEvents();
 }
 
 function checkLevelIndex() {
@@ -316,6 +318,7 @@ function loadNextLevel() {
 		bricksInPlace = false;
 		currentLevelIndex++;
 		checkLevelIndex();
+		levelCompleteSoundEvents();
 		if (battlingBoss || creditsManager.rolling) {
 			return;
 		}

@@ -102,8 +102,21 @@ function levelCompleteSoundEvents() {
   testBackgroundMusic.pause();
   testBackgroundMusic.currentTime = 0;
   sounds.levelComplete.play();
-  let randomBackgroundMusicIndex = getRandomInt(0, arrayOfBackgroundMusicTracks.length - 1);
-	testBackgroundMusic = arrayOfBackgroundMusicTracks[randomBackgroundMusicIndex];
+
+  if (battlingBoss) {
+    testBackgroundMusic = sounds.bossBattleMusic;
+    testBackgroundMusic.loop = true;
+    setTimeout(function() {
+      testBackgroundMusic.play();
+    }, 1300)
+  } else {
+    let randomBackgroundMusicIndex = getRandomInt(0, arrayOfBackgroundMusicTracks.length - 1);
+  	testBackgroundMusic = arrayOfBackgroundMusicTracks[randomBackgroundMusicIndex];
+    setTimeout(function() {
+      testBackgroundMusic.play();
+    }, 1300)
+  }
+
   console.log(testBackgroundMusic.src);
   testBackgroundMusic.volume = 0.15;
   testBackgroundMusic.playbackRate = 1;

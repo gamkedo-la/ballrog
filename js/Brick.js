@@ -259,7 +259,7 @@ function handleBrickHit(evt) {
 		if (bricksLeft <= 0) {
 			canvas.dispatchEvent(brickRemovedEvent);
 			checkPillsLive();
-			levelCompleteSoundEvents();
+			
 
 			//console.log(activePills);
 			if (activePills <= 0 && !battlingBoss) {
