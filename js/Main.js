@@ -189,7 +189,10 @@ window.onload = function() {
 		canvas.addEventListener('bossDefeated', function () {
 			console.log('DEFEATED BOSS!');
 			increaseScore(lives * 1000);
-			loadNextLevel(); // NOTE: goes to credits roll
+			// TODO: defeat boss animation
+			resetGame();
+			showTitle = false;
+			creditsManager.roll();
 		});
 		canvas.addEventListener('wheel', handleEditorMouseScroll);
 		canvas.addEventListener('mouseup', setEditorPencilUp);
