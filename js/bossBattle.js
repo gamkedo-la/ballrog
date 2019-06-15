@@ -77,6 +77,7 @@ function bossClass() {
 	this.reset = function() {
 		this.live = true;
 		this.lives = MAX_BOSS_LIVES;
+		this.attackRow = BRICK_ROWS - 1;
 	};
 
 	this.superClassDraw = this.draw;
@@ -155,7 +156,7 @@ function bossClass() {
 			},
 			exit: function(boss, dt) {
 				boss.attackRow--;
-				if (boss.attackRow < 1) {
+				if (boss.attackRow < 2) {
 					boss.attackRow = BRICK_ROWS - 1;
 				}
 				boss.brickAttackTimer = 0;
