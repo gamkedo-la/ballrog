@@ -36,6 +36,7 @@ var lastScore = score;
 var currentLevelIndex = 0;
 var gameMuted = false;
 var battlingBoss = false;
+var bossDefeated = false;
 var sounds = {
 	paddleHit: new SoundOverlapsClass("audio/paddleHit", "paddleHit"),
 	paddleHitHalfStepDown: new SoundOverlapsClass("audio/paddleHitHalfStepDown", "paddleHitHalfStepDown"),
@@ -190,9 +191,11 @@ window.onload = function() {
 			console.log('DEFEATED BOSS!');
 			increaseScore(lives * 1000);
 			// TODO: defeat boss animation
+			beatGameState.init();
 			resetGame();
+			bossDefeated = true;
 			showTitle = false;
-			creditsManager.roll();
+			// creditsManager.roll();
 		});
 		canvas.addEventListener('wheel', handleEditorMouseScroll);
 		canvas.addEventListener('mouseup', setEditorPencilUp);
@@ -259,6 +262,7 @@ function resetGame() {
 	enemiesManager.init();
 	boss.reset();
 	battlingBoss = false;
+	defeatedBoss = false;
 }
 
 function resetGAMKEDO(){
@@ -450,6 +454,8 @@ function drawEverything() {
 		drawBricks();
 		drawPills();
 		drawPaddle();
+	} else if (bossDefeated) {
+		beatGameState.draw();
 	} else if(creditsManager.rolling) {
 		creditsManager.draw();
 	} else { // normal gameplay render:
@@ -521,7 +527,7 @@ function gameLogic(dt) {
 }
 
 function moveEverything(dt) {
-	if (!(showTitle || gamePaused  || levelTransition || levelEditor.enabled || gameOverScreen || creditsManager.rolling)) {
+	if (!(showTitle || gamePaused  || levelTransition || levelEditor.enabled || gameOverScreen || creditsManager.rolling || bossDefeated)) {
 		allBalls[0].ballMove(dt);
 		allBalls.forEach(function (ball) { ball.ballMove(dt); }); // multiball
 		pillsMove(dt);
@@ -536,6 +542,9 @@ function moveEverything(dt) {
 		if(demoScreen){
 			moveComputerPaddle(allBalls[0]);
 		}
+	}
+	if (bossDefeated) {
+		beatGameState.update(dt);
 	}
 	if (gamePaused){
 		lettersMove();

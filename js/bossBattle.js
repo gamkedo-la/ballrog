@@ -222,3 +222,45 @@ function getIntersectPoint(velX, velY, posX, posY, interY) {
 	}
 	return result;
 }
+
+const beatGameState = new (function() {
+	const STATE_TIMEOUT = 5;
+	const COLOR_SWITCH_TIMEOUT = 1/6;
+	const CONGRATS = {
+		text: 'SWEET!',
+		colors: ['#fbf236', '#ac3232', '#d77bba', '#6abe30', '#df7126'],
+		colorIndex: 0,
+		colorSwitchTimer: 0,
+		X: 400,
+		Y: 300
+	};
+	let timer = 0;
+
+	this.init = function() {
+		CONGRATS.X = canvas.width/2;
+		CONGRATS.Y = canvas.height/2;
+		CONGRATS.colorIndex = 0;
+	};
+	
+	this.update = function(dt) {
+		timer += dt;
+		CONGRATS.colorSwitchTimer += dt;
+		if (CONGRATS.colorSwitchTimer > COLOR_SWITCH_TIMEOUT) {
+			CONGRATS.colorSwitchTimer = 0;
+			CONGRATS.colorIndex++;
+			if (CONGRATS.colorIndex > CONGRATS.colors.length) {
+				CONGRATS.colorIndex = 0;
+			}
+		}
+		if (timer >= STATE_TIMEOUT) {
+			bossDefeated = false;
+			creditsManager.roll();			
+		}
+	};
+
+	this.draw = function() {
+		canvasContext.textAlign = "center";
+		colorTextCentered(CONGRATS.text, CONGRATS.X, CONGRATS.Y, CONGRATS.colors[CONGRATS.colorIndex], "64px Arial Black");
+	};
+	
+})();
