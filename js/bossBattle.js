@@ -278,30 +278,13 @@ const beatGameState = new (function() {
 		}
 	};
 
-	function norm(value, min, max) {
-		return (value - min) / (max - min);
-	}
-
-	function lerp(norm, min, max) {
-		return (max - min) * norm + min;
-	}
-
-	function map(value, sourceMin, sourceMax, destMin, destMax) {
-		return lerp(norm(value, sourceMin, sourceMax), destMin, destMax);
-	}
-
 	this.draw = function() {
 		drawBackground(plasmaPic,plasmaPic);
 		drawGUI();
 		CONGRATS.draw();
 		if (paddleFlySpeed > 0) {
 			for (let i=0; i<(canvas.height - paddlePic.height); i++) {
-				let scale = Math.sin(i) + 0.5; //i%1.5 + 0.5; // 0.5, 1, 1.5 
-				// canvasContext.save();
-				// canvasContext.scale(scale, 1);
-				// drawBitMap(nyanPic, paddleX/scale + 3, paddleY + paddlePic.height + i*nyanPic.height);
-				// canvasContext.restore();
-				let width = nyanPic.width + map(Math.sin(i), -1, 1, 1, 20);
+				let width = nyanPic.width + map(Math.sin(i), -1, 1, -6, 8);
 				canvasContext.save();
 				canvasContext.translate(paddleX, paddleY + paddlePic.height + i*nyanPic.height);
 				canvasContext.drawImage(nyanPic, 0, 0, nyanPic.width, nyanPic.height, -width/2 + paddlePic.width/2, 0, width, nyanPic.height);

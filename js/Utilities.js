@@ -9,3 +9,11 @@ function getRandomIntInclusive(min, max) {
 function lerp(startPos, endPos, value) {
 	return (endPos - startPos) * value + startPos;
 }
+
+function norm(value, min, max) {
+	return (value - min) / (max - min);
+}
+
+function map(value, sourceMin, sourceMax, destMin, destMax) {
+	return lerp(destMin, destMax, norm(value, sourceMin, sourceMax));
+}

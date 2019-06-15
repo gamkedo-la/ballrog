@@ -2,6 +2,7 @@ const creditsManager = new (function() {
 	this.rolling = false;
 	var scroll = 0;
 	var speed = 40;
+	var rainbowPos = 0;
 	const BG_COLOR = '#222034';
 	const SPACE = 48;
 	const LINE_HEIGHT = 16;
@@ -17,17 +18,30 @@ const creditsManager = new (function() {
 	this.update = function(dt) {
 		if (this.rolling) {
 			scroll -= speed*dt;
+			rainbowPos += speed*dt/1.88;
 		}
 	};
-
 	this.draw = function() {
 		if (!this.rolling) {
 			return;
 		}
 		colorRect(0, 0, canvas.width, canvas.height, BG_COLOR);
 		drawBitMap(paddlePic, 20, 20); // TODO: draw eyes, scale paddle up a bit
+
 		for (let i=0; i<(canvas.height - (20 + paddlePic.height)); i++) {
-			drawBitMap(nyanPic, 20, 20 + paddlePic.height + i*nyanPic.height);
+			// drawBitMap(nyanPic, 20, 20 + paddlePic.height + i*nyanPic.height);
+			let width = nyanPic.width + map(Math.sin(i + rainbowPos), -1, 1, -6, 8);
+			canvasContext.save();
+			if (width > nyanPic.width) {
+				canvasContext.globalAlpha = 1;
+			} else if (width <= 0) {
+				canvasContext.globalAlpha = 0.3;
+			} else {
+				canvasContext.globalAlpha = 0.7;
+			}
+			canvasContext.translate(20, 20 + paddlePic.height + i*nyanPic.height);
+			canvasContext.drawImage(nyanPic, 0, 0, nyanPic.width, nyanPic.height, -width/2 + paddlePic.width/2, 0, width, nyanPic.height);
+			canvasContext.restore();
 		}
 		// TODO: animate nyan rainbow
 		canvasContext.save();
