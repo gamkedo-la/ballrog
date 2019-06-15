@@ -34,7 +34,7 @@ const creditsManager = new (function() {
 		canvasContext.translate(0, scroll);
 		let line = 0;
 		const X = canvas.width/2;
-		const Y = canvas.height/2;
+		const Y = canvas.height;
 		CREDITS_DATA.sort(function (a, b) {
 			return a.name < b.name ? -1 : 1;
 		}).forEach(function(data, i) {
