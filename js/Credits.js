@@ -38,7 +38,7 @@ const creditsManager = new (function() {
 		CREDITS_DATA.sort(function (a, b) {
 			return a.name < b.name ? -1 : 1;
 		}).forEach(function(data, i) {
-			colorTextCentered("- " + data.name + " -", X, Y + i*SPACE + line*LINE_HEIGHT, "white", "20px Arial Black");
+			colorTextCentered("★ " + data.name + " ★", X, Y + i*SPACE + line*LINE_HEIGHT, "white", "20px Arial Black");
 			data.credits.forEach(function(credit, j) {
 				line++;
 				colorTextCentered(credit, X, Y + i*SPACE + line*LINE_HEIGHT);
