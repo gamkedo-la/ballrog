@@ -1,7 +1,7 @@
 const creditsManager = new (function() {
 	this.rolling = false;
 	var scroll = 0;
-	var speed = 20;
+	var speed = 40;
 	const BG_COLOR = '#222034';
 	const SPACE = 48;
 	const LINE_HEIGHT = 16;
