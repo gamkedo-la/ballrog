@@ -224,7 +224,9 @@ function getIntersectPoint(velX, velY, posX, posY, interY) {
 }
 
 const beatGameState = new (function() {
-	const STATE_TIMEOUT = 5;
+	const PADDLE_FLY_ACCEL = 200;
+	var paddleFlySpeed = 0;
+	const STATE_TIMEOUT = 3;
 	const COLOR_SWITCH_TIMEOUT = 1/6;
 	const CONGRATS = {
 		text: 'SWEET!',
@@ -232,25 +234,43 @@ const beatGameState = new (function() {
 		colorIndex: 0,
 		colorSwitchTimer: 0,
 		X: 400,
-		Y: 300
+		Y: 600,
+		speed: 80,
+		draw: function() {
+			colorTextCentered(this.text, this.X, this.Y, this.colors[this.colorIndex], "64px Arial Black");
+		},
+		update: function(dt) {
+			this.colorSwitchTimer += dt;
+			if (this.colorSwitchTimer > COLOR_SWITCH_TIMEOUT) {
+				this.colorSwitchTimer = 0;
+				this.colorIndex++;
+				if (this.colorIndex > this.colors.length) {
+					this.colorIndex = 0;
+				}
+			}
+			this.Y -= this.speed*dt;
+			if (this.Y <= canvas.height/2) {
+				this.Y = canvas.height/2;
+			}
+		}
 	};
 	let timer = 0;
 
 	this.init = function() {
 		CONGRATS.X = canvas.width/2;
-		CONGRATS.Y = canvas.height/2;
+		CONGRATS.Y = canvas.height;
 		CONGRATS.colorIndex = 0;
+		paddleFlySpeed = 0;
 	};
 	
 	this.update = function(dt) {
-		timer += dt;
-		CONGRATS.colorSwitchTimer += dt;
-		if (CONGRATS.colorSwitchTimer > COLOR_SWITCH_TIMEOUT) {
-			CONGRATS.colorSwitchTimer = 0;
-			CONGRATS.colorIndex++;
-			if (CONGRATS.colorIndex > CONGRATS.colors.length) {
-				CONGRATS.colorIndex = 0;
-			}
+		CONGRATS.update(dt);
+		if (CONGRATS.Y <= canvas.height/2) {
+			paddleFlySpeed += PADDLE_FLY_ACCEL*dt;
+			paddleY -= paddleFlySpeed*dt;
+		}
+		if (paddleY < 0) {
+			timer += dt;
 		}
 		if (timer >= STATE_TIMEOUT) {
 			bossDefeated = false;
@@ -258,9 +278,37 @@ const beatGameState = new (function() {
 		}
 	};
 
+	function norm(value, min, max) {
+		return (value - min) / (max - min);
+	}
+
+	function lerp(norm, min, max) {
+		return (max - min) * norm + min;
+	}
+
+	function map(value, sourceMin, sourceMax, destMin, destMax) {
+		return lerp(norm(value, sourceMin, sourceMax), destMin, destMax);
+	}
+
 	this.draw = function() {
-		canvasContext.textAlign = "center";
-		colorTextCentered(CONGRATS.text, CONGRATS.X, CONGRATS.Y, CONGRATS.colors[CONGRATS.colorIndex], "64px Arial Black");
+		drawBackground(plasmaPic,plasmaPic);
+		drawGUI();
+		CONGRATS.draw();
+		if (paddleFlySpeed > 0) {
+			for (let i=0; i<(canvas.height - paddlePic.height); i++) {
+				let scale = Math.sin(i) + 0.5; //i%1.5 + 0.5; // 0.5, 1, 1.5 
+				// canvasContext.save();
+				// canvasContext.scale(scale, 1);
+				// drawBitMap(nyanPic, paddleX/scale + 3, paddleY + paddlePic.height + i*nyanPic.height);
+				// canvasContext.restore();
+				let width = nyanPic.width + map(Math.sin(i), -1, 1, 1, 20);
+				canvasContext.save();
+				canvasContext.translate(paddleX, paddleY + paddlePic.height + i*nyanPic.height);
+				canvasContext.drawImage(nyanPic, 0, 0, nyanPic.width, nyanPic.height, -width/2 + paddlePic.width/2, 0, width, nyanPic.height);
+				canvasContext.restore();
+			}
+		}
+		drawPaddle();
 	};
 	
 })();

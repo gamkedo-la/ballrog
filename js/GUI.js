@@ -17,32 +17,33 @@ function drawGUI() {
 
     guiTXT('High Score: ' + highScore.toString(), 8, GUI_Y, "white","left");
     guiTXT('Score: '+ prevScore, canvas.width/2, GUI_Y);
-    guiTXT('Level: '+ currentLevelIndex, canvas.width/2 + 200, GUI_Y, "silver", "center");
+	if (!bossDefeated) {
+		guiTXT('Level: '+ currentLevelIndex, canvas.width/2 + 200, GUI_Y, "silver", "center");
+		drawLives();
+		drawGAMKEDO();
 
-    drawLives();
-    drawGAMKEDO();
-
-    if (checkIfBallHeld() && ballCount == 1 && serveTimer == undefined) {
-		serveTimer = serveTimerFull;
-	}
-
-	if (serveTimer > 0) {
-		serveTimer--;
-		if (serveTimer < 300) {
-			if (serveTimer % framesPerSecond == 0) {
-				timeRemaining--;
-			}
-			if (timeRemaining) {
-				canvasContext.fillStyle = 'black';
-				canvasContext.fillText("Auto-Serving in: " + timeRemaining, canvas.width/2 + 1, 121);
-				canvasContext.fillStyle = 'white';
-				canvasContext.fillText("Auto-Serving in: " + timeRemaining, canvas.width/2, 120);
-			}
+		if (checkIfBallHeld() && ballCount == 1 && serveTimer == undefined) {
+			serveTimer = serveTimerFull;
 		}
-	} else {
-		allBallsUnheld();
-		timeRemaining = 5;
-		serveTimer = undefined;
+
+		if (serveTimer > 0) {
+			serveTimer--;
+			if (serveTimer < 300) {
+				if (serveTimer % framesPerSecond == 0) {
+					timeRemaining--;
+				}
+				if (timeRemaining) {
+					canvasContext.fillStyle = 'black';
+					canvasContext.fillText("Auto-Serving in: " + timeRemaining, canvas.width/2 + 1, 121);
+					canvasContext.fillStyle = 'white';
+					canvasContext.fillText("Auto-Serving in: " + timeRemaining, canvas.width/2, 120);
+				}
+			}
+		} else {
+			allBallsUnheld();
+			timeRemaining = 5;
+			serveTimer = undefined;
+		}
 	}
 }
 
