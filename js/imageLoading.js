@@ -30,6 +30,7 @@ var plasma4Pic = document.createElement("img");
 var guiBGPic = document.createElement("img");
 var iceEnemyPic = document.createElement("img");
 var wizEnemyPic = document.createElement("img");
+var freezeAttackPic = document.createElement("img");
 var imageList = [
 	{varName: ballPic, theFile: "../images/ball.png"},
 	{varName: paddlePic, theFile: "../images/paddle.png"},
@@ -62,7 +63,8 @@ var imageList = [
 	{varName: plasma4Pic, theFile: "../images/plasma4.png"},
 	{varName: guiBGPic, theFile: "../images/guiBG.png"},
 	{varName: iceEnemyPic, theFile: "../images/iceEnemy.png"},
-	{varName: wizEnemyPic, theFile: "../images/wizEnemy.png"}
+	{varName: wizEnemyPic, theFile: "../images/wizEnemy.png"},
+	{varName: freezeAttackPic, theFile: "../images/icecream.png"}
 ];
 var backgroundImages = [plasmaPic,plasma2Pic,plasma3Pic,plasma4Pic];
 var picsToLoad = imageList.length;

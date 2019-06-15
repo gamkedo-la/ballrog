@@ -31,12 +31,12 @@ function bossClass() {
 		live: false,
 		X: this.X,
 		Y: this.Y,
-		width: 10,
-		height: this.height*0.6,
+		width: 20,
+		height: 45,
 		speed: 500,
 		draw: function() {
 			if (this.live) {
-				colorRect(this.X, this.Y, this.width, this.height, 'white');
+				drawBitMap(freezeAttackPic, this.X, this.Y);
 			}
 		},
 		update: function(dt) {
