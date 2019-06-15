@@ -1,6 +1,7 @@
 bossClass.prototype = new FSMEnemyClass();
 function bossClass() {
 	const MAX_BOSS_LIVES = 4;
+	const BRICK_ATTACK_TIMEOUT = 12;
 	this.width = PADDLE_ORIGINAL_W;
 	this.height = PADDLE_THICKNESS;
 	this.X = 400 - this.width/2;
@@ -9,9 +10,11 @@ function bossClass() {
 	this.image = paddlePic;
 	this.visible = true;
 	this.ballIntersect = null;
+	this.brickAttackTimer = 0;
 	this.transitions = [
 		['wait', 'slide', ballNotHeld],
 		['slide', 'brickAttack', justMissedBall],
+		['slide', 'brickAttack', brickAttackTimerEnded],
 		['brickAttack', 'wait', brickAttackFinished],
 		['slide', 'freezeAttack', ballTravellingDown],
 		['freezeAttack', 'slide', ballTravellingUp],
@@ -110,8 +113,9 @@ function bossClass() {
 				} while(boss.ballIntersect.Y > interY);
 			},
 			update: function(boss, dt) {
+				boss.brickAttackTimer += dt;
 				boss.speed = ball.getSpeedFromVelocity(ball.VelX, ball.VelY);
-				boss.speed *= MAX_BOSS_LIVES/boss.lives;
+				boss.speed *= MAX_BOSS_LIVES/(boss.lives + 0.9);
 				if (boss.ballIntersect.X > boss.X + boss.width/2 + 20) {
 					boss.X += boss.speed*dt;
 				} else if (boss.ballIntersect.X < boss.X + boss.width/2 - 20) {
@@ -122,7 +126,7 @@ function bossClass() {
 				}
 				if (boss.X > canvas.width - boss.width) {
 					boss.X = canvas.width - boss.width;
-				}				
+				}
 			},
 			exit: noop
 		},
@@ -154,6 +158,7 @@ function bossClass() {
 				if (boss.attackRow < 1) {
 					boss.attackRow = BRICK_ROWS - 1;
 				}
+				boss.brickAttackTimer = 0;
 			}
 		},
 		freezeAttack: {
@@ -181,6 +186,10 @@ function bossClass() {
 			return true;
 		}
 		return false;
+	}
+
+	function brickAttackTimerEnded(boss) {
+		return (boss.brickAttackTimer >= BRICK_ATTACK_TIMEOUT);
 	}
 
 	function brickAttackFinished(boss) {
