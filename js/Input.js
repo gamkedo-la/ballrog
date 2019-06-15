@@ -13,6 +13,7 @@ const CNTRL_KEY = 'Control';
 const CMD_KEY = 'Meta';
 const DESTROY_BRICK = 'Minus';
 const CREDITS_KEY = 'c';
+const BEAT_BOSS_KEY = 'k';
 let didInteract = false;
 let cmd_cntrl_down = false;
 let shift_down = false;
@@ -102,6 +103,11 @@ function keyPressed(evt) {
 				}
 			}
 		}
+	}
+	if (debugMode && battlingBoss && evt.key == BEAT_BOSS_KEY) {
+		boss.lives = 0;
+		boss.live = false;
+		canvas.dispatchEvent(boss.defeatedEvent);
 	}
 	if (showTitle && evt.key == CREDITS_KEY) {
 		showTitle = false;
