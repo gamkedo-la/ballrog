@@ -518,7 +518,7 @@ function gameLogic(dt) {
 }
 
 function moveEverything(dt) {
-	if (!showTitle && !gamePaused && !levelTransition && !levelEditor.enabled && !gameOverScreen) {
+	if (!(showTitle || gamePaused  || levelTransition || levelEditor.enabled || gameOverScreen || creditsManager.rolling)) {
 		allBalls[0].ballMove(dt);
 		allBalls.forEach(function (ball) { ball.ballMove(dt); }); // multiball
 		pillsMove(dt);
@@ -533,9 +533,11 @@ function moveEverything(dt) {
 		if(demoScreen){
 			moveComputerPaddle(allBalls[0]);
 		}
-		creditsManager.update(dt);
 	}
 	if (gamePaused){
 		lettersMove();
+	}
+	if (creditsManager.rolling) {
+		creditsManager.update(dt);
 	}
 }
