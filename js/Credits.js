@@ -1,10 +1,10 @@
 const creditsManager = new (function() {
 	this.rolling = false;
 	var scroll = 0;
-	var speed = 40;
+	var speed = 32;
 	var rainbowPos = 0;
 	const BG_COLOR = '#222034';
-	const SPACE = 48;
+	const SPACE = 42;
 	const LINE_HEIGHT = 16;
 
 	this.roll = function() {
@@ -49,13 +49,15 @@ const creditsManager = new (function() {
 		let line = 0;
 		const X = canvas.width/2;
 		const Y = canvas.height;
+		colorTextCentered("Ballrog was made by the following awesome people (in alphabetical order)", X, Y + line*LINE_HEIGHT);
+		line++;
 		CREDITS_DATA.sort(function (a, b) {
 			return a.name < b.name ? -1 : 1;
 		}).forEach(function(data, i) {
-			colorTextCentered("★ " + data.name + " ★", X, Y + i*SPACE + line*LINE_HEIGHT, "white", "20px Arial Black");
+			colorTextCentered("★ " + data.name + " ★", X, Y + (i+1)*SPACE + line*LINE_HEIGHT, "white", "20px Arial Black");
 			data.credits.forEach(function(credit, j) {
 				line++;
-				colorTextCentered(credit, X, Y + i*SPACE + line*LINE_HEIGHT);
+				colorTextCentered(credit, X, Y + (i+1)*SPACE + line*LINE_HEIGHT);
 			});
 			line++;
 		});
