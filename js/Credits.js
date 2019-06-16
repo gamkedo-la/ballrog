@@ -66,157 +66,193 @@ const creditsManager = new (function() {
 })();
 
 const CREDITS_DATA = [
-	{
-		name: "Chris DeLeon",
-		credits: [
-			'Authored "Hands-On Intro to Game Programming" book.',
-			"Set git repository up for project..",
-			"Compiled credits.",
-		],
-	},
-	{
-		name: "Gonzalo Delgado",
-		credits: [
-			"Implemented initial prototype and led project.",
-			"Created game enemies sprites and programming.",
-			"Added multiple level support.",
-			"Improved ball trail effect.",
-			"Implemented level editor.",
-			"Created frozen paddle and bricks sprites.",
-			'Authored "Ice delight" level.',
-		]
-	},
-	{
-		name: 'Christer "McFunkypants" Kaitila',
-		credits: [
-			"Created paddle's blinking googly eyes.",
-			"Created ball motion blur trail effect.",
-			"Created brick hit shine effect.",
-			"Added game browser title.",
-			"Created animated plasma backgrounds.",
-			"Co-implemented multiball.",
-			"Improved GUI.",
-			"Colored GAMKEDO letter pills.",
-			"Revamped title screen.",
-			"Championed invaders mode as main gameplay idea.",
-			"Bugfixed game over screen",
-		],
-	},
-	{
-		name: "Cyriel De Neve",
-		credits: [
-			"Added extra life power-up.", //TODO check if only sprite or programming too
-			"Improved shrink power pill.",
-			"Authored level 5.",
-			'Authored "Roses" level.',
-			"Bugfixed ball-brick collisions.",
-			'Authored "Blimp" level.',
-		],
-	},
-	{
-		name: "Vince McKeown",
-		credits: [
-			"Implemented pause screen.",
-			"Created pause screen bricks sprites.",
-			"Created shrink power pill sprite.",
-			"Created elevate power pill sprite.",
-			"Created accelerate power pill sprite.",
-			"Created jump power pill sprite.",
-			"Added high score display.",
-			"Implemented sticky ball power-up.",
-			"Added random ball angle after collision.",
-			"Created ball collisions sound effects.",
-			"Game Over sound effect.",
-			"Life lost sound effect.",
-			"Letter pills sprites.",
-			"Letter (GAMKEDO) Pills.",
-			"Demo/Attract mode implementation.",
-			"Color text helper function.",
-			"Game over screen implementation."
-		],
-	},
-	{
-		name: "Brian Nielsen",
-		credits: [
-			"Implemented mute game key.",
-			"Co-implemented multiball.",
-		],
-	},
-	{
-		name: "Terrence McDonnell",
-		credits: [
-			"Created brick easing effect on level load.",
-			"Improved level loading.",
-			"Implemented jump power pill.",
-			"Fixed infinite stretch/shrink bug.",
-			"Implemented new level and game over pill powers logic.",
-			"Added death key.",
-			"New level (WIP)", // TODO: check which level
-			"Implemented invader brick movement.",
-			"Created invader movement sound effects.",
-			"Programmed detection of active power up.",
-			"Enhanced demo screen.",
-			"Improved ball-paddle interactions.",
-			"Implemented accelerate ball power pill.",
-			"Bugfixed sound creation code.",
-			"Implemented debug ball mode.",
-			"Improved sticky ball power pill.",
-			"Narrowed ball serve angle.",
-			"Bugfixed invading brick-ball collision.",
-		],
-	},
-	{
-		name: "Tyler Funk",
-		credits: [
-			"Adjusted ball speed.",
-			"Improved paddle stretch power up.",
-		],
-	},
-	{
-		name: "H Trayford",
-		credits: [
-			"Refactored brick code.",
-			"Fixed letters and font glitches.",
-			"Improved demo mode.",
-			"Crated velocity-altering brick types.",
-			"Improved ball-paddle gameplay.",
-			"Added level editor delete brick key.",
-			"Implemented level editor undo/redo.",
-		],
-	},
-	{
-		name: "Stebs",
-		credits: [
-			"Implemented brick hit multisound.",
-			"Automated increasing gameplay music play rate and volume.",
-			"Adjusted music volume.",
-			"Created pitch-shifted collision sounds.",
-			"Implemented and enhanced background music.",
-			"Created level complete sound effect.",
-			"Created multiball spawn sound effect.",
-			"Created pitch-shifted paddle jump sound effect.",
-			"Created paddle shrink and stretch sound effects.",
-			"Tweaked multiball power up.",
-			"Implemented audio buses.",
-		],
-	},
-	{
-		name: "Alan Zaring",
-		credits: [
-			"Created boss battle music.",
-		],
-	},
-	{
-		name: "Michelly Oliveira",
-		credits: [
-			"Implemented magnet pill.",
-		],
-	},
-	{
-		name: 'Jeff "Axphin" Hanlon',
-		credits: [
-			"Created menu sound effects.",
-			"Created brick hit steel sound effect.",
-		],
-	},
+    {
+	name: "Chris DeLeon",
+	credits: [
+	    'Authored "Hands-On Intro to Game Programming" book.',
+	    "Set git repository up for project..",
+	    "Compiled credits.",
+	],
+    },
+    {
+	name: "Gonzalo Delgado",
+	credits: [
+	    "Implemented initial prototype and led project.",
+	    "Created game enemies sprites and programming.",
+	    "Added multiple level support.",
+	    "Improved ball trail effect.",
+	    "Implemented level editor.",
+	    "Created frozen paddle and bricks sprites.",
+	    'Authored "Ice delight" level.',
+	    "Created credits roll screen.",
+	    "Implemented boss battle stage."
+	]
+    },
+    {
+	name: 'Christer "McFunkypants" Kaitila',
+	credits: [
+	    "Created paddle's blinking googly eyes.",
+	    "Created ball motion blur trail effect.",
+	    "Created brick hit shine effect.",
+	    "Added game browser title.",
+	    "Created animated plasma backgrounds.",
+	    "Co-implemented multiball.",
+	    "Improved GUI.",
+	    "Colored GAMKEDO letter pills.",
+	    "Revamped title screen.",
+	    "Championed invaders mode as main gameplay idea.",
+	    "Bugfixed game over screen",
+	    "Added controller and touchscreen support.",
+	    "Increased background sound layers.",
+	    "Mobile screen support.",
+	    "Added turbo mode (for internal use)."
+	],
+    },
+    {
+	name: "Cyriel De Neve",
+	credits: [
+	    "Added extra life power-up (art and code).",
+	    "Improved shrink power pill.",
+	    "Authored level 5.",
+	    'Authored "Roses" level.',
+	    "Bugfixed ball-brick collisions.",
+	    'Authored "Blimp" level.',
+	    "Added boss defeated score bonus."
+	],
+    },
+    {
+	name: "Vince McKeown",
+	credits: [
+	    "Implemented animated pause screen.",
+	    "Created pause screen bricks sprites.",
+	    "Created shrink power pill sprite.",
+	    "Created elevate power pill sprite.",
+	    "Created accelerate power pill sprite.",
+	    "Created jump power pill sprite.",
+	    "Added high score display.",
+	    "Implemented sticky ball power-up.",
+	    "Added random ball angle after collision.",
+	    "Created ball collisions sound effects.",
+	    "Game Over sound effect.",
+	    "Life lost sound effect.",
+	    "Letter pills sprites.",
+	    "Letter (GAMKEDO) Pills.",
+	    "Demo/Attract mode implementation.",
+	    "Color text helper function.",
+	    "Game over screen implementation.",
+	    "Implemented window focus lock.",
+	    "Created hat pill sprite."
+	],
+    },
+    {
+	name: "Brian Nielsen",
+	credits: [
+	    "Implemented mute game key.",
+	    "Implemented multiball.",
+	    "Fixed restart bug."
+	],
+    },
+    {
+	name: "Terrence McDonnell",
+	credits: [
+	    "Created brick easing effect on level load.",
+	    "Improved level loading.",
+	    "Implemented jump power pill.",
+	    "Fixed infinite stretch/shrink bug.",
+	    "Implemented new level and game over pill powers logic.",
+	    "Added death key.",
+	    "Authored level 4",
+	    "Implemented invader brick movement.",
+	    "Created invader movement sound effects.",
+	    "Programmed detection of active power up.",
+	    "Enhanced demo screen.",
+	    "Improved ball-paddle interactions.",
+	    "Implemented accelerate ball power pill.",
+	    "Bugfixed sound creation code.",
+	    "Implemented debug ball mode.",
+	    "Improved sticky ball power pill.",
+	    "Narrowed ball serve angle.",
+	    "Bugfixed invading brick-ball collision.",
+	    "Added paddle wobble effect.",
+	    "Improved paddle googly eyes.",
+	    "Animated game over screen.",
+	    "Improved ice enemy slide state."
+	],
+    },
+    {
+	name: "Tyler Funk",
+	credits: [
+	    "Adjusted ball speed.",
+	    "Improved paddle stretch power up.",
+	],
+    },
+    {
+	name: "H Trayford",
+	credits: [
+	    "Refactored brick code.",
+	    "Fixed letters and font glitches.",
+	    "Improved demo mode.",
+	    "Crated velocity-altering brick types.",
+	    "Improved ball-paddle gameplay.",
+	    "Added level editor delete brick key.",
+	    "Implemented level editor undo/redo.",
+	    "Implemented volume adjustment controls.",
+	    "Added credits screen access from title screen."
+	],
+    },
+    {
+	name: "Stebs",
+	credits: [
+	    "Implemented brick hit multisound.",
+	    "Automated increasing gameplay music play rate with level progression.",
+	    "Balanced music volume.",
+	    "Created pitch-shifted collision sounds.",
+	    "Implemented and enhanced background music.",
+	    "Created level complete sound effect.",
+	    "Created multiball spawn sound effect.",
+	    "Created pitch-shifted paddle jump sound effect.",
+	    "Created power pill sounds (stick, shrink, stretch, freeze, points, magnet, ghost, jump)",
+	    "Created power pill swallow sound effects.",
+	    "Created wiz enemy sound effects.",
+	    "Tweaked multiball power up.",
+	    "Implemented buses for audio volume control.",
+	    "Voiced letter pills.",
+	    "Randomized gameplay background music.",
+	    "Created magnet pill sprite."
+	],
+    },
+    {
+	name: "Alan Zaring",
+	credits: [
+	    "Created boss battle music.",
+	    "Created title screen music.",
+	    "Created gameplay music (x3).",
+	    "Balanced music volume.",
+	],
+    },
+    {
+	name: "Michelly Oliveira",
+	credits: [
+	    "Implemented magnet pill.",
+	],
+    },
+    {
+	name: 'Jeff "Axphin" Hanlon',
+	credits: [
+	    "Authored game over song.",
+	    "Created menu sound effects.",
+	    "Created brick hit steel sound effect.",
+	    "Created bullet sprite for gun power up.",
+	    "Created credits/game over music.",
+	    "Converted power up sound effect to MP3.",
+	],
+    },
+    {
+	name: "Bilal A. Cheema",
+	credits: [
+	    'Authored "Volcano" level.',
+	    "Created gun power up, with fire sprite.",
+	    "Added change brick button to level editor."
+	],
+    }
 ];
