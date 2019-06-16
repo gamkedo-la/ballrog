@@ -15,6 +15,7 @@ var brickFrozenPic = document.createElement("img");
 var livesPic = document.createElement("img");
 var titlePic = document.createElement("img");
 var pillsPic = document.createElement("img");
+var magnetPillPic = document.createElement("img");
 var pupilPic = document.createElement("img");
 var eyeballPic = document.createElement("img");
 var eyelidsPic = document.createElement("img");
@@ -48,6 +49,7 @@ var imageList = [
 	{varName: livesPic, theFile: "../images/lifeicon.png"},
 	{varName: titlePic, theFile: "../images/title.png"},
 	{varName: pillsPic, theFile: "../images/pills.png"},
+	{varName: magnetPillPic, theFile: "../images/magnetPill.png"},
 	{varName: letterBrickPic, theFile: "../images/letterBricks.png"},
 	{varName: pupilPic, theFile: "../images/pupil.png"},
 	{varName: eyeballPic, theFile: "../images/eyeball.png"},

@@ -168,7 +168,7 @@ function keyPressed(evt) {
 			currentLevelIndex--;
 			checkLevelIndex();
 			resetLevel();
-			levelCompleteSoundEvents();
+		  levelCompleteSoundEvents();
 			break;
 		case 'r':
 			resetLevel();
@@ -179,6 +179,11 @@ function keyPressed(evt) {
 			} else {
 				battlingBoss = false;
 			}
+			break;
+		case 'a'://magneticPower on, a for attract because m is taken?
+			magneticBall = true;
+			console.log("should be magnetizing");
+			break;
 		}
 	} else {
 		messageArea.innerHTML = '';

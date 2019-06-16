@@ -12,7 +12,9 @@ const SHRINK_PADDLE_MULTIPLIER = 0.5;
 const MULTI_BALL_QUANTITY = 2;
 const PILL_DROP_CHANCE = 0.4;
 
-var ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, stickyBallPill, shrinkPill, accellPill, moveUpPill, invaderPill, jumpPill, gunPill, extraLifePill, letterGPill, letterAPill, letterMPill, letterKPill, letterEPill, letterDPill, letterOPill, hatPill];
+var ENABLED_PILLS = [pointsPill, stretchPill, ghostPill, multiBallPill, stickyBallPill, shrinkPill, accellPill, moveUpPill,
+	 invaderPill, jumpPill, gunPill, extraLifePill, letterGPill, letterAPill, letterMPill, letterKPill, letterEPill,
+	 letterDPill, letterOPill, hatPill, magnetPill];
 
 // used for testing specific powerups - comment out other initializations
 //const PILL_DROP_CHANCE = 1.1; //Math.random is 0-1 so random will always be < 1.1;
@@ -52,6 +54,7 @@ function pointsPill() {
 
 magnetPill.prototype = new pillClass();
 function magnetPill() {
+	this.name = "magnetPill";
 	this.imageOffsetX = PILL_W;
 	this.imageOffsetY = PILL_H * 5;
 	this.powerTime = 10000;
@@ -375,13 +378,18 @@ function checkForGAMKEDO(){
 	}
 }
 
+
 function initPills() {
 	pills = [];
 	for (var i=0; i<MAX_PILLS; i++) { // Replace MAX_PILLS with bricksLeft
 		let pillType = ENABLED_PILLS[Math.floor(Math.random() * ENABLED_PILLS.length)]
+		//let randomEnabledPillsArrayInteger = getRandomInt(0, ENABLED_PILLS.length);
+		//let pillType = ENABLED_PILLS[randomEnabledPillsArrayInteger];
 		var pill = new pillType();
 		pills.push(pill);
+		//pills.push(magnetPill);
 	}
+	//pills[0] = magnetPill;
 }
 
 function checkPillsLive() {
@@ -439,10 +447,13 @@ function pillClass() {
 	this.powerTime = 0;
 	this.timer = undefined;
 	this.sound = undefined;
+	this.name = undefined;
 
 	this.draw = function () {
-		if (this.live) {
+		if (this.live && this.name !== "magnetPill") {
 			canvasContext.drawImage(pillsPic, this.imageOffsetX, this.imageOffsetY, PILL_W, PILL_H, this.x, this.y, PILL_W, PILL_H);
+		} else if (this.live && this.name === "magnetPill") {
+			canvasContext.drawImage(magnetPillPic, this.x,this.y, PILL_W,PILL_H);
 		}
 	};
 
@@ -463,6 +474,7 @@ function pillClass() {
 
 				increaseScore(BRICK_HIT_POINTS);
 				this.startPower();
+				console.log(this.name);//debugging magnet pill not activating upon swallow
 				this.timer = this.powerTime;
 				this.reset();
 			}
