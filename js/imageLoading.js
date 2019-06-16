@@ -1,5 +1,6 @@
 var ballPic = document.createElement("img");
 var letterBrickPic = document.createElement("img");
+var bossPic = document.createElement("img");
 var paddlePic = document.createElement("img");
 var paddleFrozenPic = document.createElement("img");
 var nyanPic = document.createElement("img");
@@ -33,7 +34,8 @@ var iceEnemyPic = document.createElement("img");
 var wizEnemyPic = document.createElement("img");
 var freezeAttackPic = document.createElement("img");
 var imageList = [
-	{varName: ballPic, theFile: "../images/ball.png"},
+        {varName: ballPic, theFile: "../images/ball.png"},
+    	{varName: bossPic, theFile: "../images/boss.png"},
 	{varName: paddlePic, theFile: "../images/paddle.png"},
 	{varName: paddleFrozenPic, theFile: "../images/paddleFrozen.png"},
 	{varName: nyanPic, theFile: "../images/nyan.png"},

@@ -7,7 +7,7 @@ function bossClass() {
 	this.X = 400 - this.width/2;
 	this.Y = 40;
 	this.speed = 500;
-	this.image = paddlePic;
+	this.image = bossPic;
 	this.visible = true;
 	this.ballIntersect = null;
 	this.brickAttackTimer = 0;
