@@ -66,6 +66,7 @@ function ballClass(x,y,vx,vy){
 		var speedMultiplier;
 		if (speedIncreased) {
 			speedMultiplier = 1.01;
+			sounds.accelSwoosh.play();
 		} else {
 			speedMultiplier = 1;
 		}
