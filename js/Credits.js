@@ -8,25 +8,31 @@ const creditsManager = new (function() {
 	const LINE_HEIGHT = 16;
 
 	this.roll = function() {
-		this.rolling = true;
+	    this.rolling = true;
+	    allBalls[0].Y = 0;
+	    allBalls[0].X = 20;
+	    paddleX = 20;
+	    paddleY = 16;
 	};
 
 	this.stop = function() {
-		this.rolling = false;
-		scroll = 0;
+	    this.rolling = false;
+	    scroll = 0;
+	    paddleY = PADDLE_ORIGINAL_Y;
 	}
 	this.update = function(dt) {
 		if (this.rolling) {
-			scroll -= speed*dt;
-			rainbowPos += speed*dt/1.88;
+		    scroll -= speed*dt;
+		    rainbowPos += speed*dt/1.88;
 		}
 	};
 	this.draw = function() {
 		if (!this.rolling) {
 			return;
 		}
-		colorRect(0, 0, canvas.width, canvas.height, BG_COLOR);
-		drawBitMap(paddlePic, 20, 20); // TODO: draw eyes, scale paddle up a bit
+	    colorRect(0, 0, canvas.width, canvas.height, BG_COLOR);
+	    drawPaddle();
+		// drawBitMap(paddlePic, 20, 20);
 
 		for (let i=0; i<(canvas.height - (20 + paddlePic.height)); i++) {
 			// drawBitMap(nyanPic, 20, 20 + paddlePic.height + i*nyanPic.height);
