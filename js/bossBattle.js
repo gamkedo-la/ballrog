@@ -62,7 +62,7 @@ function bossClass() {
 		const self = this;
 		canvas.addEventListener('bossMissedBall', function() {
 			self.dropLife();
-		});			
+		});
 	};
 
 	this.superClassUpdate = this.update;
@@ -92,9 +92,9 @@ function bossClass() {
 		if (!this.live) {
 			canvas.dispatchEvent(this.defeatedEvent);
 		}
-		console.log('Boss lost life, lives remaining', this.lives);
+		//console.log('Boss lost life, lives remaining', this.lives);
 	};
-	
+
 	this.states = {
 		wait: noopState,
 		slide: {
@@ -147,7 +147,7 @@ function bossClass() {
 
 						// don't end the level too soon
 						if (brickGrid[brickIndex] - 1 == BRICK_TYPES.empty) {
-							bricksLeft++; 
+							bricksLeft++;
 						}
 
 					}
@@ -211,7 +211,7 @@ function getIntersectPoint(velX, velY, posX, posY, interY) {
 	if (velX == 0) {
 		result.X = posX;
 		return result;
-	} 
+	}
 	const m = velY/velX;
 	result.X = (interY - posY)/m + posX;
 	if (result.X < 0) {
@@ -264,7 +264,7 @@ const beatGameState = new (function() {
 		CONGRATS.colorIndex = 0;
 		paddleFlySpeed = 0;
 	};
-	
+
 	this.update = function(dt) {
 		CONGRATS.update(dt);
 		allBalls[0].Y = CONGRATS.Y;
@@ -296,5 +296,5 @@ const beatGameState = new (function() {
 		}
 		drawPaddle();
 	};
-	
+
 })();

@@ -474,7 +474,12 @@ function pillClass() {
 
 				increaseScore(BRICK_HIT_POINTS);
 				this.startPower();
-				console.log(this.name);//debugging magnet pill not activating upon swallow
+				if (this.name === "magnetPill") {
+					setTimeout(function() {
+						magneticBall = false;
+					}, 10000)
+				}
+				//console.log(this.name);//debugging magnet pill not activating upon swallow
 				this.timer = this.powerTime;
 				this.reset();
 			}

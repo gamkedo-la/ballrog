@@ -116,7 +116,7 @@ function FSMEnemyClass() {
 			let stateTo = this.transitions[i][1];
 			let condition = this.transitions[i][2];
 			if (stateFrom == this.currentStateKey && condition(this)) {
-				console.log('Switching from ' + stateFrom + ' to ' + stateTo);
+				//console.log('Switching from ' + stateFrom + ' to ' + stateTo);
 				this.state.exit(this, dt);
 				this.setState(stateTo);
 				this.state.enter(this, dt);
@@ -194,7 +194,7 @@ function wizEnemyClass() {
 			enter: function(enemy, dt) {
 				// select empty tile
 				//fairySound probably goes here
-				console.log("wizard flies in?");
+
 				sounds.wizardFlyIn.play();
 				var minCol, maxCol, targetTile;
 				var count = 0, maxTries = 10;
@@ -235,7 +235,7 @@ function wizEnemyClass() {
 				var brickIndex = brickToTileIndex(enemy.targetTile.col, enemy.targetTile.row);
 				if (brickGrid[brickIndex] < BRICK_TYPES.threehit) {
 					brickGrid[brickIndex]++;
-					console.log("wizard places brick here?");
+					
 					sounds.wizardPlacesBrick.play();
 					if (brickGrid[brickIndex] - 1 == BRICK_TYPES.empty) {
 						bricksLeft++;

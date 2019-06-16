@@ -123,7 +123,7 @@ function drawLevelBricks() {
 
 			if(typeof(brick) != "undefined" && brick != BRICK_TYPES.empty) {
 				if (typeof(BRICK_IMAGES[brick % 100]) == "undefined") {
-					console.log("BAD IMAGE FOR", brick);
+					//console.log("BAD IMAGE FOR", brick);
 				}
 				drawSingleBrick(brick, brickLeftEdgeX, brickTopEdgeY);
 			}
@@ -259,7 +259,7 @@ function handleBrickHit(evt) {
 		if (bricksLeft <= 0) {
 			canvas.dispatchEvent(brickRemovedEvent);
 			checkPillsLive();
-			
+
 
 			//console.log(activePills);
 			if (activePills <= 0 && !battlingBoss) {

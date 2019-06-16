@@ -92,7 +92,8 @@ var sounds = {
 	bossBattleMusic: new Audio("audio/bossBattleMusic" + audioFormat),
 	moneyPillSound: new SoundOverlapsClass("audio/moneyPill", "moneyPillSound"),
 	ghostPillSound: new SoundOverlapsClass("audio/ghostPill", "ghostPillSound"),
-	magnetizingSound: new SoundOverlapsClass("audio/magnetizingSound", "magnetizingSound")
+	magnetizingSound: new SoundOverlapsClass("audio/magnetizingSound", "magnetizingSound"),
+	accelSwoosh: new SoundOverlapsClass("audio/accelSwoosh", "accelSwoosh")
 };
 
 var arrayOfBrickHitSounds = [sounds.brickHit, sounds.brickHitHalfStepDown, sounds.brickHitHalfStepUp,
@@ -221,7 +222,7 @@ window.onload = function() {
 	});
 	let randomBackgroundMusicIndex = getRandomInt(0, arrayOfBackgroundMusicTracks.length - 1);
 	testBackgroundMusic = arrayOfBackgroundMusicTracks[randomBackgroundMusicIndex];
-	console.log(testBackgroundMusic);
+	//console.log(testBackgroundMusic);
 	for (let i = 0; arrayOfBackgroundMusicTracks.length - 1; i++) {
 		arrayOfBackgroundMusicTracks[i].loop = true;
 	}
@@ -290,6 +291,8 @@ function resetLevel() {
 	enemiesManager.reset();
 	//testBackgroundMusic.play();
 	//levelCompleteSoundEvents();
+	magnetSoundPlayed = false;
+	magneticBall = false;
 }
 
 function checkLevelIndex() {
@@ -332,6 +335,8 @@ function loadNextLevel() {
 			canvas.dispatchEvent(newLevelEvent);
 		}, 1500);
 	}, 600 - allBalls[0].getSpeedFromVelocity(allBalls[0].VelX, allBalls[0].VelY));
+	magnetizedSoundPlayed = false;
+	magneticBall = false;
 }
 
 function dropLife() {

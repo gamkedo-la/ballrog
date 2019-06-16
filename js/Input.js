@@ -45,7 +45,7 @@ function keyReleased(evt) {
 }
 
 function keyPressed(evt) {
-  console.log(evt);
+  //console.log(evt);
   didInteract = true;
   if (evt.key == PAUSE_KEY) {
     if (gamePaused) {
@@ -138,7 +138,7 @@ function keyPressed(evt) {
 			startMultiBall(4);
 			break;
 		case 'j':// debug test paddleJump();
-			console.log("j pressed");
+
 			if (paddleJumping) {
 				paddleJumping = false;
 			} else {
@@ -148,15 +148,15 @@ function keyPressed(evt) {
 			break;
 		case 's':// debug stretchedPaddle
 			stretchPill.startPower();
-			console.log("s key pressed");
+
 			break;
 		case 'l':// debug ball
 			debugBall = !debugBall;
-			console.log("debugBall: " + debugBall);
+			//console.log("debugBall: " + debugBall);
 			break;
 		case 'v'://volcano, aka sticky pill
 			stickyBall = true;
-			console.log("v key pressed");
+
 			break;
 		case 'ArrowRight':
 			currentLevelIndex++;
@@ -182,7 +182,7 @@ function keyPressed(evt) {
 			break;
 		case 'a'://magneticPower on, a for attract because m is taken?
 			magneticBall = true;
-			console.log("should be magnetizing");
+
 			break;
 		}
 	} else {
@@ -213,7 +213,7 @@ function keyPressed(evt) {
 				testBackgroundMusic.volume = 1;
 			}
 
-			console.log(keys);
+			//console.log(keys);
 			for(let i = 0; i < keys.length; i++) {
 				if(sounds[keys[i]].volume <= 0.9) {
 					sounds[keys[i]].volume += 0.1;

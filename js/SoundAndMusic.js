@@ -117,7 +117,7 @@ function levelCompleteSoundEvents() {
     }, 1300)
   }
 
-  console.log(testBackgroundMusic.src);
+  //console.log(testBackgroundMusic.src);
   testBackgroundMusic.volume = 0.15;
   testBackgroundMusic.playbackRate = 1;
 }

@@ -13,7 +13,7 @@ function increaseBallSpeed(evt) {
 	if (evt.detail.row < highestHitRow) {
 		highestHitRow = evt.detail.row;
 		ball.minSpeed += (BRICK_ROWS - highestHitRow);
-		console.log('SET MIN SPEED TO', ball.minSpeed);
+		//console.log('SET MIN SPEED TO', ball.minSpeed);
 		if (ball.minSpeed > ball.getSpeedFromVelocity(ball.VelX, ball.VelY)) {
 			ball.updateSpeed(ball.minSpeed);
 		}
@@ -130,6 +130,9 @@ function ballClass(x,y,vx,vy){
 			servingX = undefined;
 			servingY = undefined;
 			//update ball position using current velocity
+			//if (speedIncreased) {
+			//	sounds.accelSwoosh.play();
+			//}
 			this.X += this.VelX*dt;
 			this.Y += this.VelY*dt;
 
@@ -373,7 +376,7 @@ function ballClass(x,y,vx,vy){
 				this.X -= 7;
 				if (!magnetSoundPlayed) {
 					sounds.magnetizingSound.play();
-					magnetizing = true;
+					magnetSoundPlayed = true;
 					console.log("magnetizing sound");
 				}
 			} else if(paddleX+paddleWidth/2 > this.X+BALL_RADIUS) {
@@ -381,7 +384,7 @@ function ballClass(x,y,vx,vy){
 				this.X += 7;
 				if (!magnetSoundPlayed) {
 					sounds.magnetizingSound.play();
-					magnetizing = true;
+					magnetSoundPlayed = true;
 					console.log("magnetizing sound");
 				}
 			}
@@ -402,7 +405,7 @@ function ballClass(x,y,vx,vy){
 
 var allBalls = [];
 function startMultiBall(quantity) {
-	console.log("MULTI BALL x"+quantity);
+	//console.log("MULTI BALL x"+quantity);
 	for (let num=0; num < quantity; num++) {
 
 		var newBall = new ballClass(
