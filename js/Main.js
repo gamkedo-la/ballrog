@@ -93,9 +93,15 @@ var sounds = {
 	moneyPillSound: new SoundOverlapsClass("audio/moneyPill", "moneyPillSound"),
 	ghostPillSound: new SoundOverlapsClass("audio/ghostPill", "ghostPillSound"),
 	magnetizingSound: new SoundOverlapsClass("audio/magnetizingSound", "magnetizingSound"),
-	accelSwoosh: new SoundOverlapsClass("audio/accelSwoosh", "accelSwoosh")
+	accelSwoosh: new SoundOverlapsClass("audio/accelSwoosh", "accelSwoosh"),
+	beingAlive: new SoundOverlapsClass("audio/beingAlive", "beingAlive"),
+	canAPill: new SoundOverlapsClass("audio/canAPill", "canAPill"),
+	iIntendToLiveForever: new SoundOverlapsClass("audio/iIntendToLiveForever", "iIntendToLiveForever"),
+	imACat: new SoundOverlapsClass("audio/imACat", "imACat"),
+	youAndIAreGonna: new SoundOverlapsClass("audio/youAndIAreGonna", "youAndIAreGonna")
 };
 
+var arrayOfExtraLifeSounds = [sounds.beingAlive, sounds.canAPill, sounds.iIntendToLiveForever, sounds.youAndIAreGonna];
 var arrayOfBrickHitSounds = [sounds.brickHit, sounds.brickHitHalfStepDown, sounds.brickHitHalfStepUp,
 							 sounds.brickHitWholeStepDown, sounds.brickHitWholeStepUp];
 var arrayOfPaddleHitSounds = [sounds.paddleHit, sounds.paddleHitHalfStepDown, sounds.paddleHitHalfStepUp,

@@ -256,6 +256,20 @@ function extraLifePill() {
 
 	this.startPower = function() {
 		lives++;
+		console.log(lives);
+		if (lives === 9) {
+			sounds.imACat.play();
+			setTimeout(function() {
+				testBackgroundMusic.volume = preDuckedVolume;
+			}, 3500)
+		} else {
+			playMultiSound(arrayOfExtraLifeSounds);
+			let preDuckedVolume = testBackgroundMusic.volume;
+			testBackgroundMusic.volume = 0.15;
+			setTimeout(function() {
+				testBackgroundMusic.volume = preDuckedVolume;
+			}, 3500)
+		}
 	}
 }
 
