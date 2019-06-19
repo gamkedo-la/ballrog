@@ -3,6 +3,7 @@ const creditsManager = new (function() {
 	var scroll = 0;
 	var speed = 32;
 	var rainbowPos = 0;
+	var paddleBob = 0;
 	const BG_COLOR = '#222034';
 	const SPACE = 42;
 	const LINE_HEIGHT = 16;
@@ -24,6 +25,8 @@ const creditsManager = new (function() {
 		if (this.rolling) {
 		    scroll -= speed*dt;
 		    rainbowPos += speed*dt/1.88;
+			paddleBob += speed*dt/5;
+			paddleY += Math.sin(paddleBob)/2;
 		}
 	};
 	this.draw = function() {
@@ -31,9 +34,6 @@ const creditsManager = new (function() {
 			return;
 		}
 	    colorRect(0, 0, canvas.width, canvas.height, BG_COLOR);
-	    drawPaddle();
-		// drawBitMap(paddlePic, 20, 20);
-
 		for (let i=0; i<(canvas.height - (20 + paddlePic.height)); i++) {
 			// drawBitMap(nyanPic, 20, 20 + paddlePic.height + i*nyanPic.height);
 			let width = nyanPic.width + map(Math.sin(i + rainbowPos), -1, 1, -6, 8);
@@ -68,6 +68,7 @@ const creditsManager = new (function() {
 			line++;
 		});
 		canvasContext.restore();
+		drawPaddle();
 	};
 })();
 
