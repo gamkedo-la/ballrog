@@ -36,7 +36,7 @@ function maybeMoveHeldBall() {
 
 function movePaddleOnMouseMove(evt) {
 	var mousePos = calculateMousePos(evt);
-	if(!(demoScreen || paddleFrozen || gameOverScreen || bossDefeated)){
+	if(!(demoScreen || paddleFrozen || gameOverScreen || bossDefeated || creditsManager.rolling)){
 		paddleX = mousePos.x - (paddleWidth/2);
 	}
 	maybeMoveHeldBall();
