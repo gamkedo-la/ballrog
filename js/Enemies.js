@@ -327,9 +327,12 @@ function iceEnemyClass() {
 		this.Y = -this.height;
 	}
 
+	this.superClassDraw = this.draw;
 	this.draw = function() {
-		if (this.visible) {
+		if (this.currentStateKey == 'slide' && this.visible) {	
 			drawBitMap(this.image, this.X + spaceInvadeX, this.Y + spaceInvadeY);
+		} else {
+			this.superClassDraw();
 		}
 	}
 
