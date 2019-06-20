@@ -253,7 +253,7 @@ extraLifePill.prototype = new pillClass();
 function extraLifePill() {
 	this.imageOffsetX = 0;
 	this.imageOffsetY = PILL_H * 6;
-
+	var preDuckedVolume;
 	this.startPower = function() {
 		lives++;
 		console.log(lives);
@@ -264,7 +264,7 @@ function extraLifePill() {
 			}, 3500)
 		} else {
 			playMultiSound(arrayOfExtraLifeSounds);
-			let preDuckedVolume = testBackgroundMusic.volume;
+			preDuckedVolume = testBackgroundMusic.volume;
 			testBackgroundMusic.volume = 0.15;
 			setTimeout(function() {
 				testBackgroundMusic.volume = preDuckedVolume;
