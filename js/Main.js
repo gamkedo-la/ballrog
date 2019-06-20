@@ -86,9 +86,9 @@ var sounds = {
 	oPillSound: new SoundOverlapsClass("audio/oPill", "oPill"),
 	stickyPillSound: new SoundOverlapsClass("audio/stickToPaddleSound", "stickyPillSound"),
 	paddleFreezeSound: new SoundOverlapsClass("audio/player_freeze_3", "paddleFreezeSound"),
-	gamePlayMusic1: new Audio("audio/gamePlayMusic" + audioFormat),
-	gamePlayMusic2: new Audio("audio/gamePlayMusicV2" + audioFormat),
-	gamePlayMusic3: new Audio("audio/gamePlayMusicV3" + audioFormat),
+	gamePlayMusic1: new Audio("audio/gameplayMusic" + audioFormat),
+	gamePlayMusic2: new Audio("audio/gameplayMusicV2" + audioFormat),
+	gamePlayMusic3: new Audio("audio/gameplayMusicV3" + audioFormat),
 	bossBattleMusic: new Audio("audio/bossBattleMusic" + audioFormat),
 	moneyPillSound: new SoundOverlapsClass("audio/moneyPill", "moneyPillSound"),
 	ghostPillSound: new SoundOverlapsClass("audio/ghostPill", "ghostPillSound"),
@@ -228,8 +228,7 @@ window.onload = function() {
 	});
 	let randomBackgroundMusicIndex = getRandomInt(0, arrayOfBackgroundMusicTracks.length - 1);
 	testBackgroundMusic = arrayOfBackgroundMusicTracks[randomBackgroundMusicIndex];
-	//console.log(testBackgroundMusic);
-	for (let i = 0; arrayOfBackgroundMusicTracks.length - 1; i++) {
+	for (let i = 0; i < arrayOfBackgroundMusicTracks.length; i++) {
 		arrayOfBackgroundMusicTracks[i].loop = true;
 	}
 	testBackgroundMusic.volume = 0.15;
