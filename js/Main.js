@@ -406,13 +406,16 @@ function drawTitleScreen() {
 
 function drawCreditsPrompt(line) {
 	canvasContext.save();
-	const creditsText = "[C] For Credits";
+	const creditsText1 = "Click to Start"; //"Click, Tap, or Fire to Start";
+	const creditsText2 = "[C] For Credits";
 	canvasContext.fillStyle = '#639bff';
 	canvasContext.font = 'small-caps bold 30px Sans-serif';
-	canvasContext.fillText(creditsText, canvas.width / 2, line + 325);
+	canvasContext.fillText(creditsText1, canvas.width / 2, line + 255);
+	canvasContext.fillText(creditsText2, canvas.width / 2, line + 295);
 	canvasContext.strokeStyle = 'black';
 	canvasContext.lineWidth = 2;
-	canvasContext.strokeText(creditsText, canvas.width / 2, line + 325);
+	canvasContext.strokeText(creditsText1, canvas.width / 2, line + 255);
+	canvasContext.strokeText(creditsText2, canvas.width / 2, line + 295);
 	canvasContext.restore();
 }
 
