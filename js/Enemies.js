@@ -148,7 +148,7 @@ function wizEnemyClass() {
 	this.height = 45;
 	this.VelX = 0;
 	this.image = wizEnemyPic;
-	this.reSpawnTimeout = 20;
+	this.reSpawnTimeout = 12;
 	this.targetTile = getTileForPixelCoord(canvas.width/2, canvas.height/2);
 	this.attackTimer = 0;
 	this.transitions = [
