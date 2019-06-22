@@ -98,7 +98,8 @@ var sounds = {
 	canAPill: new SoundOverlapsClass("audio/canAPill", "canAPill"),
 	iIntendToLiveForever: new SoundOverlapsClass("audio/iIntendToLiveForever", "iIntendToLiveForever"),
 	imACat: new SoundOverlapsClass("audio/imACat", "imACat"),
-	youAndIAreGonna: new SoundOverlapsClass("audio/youAndIAreGonna", "youAndIAreGonna")
+	youAndIAreGonna: new SoundOverlapsClass("audio/youAndIAreGonna", "youAndIAreGonna"),
+	creditsMusic: new SoundOverlapsClass("audio/gameOver-Credits", "creditsMusic")
 };
 
 var arrayOfExtraLifeSounds = [sounds.beingAlive, sounds.canAPill, sounds.iIntendToLiveForever, sounds.youAndIAreGonna];

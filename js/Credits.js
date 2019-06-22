@@ -14,12 +14,14 @@ const creditsManager = new (function() {
 	    allBalls[0].X = 20;
 	    paddleX = 20;
 	    paddleY = 16;
+		sounds.creditsMusic.play();
 	};
 
 	this.stop = function() {
 	    this.rolling = false;
 	    scroll = 0;
 	    paddleY = PADDLE_ORIGINAL_Y;
+		sounds.creditsMusic.stop();
 	}
 	this.update = function(dt) {
 		if (this.rolling) {
