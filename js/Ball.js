@@ -195,8 +195,12 @@ function ballClass(x,y,vx,vy){
 
 			paddleWobbleTimer = paddleWobbleTimerFull;
 			let deltaX = this.X - (posX + width/(2*scale.x));
+			if (paddleWearingHat) {
+				deltaX = 0;
+			}
 			var randomAngle = (Math.random() * 0.1);
 			this.updateVelocity(deltaX*6.3, -1*this.VelY);
+
 			let currentSpeed = this.getSpeedFromVelocity(this.VelX, this.VelY);
 
 			if (currentSpeed < this.minSpeed) {

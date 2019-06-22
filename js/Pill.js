@@ -378,12 +378,12 @@ function hatPill() {
 	this.imageOffsetY = PILL_H * 10;
 	this.powerTime = framesPerSecond/2 * 10;
 	this.startPower = function () {
-		//
-	}
+		paddleWearingHat = true;
+	};
 
 	this.endPower = function () {
-		//
-	}
+		paddleWearingHat = false;
+	};
 }
 
 function checkForGAMKEDO(){

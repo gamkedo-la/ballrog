@@ -23,6 +23,7 @@ const AIR_RESISTANCE = 9;
 var paddleAlpha = 1;
 var paddleScale = {x: 1, y: 1};
 var paddleFrozen = false;
+var paddleWearingHat = false;
 
 function maybeMoveHeldBall() {
 	len = allBalls.length;
