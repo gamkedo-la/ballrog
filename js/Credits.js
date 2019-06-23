@@ -1,12 +1,20 @@
 const creditsManager = new (function() {
-	this.rolling = false;
-	var scroll = 0;
-	var speed = 32;
-	var rainbowPos = 0;
-	var paddleBob = 0;
+	const BASE_SPEED = 32;
 	const BG_COLOR = '#222034';
 	const SPACE = 42;
 	const LINE_HEIGHT = 16;
+	const RAINBOW_SPEED = BASE_SPEED/1.88;
+	const BOB_SPEED = BASE_SPEED/5;
+
+	var scroll = 0;
+	var speed = BASE_SPEED;
+	var lastSpeed = BASE_SPEED;
+	var rainbowSpeed = BASE_SPEED/1.88;
+
+	var rainbowPos = 0;
+	var paddleBob = 0;
+
+	this.rolling = false;
 
 	this.roll = function() {
 	    this.rolling = true;
@@ -26,11 +34,36 @@ const creditsManager = new (function() {
 	this.update = function(dt) {
 		if (this.rolling) {
 		    scroll -= speed*dt;
-		    rainbowPos += speed*dt/1.88;
-			paddleBob += speed*dt/5;
+		    rainbowPos += RAINBOW_SPEED*dt;
+			paddleBob += BOB_SPEED*dt;
 			paddleY += Math.sin(paddleBob)/2;
 		}
 	};
+
+	this.speedUp = function() {
+		speed += 10;
+		if (speed > 100) {
+			speed = 100;
+		}
+	};
+
+	this.speedDown = function() {
+		speed -= 10;
+		if (speed < 2) {
+			speed = 2;
+		}
+	};
+
+	this.togglePause = function() {
+		console.log('Toggling pause');
+		if (speed == 0) {
+			speed = lastSpeed;
+		} else {
+			lastSpeed = speed;
+			speed = 0;
+		}
+	};
+
 	this.draw = function() {
 		if (!this.rolling) {
 			return;

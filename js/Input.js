@@ -19,6 +19,9 @@ let cmd_cntrl_down = false;
 let shift_down = false;
 const VOLUME_DOWN = 'Minus';
 const VOLUME_UP = 'Equal';
+const CREDITS_SPEED_UP_KEY = 'ArrowUp';
+const CREDITS_SPEED_DOWN_KEY = 'ArrowDown';
+const CREDITS_PAUSE_KEY = PAUSE_KEY;
 
 function calculateMousePos(evt) {
 	var rect = canvas.getBoundingClientRect();
@@ -47,7 +50,7 @@ function keyReleased(evt) {
 function keyPressed(evt) {
   //console.log(evt);
   didInteract = true;
-  if (evt.key == PAUSE_KEY) {
+  if (evt.key == PAUSE_KEY && !creditsManager.rolling) {
     if (gamePaused) {
       gamePaused = false;
 	  resetLetters();
@@ -108,6 +111,17 @@ function keyPressed(evt) {
 		boss.lives = 0;
 		boss.live = false;
 		canvas.dispatchEvent(boss.defeatedEvent);
+	}
+	if (creditsManager.rolling) {
+		if (evt.key == CREDITS_SPEED_UP_KEY) {
+			creditsManager.speedUp();
+		}
+		if (evt.key == CREDITS_SPEED_DOWN_KEY) {
+			creditsManager.speedDown();
+		}
+		if (evt.key == CREDITS_PAUSE_KEY) {
+			creditsManager.togglePause();
+		}
 	}
 	if (showTitle && evt.key == CREDITS_KEY) {
 		showTitle = false;
