@@ -308,15 +308,8 @@ function checkLevelIndex() {
 	if (currentLevelIndex == LEVEL_SEQ.length) {
 		clearBricks();
 		battlingBoss = true;
-	} else if (currentLevelIndex == LEVEL_SEQ.length + 1) {
-		battlingBoss = false;
-		creditsManager.roll();
-	} else if (currentLevelIndex > LEVEL_SEQ.length + 1) {
+	} else if (currentLevelIndex > LEVEL_SEQ.length) {
 		currentLevelIndex = 0;
-		battlingBoss = false;
-		creditsManager.stop();
-	} else {
-		creditsManager.stop();
 		battlingBoss = false;
 	}
 }

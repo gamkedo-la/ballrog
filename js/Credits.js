@@ -29,7 +29,8 @@ const creditsManager = new (function() {
 	    this.rolling = false;
 	    scroll = 0;
 	    paddleY = PADDLE_ORIGINAL_Y;
-		sounds.creditsMusic.stop();
+		sounds.creditsMusic.mainSound.pause();
+		resetGame();
 	}
 	this.update = function(dt) {
 		if (this.rolling) {
