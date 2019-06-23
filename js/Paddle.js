@@ -214,7 +214,13 @@ function drawGooglyEyes(whichBall) {
 }
 
 function drawPaddle() {
-	var image = paddleFrozen ? paddleFrozenPic : paddlePic;
+	let image = paddlePic;
+	if (paddleFrozen) {
+		image = paddleFrozenPic;
+	}
+	if (bossDefeated || creditsManager.rolling) {
+		image = paddleHappyPic;
+	}
 	canvasContext.save();
 	canvasContext.globalAlpha = paddleAlpha;
 	canvasContext.scale(paddleScale.x, paddleScale.y);

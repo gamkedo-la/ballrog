@@ -3,6 +3,7 @@ var letterBrickPic = document.createElement("img");
 var bossPic = document.createElement("img");
 var paddlePic = document.createElement("img");
 var paddleFrozenPic = document.createElement("img");
+var paddleHappyPic = document.createElement("img");
 var nyanPic = document.createElement("img");
 var brick1Pic = document.createElement("img");
 var brick2Pic = document.createElement("img");
@@ -34,9 +35,10 @@ var iceEnemyPic = document.createElement("img");
 var wizEnemyPic = document.createElement("img");
 var freezeAttackPic = document.createElement("img");
 var imageList = [
-        {varName: ballPic, theFile: "../images/ball.png"},
-    	{varName: bossPic, theFile: "../images/boss.png"},
+    {varName: ballPic, theFile: "../images/ball.png"},
+    {varName: bossPic, theFile: "../images/boss.png"},
 	{varName: paddlePic, theFile: "../images/paddle.png"},
+	{varName: paddleHappyPic, theFile: "../images/paddleHappy.png"},
 	{varName: paddleFrozenPic, theFile: "../images/paddleFrozen.png"},
 	{varName: nyanPic, theFile: "../images/nyan.png"},
 	{varName: brick1Pic, theFile: "../images/brick1.png"},
